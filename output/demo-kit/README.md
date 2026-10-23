@@ -12,7 +12,7 @@ Bản giao ngày 2026-10-19. Đây là **portfolio độc lập với Olist th�
 - [ERD Mermaid](warehouse-schema.mmd): nguồn mô hình có từng FK; PNG/SVG hình 10 chỉ rút gọn cột.
 - [Phân tích nghiệp vụ](business-analysis.md): số liệu cùng release và giới hạn kết luận.
 
-Ảnh kiến trúc được dùng riêng trong báo cáo tại `assets/architecture-user.png`; bộ 10 hình/PDF sơ đồ kỹ thuật vẫn được giữ. Chú thích dưới ảnh phân biệt 9 file trong archive với 7 feed thực sự nạp và xác định đúng nơi lưu dimensions/facts.
+Ảnh kiến trúc tại `assets/architecture-user.png` được dùng làm ảnh chính của repo và trong báo cáo; bộ 10 hình/PDF sơ đồ kỹ thuật vẫn được giữ. Chú thích dưới ảnh phân biệt 9 file trong archive với 7 feed thực sự nạp và xác định đúng nơi lưu dimensions/facts.
 
 ## Danh mục ảnh 4K
 
