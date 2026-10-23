@@ -20,7 +20,9 @@ machine-generated evidence file in [`docs/evidence/`](docs/evidence/README.md).
 [dashboard screenshots](output/demo-kit/screenshots/overview.png) ·
 [runtime evidence](docs/evidence/README.md) · [specification index](specs/spec-package/00-index.md).
 
-![System architecture](output/demo-kit/png/02-system-architecture.png)
+![System architecture](output/demo-kit/assets/architecture-user.png)
+
+*Nine files ship in the Olist archive; the pipeline ingests the seven transactional feeds — reviews and geolocation stay out of scope, see [limits](#status-and-limitations).*
 
 ---
 
@@ -73,6 +75,14 @@ flowchart LR
 
 Grain is declared before any join; facts are never joined to each other for aggregation.
 Metrics combine facts by **drill-across** through conformed dimensions.
+
+**Seven conformed dimensions, three facts.** Every table carries `release_id`; surrogate keys are
+warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never joined to each other.
+
+![Warehouse schema](docs/assets/warehouse-schema.png)
+
+<details>
+<summary><b>Editable schema source (Mermaid)</b></summary>
 
 ```mermaid
 erDiagram
@@ -148,6 +158,8 @@ erDiagram
     dim_payment_method ||--o{ fct_payments : payment_method_key
 ```
 
+</details>
+
 `fct_orders` is an accumulating snapshot; `fct_order_items` and `fct_payments` are transactions.
 `fct_order_items` and `fct_payments` also carry customer/geography/status/date keys (omitted above for
 readability). Full ERD: [warehouse ERD](docs/warehouse-erd.md) · [Mermaid source](output/demo-kit/warehouse-schema.mmd) ·
@@ -199,9 +211,13 @@ customers/cohort, delivery & payment, data quality). Business metrics come from 
 customer/cohort/delivery analysis uses versioned SQL views with their own oracle. Every card reads the
 same published release.
 
-| Overview | Sales | Data quality |
-|---|---|---|
-| ![overview](output/demo-kit/screenshots/overview.png) | ![sales](output/demo-kit/screenshots/sales.png) | ![trust](output/demo-kit/screenshots/trust.png) |
+| Overview | Delivery & payments |
+|---|---|
+| ![overview](output/demo-kit/screenshots/overview.png) | ![delivery & payments](output/demo-kit/screenshots/service.png) |
+
+| Products & sellers | Data quality |
+|---|---|
+| ![products & sellers](output/demo-kit/screenshots/commercial.png) | ![data quality](output/demo-kit/screenshots/trust.png) |
 
 More: [Superset guide](docs/superset-demo-guide.md) · [business analysis](output/analysis/business-analysis.md) ·
 [notebook](output/analysis/analysis.ipynb) · [dashboard question/grain design](docs/analytics-design.md).
