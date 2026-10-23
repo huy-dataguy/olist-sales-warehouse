@@ -76,8 +76,10 @@ flowchart LR
 Grain is declared before any join; facts are never joined to each other for aggregation.
 Metrics combine facts by **drill-across** through conformed dimensions.
 
-**Seven conformed dimensions, three facts.** Every table carries `release_id`; surrogate keys are
-warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never joined to each other.
+**Seven conformed dimensions, three facts.** Every table carries `release_id` in its primary key;
+surrogate keys are warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never
+joined to each other. Nineteen foreign-key roles tie them together: seven core relationships plus
+twelve roll-up/context keys, including all five `dim_date` roles on `fct_orders`.
 
 [![Warehouse schema: seven conformed dimensions and three facts](docs/assets/warehouse-schema.png)](docs/assets/warehouse-schema.png)
 

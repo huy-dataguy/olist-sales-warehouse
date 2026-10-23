@@ -21,12 +21,13 @@
   .zoom button{border:0;padding:2px 8px;background:transparent}
   #zval{min-width:38px;text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
   #stage{flex:1;min-height:0;overflow:auto;padding:18px}
-  #canvas{background:#f6f8fb;border-radius:10px;box-shadow:0 1px 2px #0b1b2b12;display:block}
+  #canvas{background:#f6f8fb;border-radius:10px;box-shadow:0 1px 2px #0b1b2b12;display:block;margin:0 auto}
   #canvas .tbl{cursor:grab}
   #canvas .tbl.dragging{cursor:grabbing}
-  .edge{fill:none;stroke:#93a7bc;stroke-width:1.5}
-  .edge.dim{stroke:#5b86bd}
-  .edge.fact{stroke:#8a6cc0}
+  #canvas .tbl,#canvas .edge{transition:opacity .12s ease}
+  #canvas.focus .tbl:not(.on){opacity:.22}
+  #canvas.focus .tbl.on>rect:first-child{stroke:#8fb0d6}
+  #canvas.focus .edge:not(.on){opacity:.07}
   #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#12202e;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s}
   #toast.show{opacity:1}
   dialog{border:1px solid var(--line);border-radius:12px;padding:0;width:min(720px,92vw)}
@@ -38,11 +39,12 @@
 <body>
 <header>
   <h1>Warehouse schema — kéo thả</h1>
-  <span class="hint">Kéo bảng để đặt vị trí · vị trí tự lưu trong trình duyệt</span>
+  <span class="hint">Kéo bảng để đặt vị trí · rê chuột để soi quan hệ · vị trí tự lưu</span>
   <button id="fit">Vừa khung</button>
   <div class="zoom">
     <button id="zout" title="Thu nhỏ">−</button><span id="zval">100%</span><button id="zin" title="Phóng to">+</button>
   </div>
+  <button id="ctx">Hiện đủ 19 FK</button>
   <button id="reset">Xếp lại</button>
   <button id="save">Lưu bố cục</button>
   <button id="load">Mở bố cục</button>
@@ -60,14 +62,22 @@
       .tbl .col{font:400 11.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#1b2530}
       .tbl .typ{font:400 10px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#6b7a8c}
       .tbl .badge{font:700 8.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;letter-spacing:.3px}
+      .tbl .note{font:italic 400 9.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#8b98a8}
       .edge{fill:none;stroke:#93a7bc;stroke-width:1.5}
       .edge.dim{stroke:#5b86bd}
       .edge.fact{stroke:#8a6cc0}
+  .edge.ctx{stroke-dasharray:4 4;stroke-width:1.1;opacity:.55}
     </style>
     <defs>
       <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
         <circle cx="1" cy="1" r="1" fill="#cfd8e3"/>
       </pattern>
+      <marker id="arrowDim" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#5b86bd"/>
+      </marker>
+      <marker id="arrowFact" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#8a6cc0"/>
+      </marker>
     </defs>
     <rect id="bg" x="0" y="0" width="100%" height="100%" fill="url(#grid)"/>
     <g id="edges"></g>
@@ -91,59 +101,89 @@ const NW = 280, HH = 30, RH = 18, PAD = 8, SNAP = 5, MARGIN = 48;
 
 const TABLES = [
   {id:'dim_customer', label:'dim_customer', kind:'dim', sub:'DIM · CUSTOMER',
-   cols:[['customer_key','bigint','PK'],['customer_unique_id','text',''],['is_inferred','boolean','']]},
+   cols:[['release_id','uuid','PK'],['customer_key','bigint','PK'],['customer_unique_id','text',''],['is_inferred','boolean','']]},
   {id:'dim_product', label:'dim_product', kind:'leaf', sub:'DIM · SCD2',
-   cols:[['product_key','bigint','PK'],['product_id','text',''],['category_english','text',''],['valid_from','date',''],['valid_to','date',''],['is_current','boolean','']]},
+   cols:[['release_id','uuid','PK'],['product_key','bigint','PK'],['product_id','text',''],['category_english','text',''],['valid_from','date',''],['valid_to','date',''],['is_current','boolean','']]},
   {id:'dim_seller', label:'dim_seller', kind:'leaf', sub:'DIM · SELLER',
-   cols:[['seller_key','bigint','PK'],['seller_id','text',''],['seller_state','text','']]},
+   cols:[['release_id','uuid','PK'],['seller_key','bigint','PK'],['seller_id','text',''],['seller_state','text','']]},
   {id:'dim_buyer_geography', label:'dim_buyer_geography', kind:'dim', sub:'DIM · GEO',
-   cols:[['buyer_geography_key','bigint','PK'],['postal_prefix','text',''],['city','text',''],['state','text','']]},
-  {id:'dim_date', label:'dim_date', kind:'dim', sub:'DIM · ROLE-PLAY',
-   cols:[['date_key','int','PK'],['full_date','date',''],['month_start','date','']]},
+   cols:[['release_id','uuid','PK'],['buyer_geography_key','bigint','PK'],['postal_prefix','text',''],['city','text',''],['state','text','']]},
+  {id:'dim_date', label:'dim_date', kind:'dim', sub:'DIM · 5 ROLES',
+   cols:[['release_id','uuid','PK'],['date_key','int','PK'],['full_date','date',''],['month_start','date','']],
+   note:'purchase · approved · carrier · delivered · estimated'},
   {id:'dim_order_status', label:'dim_order_status', kind:'dim', sub:'DIM · STATUS',
-   cols:[['order_status_key','bigint','PK'],['status_code','text',''],['is_delivered','boolean',''],['is_canceled','boolean','']]},
+   cols:[['release_id','uuid','PK'],['order_status_key','bigint','PK'],['status_code','text',''],['is_delivered','boolean',''],['is_canceled','boolean','']]},
   {id:'dim_payment_method', label:'dim_payment_method', kind:'leaf', sub:'DIM · PAYMENT',
-   cols:[['payment_method_key','bigint','PK'],['payment_type','text','']]},
-  {id:'fct_order_items', label:'fct_order_items', kind:'fact', sub:'FACT · ITEM LINES',
-   cols:[['order_id','text',''],['order_item_id','int',''],['product_key','bigint','FK'],['seller_key','bigint','FK'],['merchandise_value','numeric',''],['freight_value','numeric','']]},
-  {id:'fct_orders', label:'fct_orders', kind:'fact', sub:'FACT · SNAPSHOT',
-   cols:[['order_id','text',''],['customer_key','bigint','FK'],['buyer_geography_key','bigint','FK'],['order_status_key','bigint','FK'],['purchase_date_key','int','FK'],['item_merchandise_total','numeric',''],['recorded_payment_total','numeric','']]},
-  {id:'fct_payments', label:'fct_payments', kind:'fact', sub:'FACT · PAYMENTS',
-   cols:[['order_id','text',''],['payment_sequential','int',''],['payment_method_key','bigint','FK'],['recorded_payment_value','numeric','']]},
+   cols:[['release_id','uuid','PK'],['payment_method_key','bigint','PK'],['payment_type','text','']]},
+  {id:'fct_orders', label:'fct_orders', kind:'fact', sub:'FACT · ONE ROW / ORDER',
+   cols:[['release_id','uuid','PK'],['order_key','text','PK'],['customer_key','bigint','FK'],['buyer_geography_key','bigint','FK'],
+         ['order_status_key','bigint','FK'],['purchase_date_key','int','FK'],['approved_date_key','int','FK'],
+         ['carrier_date_key','int','FK'],['delivered_date_key','int','FK'],['estimated_delivery_date_key','int','FK'],
+         ['item_merchandise_total','numeric',''],['item_freight_total','numeric',''],['recorded_payment_total','numeric','']],
+   note:'+ 9 measures · delivery flags · audit'},
+  {id:'fct_order_items', label:'fct_order_items', kind:'fact', sub:'FACT · ONE ROW / ITEM',
+   cols:[['release_id','uuid','PK'],['order_item_key','text','PK'],['customer_key','bigint','FK'],
+         ['buyer_geography_key','bigint','FK'],['order_status_key','bigint','FK'],['purchase_date_key','int','FK'],
+         ['product_key','bigint','FK'],['seller_key','bigint','FK'],
+         ['merchandise_value','numeric',''],['freight_value','numeric','']],
+   note:'+ item_row_count · currency · audit'},
+  {id:'fct_payments', label:'fct_payments', kind:'fact', sub:'FACT · ONE ROW / PAYMENT',
+   cols:[['release_id','uuid','PK'],['payment_key','text','PK'],['customer_key','bigint','FK'],
+         ['buyer_geography_key','bigint','FK'],['order_status_key','bigint','FK'],['purchase_date_key','int','FK'],
+         ['payment_method_key','bigint','FK'],['payment_sequential','int',''],
+         ['recorded_payment_value','numeric',''],['payment_installments','int','']],
+   note:'+ payment_record_count · currency · audit'},
 ];
 
 const REFS = [
-  {from:'dim_customer', to:'fct_orders', col:'customer_key'},
-  {from:'dim_buyer_geography', to:'fct_orders', col:'buyer_geography_key'},
-  {from:'dim_order_status', to:'fct_orders', col:'order_status_key'},
-  {from:'dim_date', to:'fct_orders', col:'purchase_date_key'},
-  {from:'dim_product', to:'fct_order_items', col:'product_key'},
-  {from:'dim_seller', to:'fct_order_items', col:'seller_key'},
-  {from:'dim_payment_method', to:'fct_payments', col:'payment_method_key'},
+  {from:'dim_customer', to:'fct_orders', col:'customer_key', tier:'core'},
+  {from:'dim_buyer_geography', to:'fct_orders', col:'buyer_geography_key', tier:'core'},
+  {from:'dim_order_status', to:'fct_orders', col:'order_status_key', tier:'core'},
+  {from:'dim_date', to:'fct_orders', col:'purchase_date_key', tier:'core'},
+  {from:'dim_product', to:'fct_order_items', col:'product_key', tier:'core'},
+  {from:'dim_seller', to:'fct_order_items', col:'seller_key', tier:'core'},
+  {from:'dim_payment_method', to:'fct_payments', col:'payment_method_key', tier:'core'},
+  {from:'dim_date', to:'fct_orders', col:'approved_date_key', tier:'ctx'},
+  {from:'dim_date', to:'fct_orders', col:'carrier_date_key', tier:'ctx'},
+  {from:'dim_date', to:'fct_orders', col:'delivered_date_key', tier:'ctx'},
+  {from:'dim_date', to:'fct_orders', col:'estimated_delivery_date_key', tier:'ctx'},
+  {from:'dim_customer', to:'fct_order_items', col:'customer_key', tier:'ctx'},
+  {from:'dim_buyer_geography', to:'fct_order_items', col:'buyer_geography_key', tier:'ctx'},
+  {from:'dim_order_status', to:'fct_order_items', col:'order_status_key', tier:'ctx'},
+  {from:'dim_date', to:'fct_order_items', col:'purchase_date_key', tier:'ctx'},
+  {from:'dim_customer', to:'fct_payments', col:'customer_key', tier:'ctx'},
+  {from:'dim_buyer_geography', to:'fct_payments', col:'buyer_geography_key', tier:'ctx'},
+  {from:'dim_order_status', to:'fct_payments', col:'order_status_key', tier:'ctx'},
+  {from:'dim_date', to:'fct_payments', col:'purchase_date_key', tier:'ctx'},
 ];
 
-const COLORS = {
-  dim: {head:'#1f5fa9'},
-  leaf:{head:'#0f7b6c'},
-  fact:{head:'#5d3a9b'},
-};
+const COLORS = {dim:{head:'#1f5fa9'}, leaf:{head:'#0f7b6c'}, fact:{head:'#5d3a9b'}};
+const MARKER = {dim:'arrowDim', leaf:'arrowDim', fact:'arrowFact'};
 
 const DIM_ORDER = ['dim_customer','dim_buyer_geography','dim_order_status','dim_date',
                    'dim_product','dim_seller','dim_payment_method'];
+
+function height(t){
+  return HH + t.cols.length * RH + (t.note ? 16 : 0) + PAD;
+}
+function clip(s, n){ return s.length > n ? s.slice(0, n-1) + '…' : s; }
+
+const byId = Object.fromEntries(TABLES.map(t => [t.id, t]));
+
 function arrangeLayout(){
   const out = {};
   let y = 40;
   for(const id of DIM_ORDER){ out[id] = [40, y]; y += height(byId[id]) + 22; }
   out.fct_orders = [640, 40];
-  out.fct_order_items = [640, 320];
-  out.fct_payments = [640, 560];
+  out.fct_order_items = [640, 380];
+  out.fct_payments = [640, 640];
   return out;
 }
 
-const STORE = 'olist-schema-layout-v2';
-const byId = Object.fromEntries(TABLES.map(t => [t.id, t]));
+const STORE = 'olist-schema-layout-v3';
 let layout = loadLayout();
-let view = {x:0, y:0, w:1400, h:820};
+let showCtx = false;
+let view = {x:0, y:0, w:1400, h:900};
 let zoom = 1;
 
 function loadLayout(){
@@ -154,9 +194,6 @@ function loadLayout(){
   }catch(e){}
   return base;
 }
-
-function height(t){ return HH + t.cols.length * RH + PAD; }
-function clip(s, n){ return s.length > n ? s.slice(0, n-1) + '…' : s; }
 
 const svg = document.getElementById('canvas');
 const gTables = document.getElementById('tables');
@@ -185,6 +222,9 @@ function buildCard(t){
     g.appendChild(textEl(badge ? 38 : 12, yy, name, 'col'));
     g.appendChild(textEl(w-10, yy, typ, 'typ', 'end'));
   });
+  if(t.note) g.appendChild(textEl(12, HH + t.cols.length*RH + 13, t.note, 'note'));
+  g.addEventListener('pointerenter', ()=> focusTable(t.id));
+  g.addEventListener('pointerleave', ()=> clearFocus());
   return g;
 }
 
@@ -205,51 +245,74 @@ function applyView(){
   document.getElementById('zval').textContent = Math.round(zoom*100) + '%';
 }
 
+function box(t){ const [x,y] = layout[t.id]; return {x, y, w:NW, h:height(t)}; }
+
 function rowY(t, col){
   const i = t.cols.findIndex(c => c[0] === col);
-  if(i < 0) return height(t)/2 + HH/2;
+  if(i < 0) return height(t)/2;
   return HH + 6 + i*RH + 12 - 4;
 }
-function anchor(t, side, col){
-  const [x,y] = layout[t.id];
-  return [side==='right' ? x + NW : x, y + (col ? rowY(t, col) : height(t)/2 + HH/2)];
+
+const NORMALS = {left:[-1,0], right:[1,0], top:[0,-1], bottom:[0,1]};
+
+function sidePoint(t, side, col){
+  const b = box(t);
+  if(side === 'left')  return [b.x, b.y + rowY(t, col)];
+  if(side === 'right') return [b.x + b.w, b.y + rowY(t, col)];
+  if(side === 'top')   return [b.x + b.w/2, b.y];
+  return [b.x + b.w/2, b.y + b.h];
 }
 
-function dot(x,y){
-  gEdges.appendChild(ns('circle',{cx:x,cy:y,r:2.6,fill:'#fff',stroke:'#93a7bc','stroke-width':1.4}));
-}
 function drawEdges(){
   gEdges.innerHTML = '';
-  for(const r of REFS){
+  const visible = REFS.filter(r => showCtx || r.tier !== 'ctx');
+  const srcCount = {}, srcSeen = {};
+  visible.forEach(r => { srcCount[r.from] = (srcCount[r.from] || 0) + 1; });
+  visible.forEach(r => {
     const src = byId[r.from], dst = byId[r.to];
-    if(!src || !dst) continue;
-    const [sx0,sy0] = layout[src.id], [tx0,ty0] = layout[dst.id];
-    const cls = `edge ${src.kind==='fact'?'fact':'dim'}`;
-    const cx = sx0 + NW/2;
-    const overlapX = sx0 < tx0 + NW && sx0 + NW > tx0;
-    const blocked = TABLES.some(o=>{
-      if(o.id === src.id || o.id === dst.id) return false;
-      const [ox,oy] = layout[o.id], oh = height(o);
-      return cx > ox-4 && cx < ox+NW+4 && sy0 + height(src) < oy + oh && ty0 > oy;
-    });
-    const above = sy0 + height(src) <= ty0 + 2 && overlapX && !blocked;
-    let d, s, e;
-    if(above){
-      const sx = sx0 + NW/2, sy = sy0 + height(src);
-      const tx = Math.min(Math.max(sx, tx0 + 24), tx0 + NW - 24), ty = ty0;
-      d = `M${sx},${sy} V${ty-22} H${tx} V${ty}`;
-      s = [sx,sy]; e = [tx,ty];
-    }else{
-      s = anchor(src,'right');
-      e = anchor(dst,'left',r.col);
-      const dir = e[0] >= s[0] ? 1 : -1;
-      const idx = REFS.indexOf(r);
-      const vx = s[0] + dir * (26 + idx * 14);
-      d = `M${s[0]},${s[1]} H${vx} V${e[1]} H${e[0]}`;
+    if(!src || !dst) return;
+    let best = null;
+    for(const ss of ['right','left','bottom','top']){
+      const p1 = sidePoint(src, ss);
+      for(const ts of ['left','right','top','bottom']){
+        const p2 = sidePoint(dst, ts, r.col);
+        const dx = p2[0]-p1[0], dy = p2[1]-p1[1];
+        const dist = Math.hypot(dx, dy);
+        const n1 = NORMALS[ss], n2 = NORMALS[ts];
+        const away1 = (dx*n1[0] + dy*n1[1]) < 0 ? 110 : 0;
+        const away2 = (dx*n2[0] + dy*n2[1]) > 0 ? 110 : 0;
+        const score = dist + away1 + away2;
+        if(!best || score < best.score) best = {score, ss, ts, p1, p2};
+      }
     }
-    gEdges.appendChild(ns('path',{d, class:cls}));
-    dot(...s); dot(...e);
-  }
+    const {ss, ts, p1, p2} = best;
+    if(ss === 'left' || ss === 'right'){
+      const n = srcCount[r.from], k = srcSeen[r.from] = (srcSeen[r.from] || 0);
+      p1[1] += (k - (n - 1) / 2) * 10;
+      srcSeen[r.from] = k + 1;
+    }
+    const dist = Math.hypot(p2[0]-p1[0], p2[1]-p1[1]);
+    const k = Math.min(150, Math.max(35, dist * 0.42));
+    const n1 = NORMALS[ss], n2 = NORMALS[ts];
+    const c1 = [p1[0] + n1[0]*k, p1[1] + n1[1]*k];
+    const c2 = [p2[0] + n2[0]*k, p2[1] + n2[1]*k];
+    const d = `M${p1[0]},${p1[1]} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
+    const cls = `edge ${src.kind === 'fact' ? 'fact' : 'dim'}${r.tier === 'ctx' ? ' ctx' : ''}`;
+    gEdges.appendChild(ns('path',{d, class:cls, 'marker-end':`url(#${MARKER[src.kind]||'arrowDim'})`, 'data-from':src.id, 'data-to':dst.id}));
+    gEdges.appendChild(ns('circle',{cx:p1[0],cy:p1[1],r:2.4,fill:'#fff',stroke:'#93a7bc','stroke-width':1.3,'data-from':src.id,'data-to':dst.id}));
+  });
+}
+
+function focusTable(id){
+  const related = new Set([id]);
+  svg.classList.add('focus');
+  svg.querySelectorAll('.edge').forEach(e => e.classList.toggle('on', e.dataset.from === id || e.dataset.to === id));
+  svg.querySelectorAll('.edge.on').forEach(e => { related.add(e.dataset.from); related.add(e.dataset.to); });
+  svg.querySelectorAll('.tbl').forEach(g => g.classList.toggle('on', related.has(g.dataset.id)));
+}
+function clearFocus(){
+  svg.classList.remove('focus');
+  svg.querySelectorAll('.on').forEach(e => e.classList.remove('on'));
 }
 
 function scaleX(){ return svg.getBoundingClientRect().width / view.w; }
@@ -291,9 +354,9 @@ function persist(){ try{ localStorage.setItem(STORE, JSON.stringify(layout)); }c
 function contentBox(){
   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
   for(const t of TABLES){
-    const [x,y]=layout[t.id];
-    minX=Math.min(minX,x); minY=Math.min(minY,y);
-    maxX=Math.max(maxX,x+NW); maxY=Math.max(maxY,y+height(t));
+    const b = box(t);
+    minX=Math.min(minX,b.x); minY=Math.min(minY,b.y);
+    maxX=Math.max(maxX,b.x+b.w); maxY=Math.max(maxY,b.y+b.h);
   }
   return {x:minX-MARGIN, y:minY-MARGIN, w:maxX-minX+MARGIN*2, h:maxY-minY+MARGIN*2};
 }
@@ -310,7 +373,7 @@ function fit(){
   const availW = Math.max(320, stage.clientWidth - 40);
   const availH = Math.max(240, stage.clientHeight - 40);
   zoom = Math.min(1, availW / b.w, availH / b.h);
-  zoom = Math.max(0.35, Math.round(zoom*20)/20);
+  zoom = Math.max(0.35, Math.floor(zoom*20)/20);
   applyView();
 }
 
@@ -326,6 +389,7 @@ function serializeSVG(){
   clone.setAttribute('width', b.w);
   clone.setAttribute('height', b.h);
   clone.setAttribute('viewBox', `${b.x} ${b.y} ${b.w} ${b.h}`);
+  clone.classList.remove('focus');
   const bg = clone.querySelector('#bg');
   if(bg){ bg.setAttribute('x',b.x); bg.setAttribute('y',b.y); bg.setAttribute('width',b.w); bg.setAttribute('height',b.h); }
   return {xml: new XMLSerializer().serializeToString(clone), w:b.w, h:b.h};
@@ -373,6 +437,12 @@ document.getElementById('reset').onclick = ()=>{
   layout = arrangeLayout(); persist(); render(); fit(); toast('Đã xếp lại');
 };
 document.getElementById('fit').onclick = ()=> fit();
+document.getElementById('ctx').onclick = (e)=>{
+  showCtx = !showCtx;
+  e.target.textContent = showCtx ? 'Ẩn khoá roll-up' : 'Hiện đủ 19 FK';
+  drawEdges();
+  toast(showCtx ? 'Đang hiện đủ 19 khoá ngoại' : 'Chỉ còn 7 quan hệ lõi');
+};
 document.getElementById('zin').onclick = ()=>{ zoom = Math.min(2, Math.round((zoom+0.1)*10)/10); applyView(); };
 document.getElementById('zout').onclick = ()=>{ zoom = Math.max(0.35, Math.round((zoom-0.1)*10)/10); applyView(); };
 
@@ -388,12 +458,19 @@ document.getElementById('copy').onclick = async ()=>{
   catch(e){ document.getElementById('modalText').select(); toast('Ctrl/Cmd + C để copy'); }
 };
 
+function refFor(tableId, col){
+  const r = REFS.find(x=>x.to===tableId && x.col===col);
+  return r ? `${r.from}.${byId[r.from].cols[0][0]}` : '';
+}
 function toDBML(){
   const t = TABLES.map(tb=>{
-    const cols = tb.cols.map(([n,ty,k])=>`  ${n} ${ty}${k==='PK'?' [pk]':''}`).join('\n');
+    const cols = tb.cols.map(([n,ty,k])=>{
+      const ann = k==='PK' ? ' [pk]' : (k==='FK' ? ` [ref: > ${refFor(tb.id,n)}]` : '');
+      return `  ${n} ${ty}${ann}`;
+    }).join('\n');
     return `Table ${tb.label} {\n${cols}\n}`;
   }).join('\n\n');
-  const refs = REFS.map(r=>`Ref: ${r.from}.${r.col} > ${r.to}.${r.col}`).join('\n');
+  const refs = REFS.map(r=>`Ref: ${r.from}.${byId[r.from].cols[0][0]} < ${r.to}.${r.col}`).join('\n');
   return `${t}\n\n${refs}\n`;
 }
 document.getElementById('dbml').onclick = ()=> showModal('DBML — dán vào dbdiagram.io để kéo thả thêm', toDBML());
