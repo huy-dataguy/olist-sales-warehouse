@@ -1,0 +1,126 @@
+{
+  "version": "2.0.0",
+  "engine": "Metabase OSS (historical, superseded by Superset)",
+  "release_policy": "business cards use one required explicit ever-published release ID; latest link resolves once then pins URL",
+  "formula_owner": "semantic definitions, not chart-local KPI formulas",
+  "dashboards": [
+    {
+      "id": "sales_overview",
+      "filters": [
+        "release_id (required)",
+        "purchase_month"
+      ],
+      "cards": [
+        {
+          "id": "delivered_value",
+          "source": "sales_monthly",
+          "metric": "delivered_merchandise_value"
+        },
+        {
+          "id": "delivered_orders",
+          "source": "sales_monthly",
+          "metric": "delivered_orders"
+        },
+        {
+          "id": "delivered_aov",
+          "source": "sales_monthly",
+          "metric": "delivered_aov"
+        },
+        {
+          "id": "delivered_customers",
+          "source": "sales_monthly",
+          "metric": "delivered_unique_customers"
+        },
+        {
+          "id": "cancellation_rate",
+          "source": "sales_monthly",
+          "metric": "cancellation_rate"
+        },
+        {
+          "id": "daily_value_trend",
+          "source": "sales_daily",
+          "metric": "delivered_merchandise_value"
+        }
+      ],
+      "implementation_status": "planned"
+    },
+    {
+      "id": "commercial_performance",
+      "filters": [
+        "release_id (required)",
+        "purchase_month"
+      ],
+      "cards": [
+        {
+          "id": "category_value",
+          "source": "product_monthly",
+          "metric": "delivered_merchandise_value"
+        },
+        {
+          "id": "seller_value",
+          "source": "seller_monthly",
+          "metric": "delivered_merchandise_value"
+        },
+        {
+          "id": "buyer_state_value",
+          "source": "buyer_state_monthly",
+          "metric": "delivered_merchandise_value"
+        },
+        {
+          "id": "category_rows",
+          "source": "product_monthly",
+          "metric": "delivered_item_rows"
+        }
+      ],
+      "implementation_status": "planned"
+    },
+    {
+      "id": "data_pipeline_health",
+      "filters": [
+        "pipeline_run_id",
+        "release_id where applicable"
+      ],
+      "cards": [
+        {
+          "id": "pipeline_state",
+          "source": "pipeline_health",
+          "metric": "state"
+        },
+        {
+          "id": "published_at",
+          "source": "release_metadata",
+          "metric": "published_at"
+        },
+        {
+          "id": "source_coverage_warnings",
+          "source": "quality_health",
+          "metric": "affected_records"
+        },
+        {
+          "id": "quality_failures",
+          "source": "quality_health",
+          "metric": "affected_records"
+        }
+      ],
+      "implementation_status": "planned"
+    }
+  ],
+  "unsupported": [
+    "arbitrary date-range rollup of daily distincts",
+    "averaging daily AOV",
+    "category/seller order AOV without separate definition",
+    "candidate/private raw/work reads"
+  ],
+  "implementation_status": "design only; dashboards not deployed",
+  "source_bindings": {
+    "sales_monthly": "reporting.validated_sales_monthly",
+    "sales_daily": "reporting.validated_sales_daily",
+    "product_monthly": "reporting.validated_product_monthly",
+    "seller_monthly": "reporting.validated_seller_monthly",
+    "buyer_state_monthly": "reporting.validated_buyer_state_monthly",
+    "pipeline_health": "reporting.pipeline_health",
+    "quality_health": "reporting.quality_health",
+    "release_metadata": "reporting.release_metadata"
+  },
+  "operational_context": "Health cards can show an explicit failed/current run; published business context is separately labeled."
+}

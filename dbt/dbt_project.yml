@@ -1,0 +1,16 @@
+name: sales_dw
+version: '2.0.0'
+config-version: 2
+profile: sales_dw
+model-paths: [models/staging, models/intermediate, models/dimensions, models/facts, models/quality]
+macro-paths: [macros]
+test-paths: [tests]
+flags:
+  send_anonymous_usage_stats: false
+models:
+  sales_dw:
+    +pre-hook: "select ops.assert_lease('{{ var('pipeline_run_id') }}'::uuid, {{ var('fencing_token') }})"
+    +post-hook:
+      - "select ops.checkpoint('{{ this.identifier }}', {{ var('source_cut') }}, '{{ var('pipeline_run_id') }}'::uuid, {{ var('fencing_token') }})"
+      - "analyze {{ this }}"
+    +materialized: table

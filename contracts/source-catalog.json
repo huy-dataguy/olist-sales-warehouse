@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "source": "olist",
+  "publisher_count": 1,
+  "feeds": [
+    {
+      "entity": "customers",
+      "file_member": "olist_customers_dataset.csv",
+      "natural_key": [
+        "customer_id"
+      ],
+      "schema": "contracts/source/customers.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "orders",
+      "file_member": "olist_orders_dataset.csv",
+      "natural_key": [
+        "order_id"
+      ],
+      "schema": "contracts/source/orders.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "order_items",
+      "file_member": "olist_order_items_dataset.csv",
+      "natural_key": [
+        "order_id",
+        "order_item_id"
+      ],
+      "schema": "contracts/source/order_items.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "payments",
+      "file_member": "olist_order_payments_dataset.csv",
+      "natural_key": [
+        "order_id",
+        "payment_sequential"
+      ],
+      "schema": "contracts/source/payments.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "products",
+      "file_member": "olist_products_dataset.csv",
+      "natural_key": [
+        "product_id"
+      ],
+      "schema": "contracts/source/products.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "sellers",
+      "file_member": "olist_sellers_dataset.csv",
+      "natural_key": [
+        "seller_id"
+      ],
+      "schema": "contracts/source/sellers.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    },
+    {
+      "entity": "category_translation",
+      "file_member": "product_category_name_translation.csv",
+      "natural_key": [
+        "product_category_name"
+      ],
+      "schema": "contracts/source/category_translation.schema.json",
+      "owner": "ingestion-service",
+      "revision_behavior": "static Olist v2 snapshot; no native updated_at or CDC"
+    }
+  ]
+}
+

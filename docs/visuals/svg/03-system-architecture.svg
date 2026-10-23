@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Kiến trúc tổng thể: nguồn → Warehouse → BI</title>
+<desc id="desc">Airflow điều phối; dbt quản lý transformation; MetricFlow sở hữu logic KPI dùng chung.. Sơ đồ thiết kế; chưa nghiệm thu runtime.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">DESIGN BASELINE 2.0  /  15.10.2026</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Kiến trúc tổng thể: nguồn → Warehouse → BI</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Airflow điều phối; dbt quản lý transformation; MetricFlow sở hữu logic KPI dùng chung.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">THIẾT KẾ, CHƯA NGHIỆM THU HỆ THỐNG   |   03 / 09</text>
+<rect x="72" y="212" width="1776" height="76" rx="18" fill="#EAF1FD"/>
+<text x="98" y="260" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1782">APACHE AIRFLOW</text>
+<text x="430" y="260" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1450">Schedule • dependencies • retries • logs • trạng thái đúng • failure handling</text>
+<rect x="72" y="328" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="348" width="5" height="220" rx="2" fill="#2458B5"/>
+<text x="98" y="372" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="356">01  SOURCE</text>
+<text x="98" y="412.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Nguồn Olist</text>
+<text x="98" y="462.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 CSV nghiệp vụ</text>
+<text x="98" y="509.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Manifest + SHA-256</text>
+<text x="98" y="555.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Fixture tổng hợp tách riêng</text>
+<rect x="528" y="328" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="528" y="348" width="5" height="220" rx="2" fill="#2458B5"/>
+<text x="554" y="372" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="356">02  INGEST</text>
+<text x="554" y="412.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Python ingestion</text>
+<text x="554" y="462.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Schema / row validation</text>
+<text x="554" y="509.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Batch, receipt, record hash</text>
+<text x="554" y="555.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Reject → quarantine</text>
+<rect x="984" y="328" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="984" y="348" width="5" height="220" rx="2" fill="#2458B5"/>
+<text x="1010" y="372" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="356">03  PRESERVE</text>
+<text x="1010" y="412.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">MinIO raw</text>
+<text x="1010" y="462.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Source-native bất biến</text>
+<text x="1010" y="509.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Audit, replay từ bản gốc</text>
+<text x="1010" y="555.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Artifact identity</text>
+<rect x="1440" y="328" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1440" y="348" width="5" height="220" rx="2" fill="#6650A8"/>
+<text x="1466" y="372" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">04  ADMIT</text>
+<text x="1466" y="412.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">PostgreSQL landing</text>
+<text x="1466" y="462.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Accepted source versions</text>
+<text x="1466" y="509.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Load transaction + ledger</text>
+<text x="1466" y="555.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Chốt source_cut</text>
+<polyline points="486,456 522,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="942,456 978,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="1398,456 1434,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="1644,588 1644,636" fill="none" stroke="#6650A8" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-purple)"/>
+<rect x="72" y="636" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="656" width="5" height="220" rx="2" fill="#087E79"/>
+<text x="98" y="680" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="356">08  CONSUME</text>
+<text x="98" y="720.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Metabase / SQL</text>
+<text x="98" y="770.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Published releases only</text>
+<text x="98" y="817.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Mọi card pin release_id</text>
+<text x="98" y="863.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Analyst read-only views</text>
+<rect x="528" y="636" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="528" y="656" width="5" height="220" rx="2" fill="#087E79"/>
+<text x="554" y="680" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="356">07  SEMANTICS / PUBLISH</text>
+<text x="554" y="720.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">MetricFlow + exports</text>
+<text x="554" y="770.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Bind một release</text>
+<text x="554" y="817.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">5 exports + SQL parity</text>
+<text x="554" y="863.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Publish sau mọi gate</text>
+<rect x="984" y="636" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="984" y="656" width="5" height="220" rx="2" fill="#6650A8"/>
+<text x="1010" y="680" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">06  FREEZE</text>
+<text x="1010" y="720.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Warehouse snapshot</text>
+<text x="1010" y="770.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 dimensions + 3 facts</text>
+<text x="1010" y="817.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Typed, immutable release</text>
+<text x="1010" y="863.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">FK trong cùng release</text>
+<rect x="1440" y="636" width="408" height="260" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1440" y="656" width="5" height="220" rx="2" fill="#6650A8"/>
+<text x="1466" y="680" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">05  TRANSFORM</text>
+<text x="1466" y="720.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">dbt working models</text>
+<text x="1466" y="770.99" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Staging → intermediate</text>
+<text x="1466" y="817.35" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Kimball dims / facts</text>
+<text x="1466" y="863.71" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Tests + checkpoints</text>
+<polyline points="523,765 486,765" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="979,765 942,765" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="1435,765 1398,765" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="72" y="922" width="1776" height="60" rx="18" fill="#F0ECFA"/>
+<text x="98" y="961" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="1782">XUYÊN SUỐT</text>
+<text x="294" y="961" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1515">Contracts • DQ • lineage • least privilege • lease fencing • backup / restore • retention</text>
+</svg>

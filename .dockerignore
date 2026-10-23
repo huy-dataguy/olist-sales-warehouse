@@ -1,0 +1,12 @@
+.venv
+.git
+var
+data/raw
+data/replay
+docs/visuals
+output
+tmp
+**/target
+**/logs
+**/__pycache__
+.env

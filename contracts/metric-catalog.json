@@ -1,0 +1,223 @@
+{
+  "contract_id": "METRICS-002",
+  "version": "2.0.0",
+  "owner": "business-data-steward",
+  "metrics": [
+    {
+      "name": "total_orders",
+      "model": "fct_orders",
+      "definition": "sum(order_count)",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "additive",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "delivered_orders",
+      "model": "fct_orders",
+      "definition": "sum(delivered_order_count)",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "additive",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "canceled_orders",
+      "model": "fct_orders",
+      "definition": "sum(canceled_order_count)",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "additive",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "cancellation_rate",
+      "model": "ratio",
+      "definition": "canceled_orders / total_orders",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "ratio",
+      "components": [
+        "canceled_orders",
+        "total_orders"
+      ],
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "delivered_merchandise_value",
+      "model": "fct_order_items",
+      "definition": "sum(merchandise_value) where accepted parent status=delivered",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state",
+        "product__category",
+        "seller__seller_id"
+      ],
+      "additivity": "additive",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "delivered_aov",
+      "model": "ratio",
+      "definition": "delivered_merchandise_value / delivered_orders",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "ratio",
+      "components": [
+        "delivered_merchandise_value",
+        "delivered_orders"
+      ],
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "delivered_unique_customers",
+      "model": "fct_orders",
+      "definition": "count_distinct(customer_key) where status=delivered and customer_key>0",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state"
+      ],
+      "additivity": "non_additive_distinct",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    },
+    {
+      "name": "delivered_item_rows",
+      "model": "fct_order_items",
+      "definition": "sum(item_row_count) where status=delivered",
+      "allowed_dimensions": [
+        "metric_time__day",
+        "metric_time__month",
+        "buyer_geography__state",
+        "product__category",
+        "seller__seller_id"
+      ],
+      "additivity": "additive",
+      "components": null,
+      "default_time": "purchase_date",
+      "zero_denominator": "null",
+      "release_binding": "explicit validated/candidate release_id as appropriate"
+    }
+  ],
+  "filters": {
+    "period": "purchase calendar month in v1 exports",
+    "status": "accepted snapshot, not point-in-time historical knowledge"
+  },
+  "rollup_rules": {
+    "distincts": "requery at requested grain",
+    "ratios": "sum components then divide",
+    "amounts": "no binary floating-point source accumulation"
+  },
+  "exports": [
+    {
+      "id": "sales_monthly",
+      "grain": [
+        "release_id",
+        "month"
+      ],
+      "metrics": [
+        "total_orders",
+        "delivered_orders",
+        "canceled_orders",
+        "cancellation_rate",
+        "delivered_merchandise_value",
+        "delivered_aov",
+        "delivered_unique_customers",
+        "delivered_item_rows"
+      ]
+    },
+    {
+      "id": "sales_daily",
+      "grain": [
+        "release_id",
+        "day"
+      ],
+      "metrics": [
+        "total_orders",
+        "delivered_orders",
+        "canceled_orders",
+        "delivered_merchandise_value",
+        "delivered_item_rows"
+      ]
+    },
+    {
+      "id": "product_monthly",
+      "grain": [
+        "release_id",
+        "month",
+        "category"
+      ],
+      "metrics": [
+        "delivered_merchandise_value",
+        "delivered_item_rows"
+      ]
+    },
+    {
+      "id": "seller_monthly",
+      "grain": [
+        "release_id",
+        "month",
+        "seller_id"
+      ],
+      "metrics": [
+        "delivered_merchandise_value",
+        "delivered_item_rows"
+      ]
+    },
+    {
+      "id": "buyer_state_monthly",
+      "grain": [
+        "release_id",
+        "month",
+        "state"
+      ],
+      "metrics": [
+        "total_orders",
+        "delivered_orders",
+        "canceled_orders",
+        "cancellation_rate",
+        "delivered_merchandise_value",
+        "delivered_aov",
+        "delivered_unique_customers",
+        "delivered_item_rows"
+      ]
+    }
+  ],
+  "dashboard_rule": "All cards use one explicit release_id; monthly distinct card reads sales_monthly directly."
+}
+

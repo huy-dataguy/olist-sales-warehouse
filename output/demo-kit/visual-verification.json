@@ -1,0 +1,96 @@
+{
+  "passed": true,
+  "date": "2026-10-19",
+  "scope": "Document bounds, offline presentation and export QA; not a new pipeline run",
+  "checks": [
+    {
+      "slug": "01-business-input-output",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "02-system-architecture",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "03-data-layers-and-lineage",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "04-kimball-bus-matrix",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "05-dimensional-constellation",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "06-airflow-workflow",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "07-semantic-and-serving",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "08-publication-quality-and-recovery",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "09-dashboards-results-and-evidence",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slug": "10-warehouse-key-schema",
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "issues": [],
+  "gallery_controls": true,
+  "mobile_gallery": true,
+  "schema_checks": {
+    "tables": 10,
+    "fk_edges": 19,
+    "columns_exist_in_migration": true,
+    "no_fact_to_fact_fk": true
+  }
+}

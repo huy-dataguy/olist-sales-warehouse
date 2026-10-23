@@ -1,0 +1,141 @@
+{
+  "version": "2.0.0",
+  "batch": {
+    "states": [
+      "discovered",
+      "raw_preserved",
+      "validated",
+      "loaded",
+      "failed"
+    ],
+    "transitions": [
+      [
+        "discovered",
+        "raw_preserved"
+      ],
+      [
+        "raw_preserved",
+        "validated"
+      ],
+      [
+        "validated",
+        "loaded"
+      ],
+      [
+        "discovered",
+        "failed"
+      ],
+      [
+        "raw_preserved",
+        "failed"
+      ],
+      [
+        "validated",
+        "failed"
+      ]
+    ],
+    "retry_rule": "new attempt; retry prior stage idempotently, never silently reset a committed source version"
+  },
+  "release": {
+    "states": [
+      "building",
+      "warehouse_validated",
+      "snapshotted",
+      "metrics_validated",
+      "published",
+      "failed"
+    ],
+    "transitions": [
+      [
+        "building",
+        "warehouse_validated"
+      ],
+      [
+        "warehouse_validated",
+        "snapshotted"
+      ],
+      [
+        "snapshotted",
+        "metrics_validated"
+      ],
+      [
+        "metrics_validated",
+        "published"
+      ],
+      [
+        "building",
+        "failed"
+      ],
+      [
+        "warehouse_validated",
+        "failed"
+      ],
+      [
+        "snapshotted",
+        "failed"
+      ],
+      [
+        "metrics_validated",
+        "failed"
+      ]
+    ],
+    "terminal": [
+      "published",
+      "failed"
+    ],
+    "retry_rule": "published acknowledgement is idempotent; failed candidate is not promoted by resetting its check evidence"
+  },
+  "pipeline_run": {
+    "states": [
+      "created",
+      "running",
+      "failed",
+      "succeeded"
+    ],
+    "transitions": [
+      [
+        "created",
+        "running"
+      ],
+      [
+        "running",
+        "failed"
+      ],
+      [
+        "running",
+        "succeeded"
+      ]
+    ],
+    "retry_rule": "new attempt/run context, retain prior audit and accepted source/release identities"
+  },
+  "publication": {
+    "required_checks": [
+      "V-004",
+      "V-005",
+      "V-007",
+      "V-013",
+      "V-017"
+    ],
+    "guards": [
+      "current owner and unexpired monotonic fence",
+      "complete immutable 10-model Warehouse snapshot",
+      "same source_cut/contract/model/semantic identity",
+      "complete 5 governed exports",
+      "independent metric parity",
+      "all required checks passed"
+    ],
+    "transaction": [
+      "lock and validate lease/candidate",
+      "mark candidate published",
+      "update main publication pointer",
+      "append state event",
+      "commit"
+    ],
+    "forbidden": [
+      "candidate read by BI",
+      "stale worker publish",
+      "all_done notification masking failure",
+      "cross-system atomicity claim for Metabase API"
+    ]
+  }
+}

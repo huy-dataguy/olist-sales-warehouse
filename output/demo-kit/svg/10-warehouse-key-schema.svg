@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Thiết kế bảng và quan hệ Kimball</title>
+<desc id="desc">Cột rút gọn từ migration 001. Khóa đầy đủ luôn có release_id; nét nối biểu diễn FK dimension → fact.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Thiết kế bảng và quan hệ Kimball</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Cột rút gọn từ migration 001. Khóa đầy đủ luôn có release_id; nét nối biểu diễn FK dimension → fact.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   10 / 10</text>
+<rect x="72" y="224" width="396" height="171" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="224" width="396" height="43" rx="10" fill="#EAF1FD"/>
+<text x="87" y="254" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="366">dim_date</text>
+<text x="87" y="297" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">date_key int YYYYMMDD</text>
+<text x="87" y="326" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">full_date, month_start</text>
+<text x="87" y="355" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">day, month, quarter, year</text>
+<rect x="516" y="224" width="396" height="171" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="516" y="224" width="396" height="43" rx="10" fill="#EAF1FD"/>
+<text x="531" y="254" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="366">dim_customer</text>
+<text x="531" y="297" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">customer_key bigint SK</text>
+<text x="531" y="326" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">customer_unique_id</text>
+<text x="531" y="355" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">source_system, is_inferred</text>
+<rect x="960" y="224" width="444" height="171" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="960" y="224" width="444" height="43" rx="10" fill="#EAF1FD"/>
+<text x="975" y="254" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="414">dim_buyer_geography</text>
+<text x="975" y="297" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="414">buyer_geography_key bigint SK</text>
+<text x="975" y="326" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="414">postal_prefix, city, state</text>
+<text x="975" y="355" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="414">Order-time address tuple</text>
+<rect x="1452" y="224" width="396" height="171" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1452" y="224" width="396" height="43" rx="10" fill="#EAF1FD"/>
+<text x="1467" y="254" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="366">dim_order_status</text>
+<text x="1467" y="297" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">order_status_key bigint SK</text>
+<text x="1467" y="326" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">status_code</text>
+<text x="1467" y="355" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="366">is_delivered, is_canceled</text>
+<polyline points="270.0,395 270.0,418" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="96,418 1818,418" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="290,418 290,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="950,418 950,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1610,418 1610,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="714.0,395 714.0,435" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="96,435 1818,435" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="300,435 300,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="960,435 960,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1620,435 1620,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1182.0,395 1182.0,452" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="96,452 1818,452" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="310,452 310,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="970,452 970,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1630,452 1630,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1650.0,395 1650.0,469" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="96,469 1818,469" fill="none" stroke="#52647B" stroke-width="1.5" stroke-linejoin="round"/>
+<polyline points="320,469 320,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="980,469 980,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<polyline points="1640,469 1640,496" fill="none" stroke="#52647B" stroke-width="1.2" stroke-linejoin="round" stroke-dasharray="8 7"/>
+<rect x="72" y="499" width="560" height="251" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="499" width="560" height="43" rx="10" fill="#F0ECFA"/>
+<text x="87" y="529" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="530">fct_order_items</text>
+<text x="87" y="572" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">PK  release_id + order_item_key</text>
+<text x="87" y="601" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">UK  source + order_id + item ordinal</text>
+<text x="87" y="630" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  customer / geography / status / date</text>
+<text x="87" y="659" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  product_key, seller_key</text>
+<text x="87" y="688" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">merchandise_value, freight_value</text>
+<text x="87" y="717" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">item_row_count = 1</text>
+<rect x="680" y="499" width="560" height="251" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="680" y="499" width="560" height="43" rx="10" fill="#F0ECFA"/>
+<text x="695" y="529" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="530">fct_orders</text>
+<text x="695" y="572" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">PK  release_id + order_key</text>
+<text x="695" y="601" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">UK  source + order_id</text>
+<text x="695" y="630" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  customer / geography / status</text>
+<text x="695" y="659" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  5 role-playing date keys</text>
+<text x="695" y="688" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">order / delivered / canceled counts</text>
+<text x="695" y="717" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">child totals, milestone timestamps</text>
+<rect x="1288" y="499" width="560" height="251" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1288" y="499" width="560" height="43" rx="10" fill="#F0ECFA"/>
+<text x="1303" y="529" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="530">fct_payments</text>
+<text x="1303" y="572" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">PK  release_id + payment_key</text>
+<text x="1303" y="601" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">UK  source + order_id + pay sequence</text>
+<text x="1303" y="630" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  customer / geography / status / date</text>
+<text x="1303" y="659" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">FK  payment_method_key</text>
+<text x="1303" y="688" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">recorded_payment_value, record_count</text>
+<text x="1303" y="717" font-family="DejaVu Sans" font-size="19" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">payment_installments (non-additive)</text>
+<rect x="72" y="809" width="267" height="140" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="809" width="267" height="43" rx="10" fill="#E5F5F1"/>
+<text x="87" y="839" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="237">dim_product</text>
+<text x="87" y="882" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">product_key bigint SK</text>
+<text x="87" y="911" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">product_id, category</text>
+<text x="87" y="940" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">valid_from / valid_to</text>
+<rect x="365" y="809" width="267" height="140" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="365" y="809" width="267" height="43" rx="10" fill="#E5F5F1"/>
+<text x="380" y="839" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="237">dim_seller</text>
+<text x="380" y="882" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">seller_key bigint SK</text>
+<text x="380" y="911" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">seller_id</text>
+<text x="380" y="940" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="237">city, state, postal</text>
+<rect x="1288" y="809" width="560" height="140" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1288" y="809" width="560" height="43" rx="10" fill="#E5F5F1"/>
+<text x="1303" y="839" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="530">dim_payment_method</text>
+<text x="1303" y="882" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">payment_method_key bigint SK</text>
+<text x="1303" y="911" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="530">payment_type</text>
+<polyline points="205,809 205,759" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="498,809 498,759" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="1568,809 1568,759" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<text x="680" y="815.0" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="560">PK/UK/FK: cùng release_id.</text>
+<text x="680" y="845.45" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="560">Mọi bảng có lineage / source_cut / run IDs.</text>
+<text x="680" y="875.9" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="560">Không nối facts để cộng số tiền.</text>
+</svg>

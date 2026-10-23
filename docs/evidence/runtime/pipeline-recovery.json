@@ -1,0 +1,160 @@
+{
+  "passed": true,
+  "database": "sales_dw_restore_20261015_133251",
+  "run_id": "cecc49e1-7d68-4cb0-8df7-3a6ad1dc4fd3",
+  "failed_run": "81539aca-3d67-41eb-b9e0-7077f812e4d4",
+  "checks": {
+    "load_commit_survived": true,
+    "snapshot_transaction_rolled_back": true,
+    "semantic.after.sales_monthly": {
+      "rollback": true,
+      "publication_blocked": true
+    },
+    "parity_result": {
+      "rollback": true,
+      "publication_blocked": true
+    },
+    "semantic_commit_acknowledgement_recovered": true
+  },
+  "load": {
+    "source_cut": 1,
+    "new_versions": 0,
+    "duplicate_occurrences": 451535,
+    "receipt_id": "2ef4ad03-0c49-4aa4-a028-a554bc289fe8"
+  },
+  "build": {
+    "allocated_keys": {
+      "customer": 0,
+      "product": 0,
+      "seller": 0,
+      "buyer_geography": 0,
+      "order_status": 0,
+      "payment_method": 0
+    },
+    "dbt_nodes": 93,
+    "failures": [],
+    "artifacts": "var/runs/cecc49e1-7d68-4cb0-8df7-3a6ad1dc4fd3/dbt"
+  },
+  "snapshot": {
+    "release_id": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+    "quality": {
+      "rows": {
+        "dim_customer": 96098,
+        "dim_product": 32953,
+        "dim_seller": 3097,
+        "dim_buyer_geography": 15036,
+        "dim_date": 5481,
+        "dim_order_status": 10,
+        "dim_payment_method": 7,
+        "fct_orders": 99441,
+        "fct_order_items": 112650,
+        "fct_payments": 103886
+      },
+      "money_and_identity_checks": {
+        "items": true,
+        "freight": true,
+        "payments": true,
+        "customers": true,
+        "known_order_keys": true
+      },
+      "source_warnings": {
+        "missing_items": 775,
+        "missing_payments": 1,
+        "missing_delivery_timestamp": 8,
+        "payment_delta": 303,
+        "temporal_anomaly": 166,
+        "missing_category": 610
+      }
+    },
+    "snapshot_relations": {
+      "dim_customer": {
+        "rows": 96098,
+        "logical_sha256": "b7882981f926b37491cd0854f48b8b82d58df1d48b6dfb3337021e75db797c8b"
+      },
+      "dim_product": {
+        "rows": 32953,
+        "logical_sha256": "6ead34570e489d3b35d6687715f7e987fde6f8ada576d1f1fbe80f9f577b7a5f"
+      },
+      "dim_seller": {
+        "rows": 3097,
+        "logical_sha256": "e284f89b05dbd526d8fd56f2cd4e2fb15da9de71465e3947aff3734de7763e5e"
+      },
+      "dim_buyer_geography": {
+        "rows": 15036,
+        "logical_sha256": "55d4a4e216e177e799db986a7ab2279f20aacd9021e67de4741a6dc4530522ae"
+      },
+      "dim_date": {
+        "rows": 5481,
+        "logical_sha256": "5e1408c894987283429e08f378c46b3e41c4fd5126c3cba92fea7a0d1a9dc84e"
+      },
+      "dim_order_status": {
+        "rows": 10,
+        "logical_sha256": "2987678c5c4f1464b13bb60f03c98637725ee20eb28caf4440a1a1c3d81f92cf"
+      },
+      "dim_payment_method": {
+        "rows": 7,
+        "logical_sha256": "6c5fbaeb777cddfe3ac01943daa2f64013dcfe11488246562e4ca9d7290fd13d"
+      },
+      "fct_orders": {
+        "rows": 99441,
+        "logical_sha256": "3cbce4e76df29e1ae541744b996605265e7e63f9fa1d3327bcc6c8883f6c0dc9"
+      },
+      "fct_order_items": {
+        "rows": 112650,
+        "logical_sha256": "3934c842042ebfb93fa0fef2dc0a977a60ffbb7ae82f652adaffa8a13dde9b52"
+      },
+      "fct_payments": {
+        "rows": 103886,
+        "logical_sha256": "65018da14bcdcbc69d0510ecc4b48fd14632da3b89a2be1ecec2ece753b79b09"
+      }
+    }
+  },
+  "semantic": {
+    "release_id": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+    "exports": {
+      "sales_monthly": {
+        "rows": 25,
+        "parity": true,
+        "committed_content_verified": true
+      },
+      "sales_daily": {
+        "rows": 634,
+        "parity": true,
+        "committed_content_verified": true
+      },
+      "product_monthly": {
+        "rows": 1283,
+        "parity": true,
+        "committed_content_verified": true
+      },
+      "seller_monthly": {
+        "rows": 16441,
+        "parity": true,
+        "committed_content_verified": true
+      },
+      "buyer_state_monthly": {
+        "rows": 565,
+        "parity": true,
+        "committed_content_verified": true
+      }
+    },
+    "recovered_commit": true,
+    "invalid_bindings_rejected": true,
+    "forbidden_dimension_rejected": true
+  },
+  "publish": {
+    "release_id": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+    "state": "published",
+    "atomic_boundary": "PostgreSQL only; Metabase delivery separate"
+  },
+  "ack": {
+    "release_id": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+    "state": "published",
+    "recovered_ack": true
+  },
+  "finish": {
+    "state": "succeeded",
+    "release_id": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+    "publish_ack_replay": true
+  }
+}

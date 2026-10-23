@@ -1,0 +1,182 @@
+{
+  "version": "2.0.0",
+  "owner": "pipeline-and-platform-owner",
+  "scenarios": [
+    {
+      "id": "SC-001",
+      "name": "same_batch_replay",
+      "stage": "admission",
+      "expected": "accepted business versions/keys/metrics unchanged; receipt/attempt audit grows",
+      "verification": "V-009",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-002",
+      "name": "new_month_batch",
+      "stage": "admission",
+      "expected": "only declared new versions/affected orders are processed; source cut is committed",
+      "verification": "V-009",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-003",
+      "name": "equal_revision_conflict",
+      "stage": "validation",
+      "expected": "raw and quarantine retained; no state replacement or publication",
+      "verification": "V-003",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-004",
+      "name": "unknown_schema",
+      "stage": "contract",
+      "expected": "raw retained; batch failed; accepted source cut unchanged",
+      "verification": "V-010",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-005",
+      "name": "late_child",
+      "stage": "transformation",
+      "expected": "existing parent totals/coverage are recomputed from complete accepted child set",
+      "verification": "V-009",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-006",
+      "name": "old_order_status_correction",
+      "stage": "transformation",
+      "expected": "all affected line/order metric classifications restate at a new release",
+      "verification": "V-009",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-007",
+      "name": "late_scd2_effective_version",
+      "stage": "dimension",
+      "expected": "half-open intervals split, as-of keys correct, prior published release immutable",
+      "verification": "V-014",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-008",
+      "name": "inferred_member_enrichment",
+      "stage": "dimension",
+      "expected": "same allocated SK, attributes populated, orphan fact absent",
+      "verification": "V-014",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-009",
+      "name": "fail_after_raw",
+      "stage": "raw",
+      "expected": "raw receipt recoverable; no admitted invalid source or new consumer release",
+      "verification": "V-010",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-010",
+      "name": "fail_after_load_commit",
+      "stage": "dbt",
+      "expected": "accepted source remains; pending work resumes at declared cut without duplicates",
+      "verification": "V-010",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-011",
+      "name": "fail_during_snapshot",
+      "stage": "snapshot",
+      "expected": "incomplete candidate invisible; previous Warehouse/BI release remains usable",
+      "verification": "V-017",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-012",
+      "name": "fail_during_metric_export",
+      "stage": "semantic",
+      "expected": "partial exports cannot publish",
+      "verification": "V-010",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-013",
+      "name": "parity_failure",
+      "stage": "parity",
+      "expected": "candidate failed, pointer unchanged, diagnostic links metric/model/source",
+      "verification": "V-005",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-014",
+      "name": "stale_lease_owner",
+      "stage": "publication",
+      "expected": "expired/older fence cannot mutate shared state or pointer",
+      "verification": "V-017",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-015",
+      "name": "competing_publishers",
+      "stage": "publication",
+      "expected": "one lease/fence wins; no mixed release; loser has explicit failed/stale result",
+      "verification": "V-017",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-016",
+      "name": "missing_or_wrong_semantic_binding",
+      "stage": "connection",
+      "expected": "missing setting fails closed; wrong-release/source-cut preflight rejects request",
+      "verification": "V-017",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-017",
+      "name": "browser_refresh_during_publish",
+      "stage": "BI",
+      "expected": "all cards use pinned retained published release; no pointer race",
+      "verification": "V-006",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-018",
+      "name": "ack_lost_after_publish_commit",
+      "stage": "publication",
+      "expected": "retry recognizes identical committed release; no false rollback/duplicate publication",
+      "verification": "V-010",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-019",
+      "name": "restore_drill",
+      "stage": "operations",
+      "expected": "isolated restore preserves keys/KPIs/roles/pointer; active target untouched; recovered leases/inflight runs invalidated",
+      "verification": "V-016",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-020",
+      "name": "privilege_denial_and_rotation",
+      "stage": "security",
+      "expected": "unauthorized reads/writes/DDL and old credentials denied; permitted new paths succeed",
+      "verification": "V-015",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-021",
+      "name": "disk_budget_admission",
+      "stage": "capacity",
+      "expected": "optional backfill stops before hard limit, referenced source/release/backup preserved",
+      "verification": "V-020",
+      "implementation_status": "planned; no service execution in design-only task"
+    },
+    {
+      "id": "SC-022",
+      "name": "full_vs_incremental",
+      "stage": "rebuild",
+      "expected": "same logical facts/KPIs; stable SKs for retained registry; fresh-target comparison uses natural identity",
+      "verification": "V-009",
+      "implementation_status": "planned; no service execution in design-only task"
+    }
+  ]
+}

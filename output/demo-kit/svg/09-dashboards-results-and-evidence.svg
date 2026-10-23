@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Kết quả để trình bày trong buổi demo</title>
+<desc id="desc">Tháng kinh doanh 07/2018 | Cutoff khách hàng 31/08/2018 | Release handoff 87f01740.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Kết quả để trình bày trong buổi demo</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Tháng kinh doanh 07/2018 | Cutoff khách hàng 31/08/2018 | Release handoff 87f01740.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   09 / 10</text>
+<rect x="72" y="226" width="408" height="157" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="94" y="266" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">Giá trị hàng delivered</text>
+<text x="94" y="319" font-family="DejaVu Sans" font-size="37" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="364">867.953,46</text>
+<text x="94" y="356" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">BRL; chưa gồm freight</text>
+<rect x="528" y="226" width="408" height="157" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="550" y="266" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">Đơn delivered</text>
+<text x="550" y="319" font-family="DejaVu Sans" font-size="37" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="364">6.159</text>
+<text x="550" y="356" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">6.100 khách phân biệt</text>
+<rect x="984" y="226" width="408" height="157" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1006" y="266" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">AOV delivered</text>
+<text x="1006" y="319" font-family="DejaVu Sans" font-size="37" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="364">140,92</text>
+<text x="1006" y="356" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">BRL / delivered order</text>
+<rect x="1440" y="226" width="408" height="157" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1462" y="266" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">Giao đúng hẹn</text>
+<text x="1462" y="319" font-family="DejaVu Sans" font-size="37" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="364">96,62%</text>
+<text x="1462" y="356" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="364">5.948 / 6.156 eligible</text>
+<rect x="72" y="417" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="94" y="458" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Tổng quan kinh doanh</text>
+<text x="94" y="497" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Quy mô, biến động và nên xem sâu ở đâu?</text>
+<rect x="982" y="417" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1004" y="458" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Hiệu quả bán hàng</text>
+<text x="1004" y="497" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Đơn / khách / AOV / MoM / YoY / hủy</text>
+<rect x="72" y="545" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="94" y="586" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Sản phẩm &amp; nhà bán hàng</text>
+<text x="94" y="625" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Category, seller và khu vực đóng góp</text>
+<rect x="982" y="545" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1004" y="586" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Khách hàng &amp; mua lại</text>
+<text x="1004" y="625" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Repeat, recency, cohort; cutoff cố định</text>
+<rect x="72" y="673" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="94" y="714" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Giao hàng &amp; thanh toán</text>
+<text x="94" y="753" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Đúng hẹn, thời gian giao, phương thức</text>
+<rect x="982" y="673" width="866" height="106" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1004" y="714" font-family="DejaVu Sans" font-size="26" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="822">Chất lượng dữ liệu &amp; vận hành</text>
+<text x="1004" y="753" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="822">Published release, DQ và audit runs</text>
+<rect x="72" y="831" width="856" height="146" rx="18" fill="#E5F5F1"/>
+<text x="96" y="869" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="808">KIỂM CHỨNG HIỆN TẠI</text>
+<text x="96" y="901.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">60 chart queries + 8 SQL Lab queries; 6 browser pages; nhận xét đổi</text>
+<text x="96" y="934.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">theo tháng ở 4 trang; 14 actual navigation clicks.</text>
+<rect x="960" y="831" width="888" height="146" rx="18" fill="#FFF3DD"/>
+<text x="984" y="869" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#966119" text-anchor="start" data-max-width="840">GIỚI HẠN CỦA KẾT QUẢ</text>
+<text x="984" y="901.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">Dữ liệu lịch sử Olist, không phải Abbott. Không target / cost / profit / lý</text>
+<text x="984" y="934.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">do hủy. Single-host local; không tuyên bố production-ready.</text>
+</svg>

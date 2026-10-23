@@ -1,0 +1,1363 @@
+{
+  "scope": "Design contracts, real-source row schema checks when requested, independent synthetic Kimball expectations. No database, production transformation or service execution.",
+  "source_row_contracts": [
+    {
+      "entity": "customers",
+      "rows": 99441,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "orders",
+      "rows": 99441,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "order_items",
+      "rows": 112650,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "payments",
+      "rows": 103886,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "products",
+      "rows": 32951,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "sellers",
+      "rows": 3095,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    },
+    {
+      "entity": "category_translation",
+      "rows": 71,
+      "headers_match": true,
+      "duplicate_natural_keys": 0,
+      "contract_error_count": 0,
+      "sample_contract_errors": []
+    }
+  ],
+  "checks": [
+    {
+      "check": "json_schemas_are_valid",
+      "passed": true,
+      "actual": 10,
+      "expected": 10
+    },
+    {
+      "check": "physical_ddl_parses_as_postgresql_without_execution",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "physical_ddl_has_no_fact_to_fact_foreign_key",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "bi_views_exclude_unpublished_candidates",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "dim_customer_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_customer_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_product_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_product_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "product_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "product_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_seller_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_seller_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "seller_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "seller_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_buyer_geography_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_buyer_geography_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_date_physical_integer_key",
+      "passed": true,
+      "actual": "int4",
+      "expected": "int4"
+    },
+    {
+      "check": "dim_date_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_order_status_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_order_status_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ]
+    },
+    {
+      "check": "dim_payment_method_physical_integer_key",
+      "passed": true,
+      "actual": "int8",
+      "expected": "int8"
+    },
+    {
+      "check": "dim_payment_method_physical_release_pk",
+      "passed": true,
+      "actual": [
+        [
+          "release_id",
+          "payment_method_key"
+        ]
+      ],
+      "expected": [
+        [
+          "release_id",
+          "payment_method_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_physical_grain",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders_customer_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_buyer_geography_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_order_status_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_purchase_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_approved_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_carrier_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_delivered_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_orders_estimated_delivery_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_physical_grain",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items_customer_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_buyer_geography_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_order_status_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_purchase_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_product_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_product",
+        [
+          "release_id",
+          "product_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_product",
+        [
+          "release_id",
+          "product_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_order_items_seller_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_seller",
+        [
+          "release_id",
+          "seller_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_seller",
+        [
+          "release_id",
+          "seller_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_payments_physical_grain",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments_customer_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_customer",
+        [
+          "release_id",
+          "customer_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_payments_buyer_geography_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_buyer_geography",
+        [
+          "release_id",
+          "buyer_geography_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_payments_order_status_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_order_status",
+        [
+          "release_id",
+          "order_status_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_payments_purchase_date_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_date",
+        [
+          "release_id",
+          "date_key"
+        ]
+      ]
+    },
+    {
+      "check": "fct_payments_payment_method_key_physical_release_fk",
+      "passed": true,
+      "actual": [
+        "warehouse_store",
+        "dim_payment_method",
+        [
+          "release_id",
+          "payment_method_key"
+        ]
+      ],
+      "expected": [
+        "warehouse_store",
+        "dim_payment_method",
+        [
+          "release_id",
+          "payment_method_key"
+        ]
+      ]
+    },
+    {
+      "check": "product_type2_physical_exclusion_declared",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "bus_has_seven_conformed_dimensions",
+      "passed": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "bus_has_three_business_processes",
+      "passed": true,
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "check": "no_atomic_fact_to_fact_reporting",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "fct_orders.customer_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.buyer_geography_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.order_status_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.purchase_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.approved_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.carrier_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.delivered_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders.estimated_delivery_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_orders_release_in_unique_key",
+      "passed": true,
+      "actual": "release_id",
+      "expected": "release_id"
+    },
+    {
+      "check": "fct_order_items.customer_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items.buyer_geography_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items.order_status_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items.purchase_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items.product_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items.seller_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_order_items_release_in_unique_key",
+      "passed": true,
+      "actual": "release_id",
+      "expected": "release_id"
+    },
+    {
+      "check": "fct_payments.customer_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments.buyer_geography_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments.order_status_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments.purchase_date_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments.payment_method_key_conforms",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "fct_payments_release_in_unique_key",
+      "passed": true,
+      "actual": "release_id",
+      "expected": "release_id"
+    },
+    {
+      "check": "customer_dimension_has_no_current_address",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "dim_customer_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_product_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_seller_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_buyer_geography_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_date_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_order_status_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "dim_payment_method_unknown_member",
+      "passed": true,
+      "actual": "unknown",
+      "expected": "unknown"
+    },
+    {
+      "check": "metric_names_unique",
+      "passed": true,
+      "actual": 8,
+      "expected": 8
+    },
+    {
+      "check": "delivered_orders_has_no_product_or_seller_fanout",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "delivered_aov_has_no_product_or_seller_fanout",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "delivered_unique_customers_has_no_product_or_seller_fanout",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "cancellation_rate_component_canceled_orders",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "cancellation_rate_component_total_orders",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "delivered_aov_component_delivered_merchandise_value",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "delivered_aov_component_delivered_orders",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "distinct_customers_declared_nonadditive",
+      "passed": true,
+      "actual": "non_additive_distinct",
+      "expected": "non_additive_distinct"
+    },
+    {
+      "check": "source_customers_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_orders_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_order_items_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_payments_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_products_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_sellers_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_category_translation_contract",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_contract_accepts_leading_zero_postal_prefix",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "source_contract_rejects_blank_key",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "source_contract_rejects_schema_drift",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "golden_fixture_schema",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_fixture_namespace_is_synthetic",
+      "passed": true,
+      "actual": "synthetic_contract_fixture",
+      "expected": "synthetic_contract_fixture"
+    },
+    {
+      "check": "golden_order_grain",
+      "passed": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "golden_item_grain",
+      "passed": true,
+      "actual": 8,
+      "expected": 8
+    },
+    {
+      "check": "golden_payment_grain",
+      "passed": true,
+      "actual": 7,
+      "expected": 7
+    },
+    {
+      "check": "golden_fact_references_resolve",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_total_metrics",
+      "passed": true,
+      "actual": {
+        "total_orders": 7,
+        "delivered_orders": 5,
+        "canceled_orders": 1,
+        "delivered_merchandise_value": "500.00",
+        "delivered_unique_customers": 2,
+        "delivered_item_rows": 7,
+        "delivered_aov": "100.00"
+      },
+      "expected": {
+        "total_orders": 7,
+        "delivered_orders": 5,
+        "canceled_orders": 1,
+        "delivered_merchandise_value": "500.00",
+        "delivered_unique_customers": 2,
+        "delivered_item_rows": 7,
+        "delivered_aov": "100.00"
+      }
+    },
+    {
+      "check": "golden_month_2024-01",
+      "passed": true,
+      "actual": {
+        "total_orders": 4,
+        "delivered_orders": 3,
+        "canceled_orders": 1,
+        "delivered_merchandise_value": "280.00",
+        "delivered_unique_customers": 1,
+        "delivered_item_rows": 4
+      },
+      "expected": {
+        "total_orders": 4,
+        "delivered_orders": 3,
+        "canceled_orders": 1,
+        "delivered_merchandise_value": "280.00",
+        "delivered_unique_customers": 1,
+        "delivered_item_rows": 4
+      }
+    },
+    {
+      "check": "golden_month_2024-02",
+      "passed": true,
+      "actual": {
+        "total_orders": 3,
+        "delivered_orders": 2,
+        "canceled_orders": 0,
+        "delivered_merchandise_value": "220.00",
+        "delivered_unique_customers": 2,
+        "delivered_item_rows": 3
+      },
+      "expected": {
+        "total_orders": 3,
+        "delivered_orders": 2,
+        "canceled_orders": 0,
+        "delivered_merchandise_value": "220.00",
+        "delivered_unique_customers": 2,
+        "delivered_item_rows": 3
+      }
+    },
+    {
+      "check": "golden_category_additivity",
+      "passed": true,
+      "actual": {
+        "food": "240.00",
+        "beauty": "140.00",
+        "Unknown": "120.00"
+      },
+      "expected": {
+        "food": "240.00",
+        "beauty": "140.00",
+        "Unknown": "120.00"
+      }
+    },
+    {
+      "check": "golden_seller_additivity",
+      "passed": true,
+      "actual": {
+        "s1": "360.00",
+        "s2": "140.00"
+      },
+      "expected": {
+        "s1": "360.00",
+        "s2": "140.00"
+      }
+    },
+    {
+      "check": "golden_buyer_state_additivity",
+      "passed": true,
+      "actual": {
+        "SP": "280.00",
+        "RJ": "220.00"
+      },
+      "expected": {
+        "SP": "280.00",
+        "RJ": "220.00"
+      }
+    },
+    {
+      "check": "golden_state_distincts",
+      "passed": true,
+      "actual": {
+        "SP": 1,
+        "RJ": 2
+      },
+      "expected": {
+        "SP": 1,
+        "RJ": 2
+      }
+    },
+    {
+      "check": "state_distincts_must_not_be_summed",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "daily_distincts_must_not_be_summed",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "daily_aovs_must_not_be_averaged",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_overall_aov",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_overall_cancellation_rate",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_2024-01_aov",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_2024-01_cancellation_rate",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_2024-02_aov",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_2024-02_cancellation_rate",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_ratio_incorrect_average_daily_aov",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "golden_quality_and_role_dates",
+      "passed": true,
+      "actual": {
+        "orders_without_items": 1,
+        "orders_without_payments": 1,
+        "delivered_orders_without_delivery_timestamp": 1,
+        "products_without_category": 1,
+        "payment_difference_above_one_cent": 1,
+        "delivery_eligible_orders": 4,
+        "on_time_delivery_orders": 3
+      },
+      "expected": {
+        "orders_without_items": 1,
+        "orders_without_payments": 1,
+        "delivered_orders_without_delivery_timestamp": 1,
+        "products_without_category": 1,
+        "payment_difference_above_one_cent": 1,
+        "delivery_eligible_orders": 4,
+        "on_time_delivery_orders": 3
+      }
+    },
+    {
+      "check": "missing_delivery_is_unknown_date_not_dropped_order",
+      "passed": true,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "check": "golden_correct_merchandise",
+      "passed": true,
+      "actual": "150.00",
+      "expected": "150.00"
+    },
+    {
+      "check": "golden_naive_join_merchandise",
+      "passed": true,
+      "actual": "300.00",
+      "expected": "300.00"
+    },
+    {
+      "check": "golden_correct_payment",
+      "passed": true,
+      "actual": "165.00",
+      "expected": "165.00"
+    },
+    {
+      "check": "golden_naive_join_payment",
+      "passed": true,
+      "actual": "330.00",
+      "expected": "330.00"
+    },
+    {
+      "check": "zero_denominator_returns_null",
+      "passed": true,
+      "actual": null,
+      "expected": null
+    },
+    {
+      "check": "scd2_late_arrival_and_repeat_payload",
+      "passed": true,
+      "actual": [
+        {
+          "surrogate_key": 101,
+          "valid_from": "2024-01-01 00:00:00",
+          "valid_to": "2024-01-15 00:00:00",
+          "category": "food",
+          "is_current": false
+        },
+        {
+          "surrogate_key": 102,
+          "valid_from": "2024-01-15 00:00:00",
+          "valid_to": "2024-02-15 00:00:00",
+          "category": "wellness",
+          "is_current": false
+        },
+        {
+          "surrogate_key": 103,
+          "valid_from": "2024-02-15 00:00:00",
+          "valid_to": null,
+          "category": "health",
+          "is_current": true
+        }
+      ],
+      "expected": [
+        {
+          "surrogate_key": 101,
+          "valid_from": "2024-01-01 00:00:00",
+          "valid_to": "2024-01-15 00:00:00",
+          "category": "food",
+          "is_current": false
+        },
+        {
+          "surrogate_key": 102,
+          "valid_from": "2024-01-15 00:00:00",
+          "valid_to": "2024-02-15 00:00:00",
+          "category": "wellness",
+          "is_current": false
+        },
+        {
+          "surrogate_key": 103,
+          "valid_from": "2024-02-15 00:00:00",
+          "valid_to": null,
+          "category": "health",
+          "is_current": true
+        }
+      ]
+    },
+    {
+      "check": "scd2_lookup_cardinality_2023-12-31 23:59:59",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "scd2_lookup_cardinality_2024-01-10 00:00:00",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "scd2_lookup_cardinality_2024-01-15 00:00:00",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "scd2_lookup_cardinality_2024-02-15 00:00:00",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "scd2_exact_boundaries_and_unknown_history",
+      "passed": true,
+      "actual": [
+        0,
+        101,
+        102,
+        103
+      ],
+      "expected": [
+        0,
+        101,
+        102,
+        103
+      ]
+    },
+    {
+      "check": "inferred_member_keeps_surrogate_key",
+      "passed": true,
+      "actual": 501,
+      "expected": 501
+    },
+    {
+      "check": "inferred_member_enriched",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "synthetic_batch_requires_scenario_label",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "marked_synthetic_batch_is_valid",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "published_release_contract_accepts_valid_fixture",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "check": "published_release_contract_rejects_failed_parity",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "published_release_contract_rejects_pending_checks",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    },
+    {
+      "check": "published_release_contract_requires_all_mandatory_checks",
+      "passed": true,
+      "actual": false,
+      "expected": false
+    }
+  ],
+  "check_count": 137,
+  "passed": true
+}

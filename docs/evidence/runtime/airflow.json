@@ -1,0 +1,149 @@
+{
+  "passed": true,
+  "successful_retry": {
+    "run_id": "acceptance_retry_fixed_20261015",
+    "state": "success",
+    "start_date": "2026-10-15T13:40:27.993832+00:00",
+    "end_date": "2026-10-15T13:45:03.113229+00:00",
+    "conf": {
+      "fail_once": "load"
+    }
+  },
+  "expected_terminal_failure": {
+    "run_id": "acceptance_failure_20261015",
+    "state": "failed",
+    "start_date": "2026-10-15T13:45:57.968809+00:00",
+    "end_date": "2026-10-15T13:47:09.741276+00:00",
+    "conf": {
+      "fail_at": "raw"
+    }
+  },
+  "tasks": [
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "build",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "finish",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "lease",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "load",
+      "state": "success",
+      "try_number": 2
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "publish",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "raw",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "semantic",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "snapshot",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_retry_fixed_20261015",
+      "task_id": "validate",
+      "state": "success",
+      "try_number": 1
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "build",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "finish",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "lease",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "load",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "publish",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "raw",
+      "state": "failed",
+      "try_number": 3
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "semantic",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "snapshot",
+      "state": "upstream_failed",
+      "try_number": 0
+    },
+    {
+      "run_id": "acceptance_failure_20261015",
+      "task_id": "validate",
+      "state": "upstream_failed",
+      "try_number": 0
+    }
+  ],
+  "warehouse_audit": [
+    {
+      "pipeline_run_id": "03a7356b-9951-5fb4-9339-60e106b47e8a",
+      "state": "succeeded",
+      "error_category": null
+    },
+    {
+      "pipeline_run_id": "219bcd6d-801d-5299-b5ee-a5c7c3ba358b",
+      "state": "failed",
+      "error_category": "airflow_task_failure"
+    }
+  ],
+  "failed_run_did_not_publish": true,
+  "publish_ack_replayed": true,
+  "initial_debug_failures_retained": [
+    "scheduled__2026-10-14T19:00:00+00:00",
+    "acceptance_retry_20261015"
+  ]
+}

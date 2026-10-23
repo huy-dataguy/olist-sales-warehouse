@@ -1,0 +1,13 @@
+# Offline probe only. Port 1 deliberately prevents accidental warehouse execution.
+semantic_compatibility_probe:
+  target: local
+  outputs:
+    local:
+      type: postgres
+      host: 127.0.0.1
+      port: 1
+      user: compile_only
+      password: compile_only
+      dbname: compile_only
+      schema: probe
+      threads: 1

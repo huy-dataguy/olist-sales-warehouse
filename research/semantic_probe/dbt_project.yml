@@ -1,0 +1,7 @@
+name: semantic_compatibility_probe
+version: '1.0.0'
+config-version: 2
+profile: semantic_compatibility_probe
+model-paths: [models]
+flags:
+  send_anonymous_usage_stats: false

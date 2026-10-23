@@ -1,0 +1,10 @@
+{
+  "scope": "Design structure, local links, requirement/check/task references, DAG acyclicity and source artifact identity. Not native DSH admission or system completion.",
+  "template_version": "1.0.0",
+  "requirements": 20,
+  "tasks": 20,
+  "verification_entries": 20,
+  "operational_scenarios": 22,
+  "passed": true,
+  "issues": []
+}

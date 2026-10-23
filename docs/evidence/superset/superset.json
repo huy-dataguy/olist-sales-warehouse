@@ -1,0 +1,2001 @@
+{
+  "passed": true,
+  "engine": "Apache Superset 6.1.0",
+  "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+  "catalog_sha256": "82cf6ac59b4b2219db99cd064a7fd827259d85bea0089fe8408d70c8ddb3bbce",
+  "charts": {
+    "value@overview": {
+      "id": 52,
+      "rows": 1,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_merchandise_value) END AS \"Giá trị hàng đã giao · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Giá trị hàng đã giao · BRL": 867953.46
+        }
+      ]
+    },
+    "orders@overview": {
+      "id": 53,
+      "rows": 1,
+      "seconds": 0.112,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_orders) END AS \"Đơn hàng đã giao\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Đơn hàng đã giao": 6159
+        }
+      ]
+    },
+    "customers@overview": {
+      "id": 54,
+      "rows": 1,
+      "seconds": 0.113,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_unique_customers) END AS \"Khách mua hàng · phân biệt\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Khách mua hàng · phân biệt": 6100
+        }
+      ]
+    },
+    "aov@overview": {
+      "id": 55,
+      "rows": 1,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_aov) END AS \"Giá trị bình quân đơn · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Giá trị bình quân đơn · BRL": 140.9244130540672
+        }
+      ]
+    },
+    "cancellation@overview": {
+      "id": 56,
+      "rows": 1,
+      "seconds": 0.119,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(cancellation_rate) END AS \"Tỷ lệ đơn hủy\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Tỷ lệ đơn hủy": 0.006516211061665607
+        }
+      ]
+    },
+    "mom@overview": {
+      "id": 57,
+      "rows": 1,
+      "seconds": 0.128,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(value_mom) END AS \"Thay đổi giá trị · so tháng trước\" \nFROM (SELECT m.release_id,m.month,m.month::text AS purchase_month,\n                  (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS value_mom,\n                  (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS value_yoy\n                  FROM reporting.validated_sales_monthly m LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n                  LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n                  WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Thay đổi giá trị · so tháng trước": 0.013872102708041066
+        }
+      ]
+    },
+    "value_trend@overview": {
+      "id": 58,
+      "rows": 20,
+      "seconds": 0.138,
+      "status": "success",
+      "query": "SELECT purchase_month AS purchase_month, SUM(delivered_merchandise_value) AS \"Xu hướng giá trị hàng · 2017–08/2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY purchase_month ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "purchase_month": "2017-01-01",
+          "Xu hướng giá trị hàng · 2017–08/2018": 111798.36
+        },
+        {
+          "purchase_month": "2017-02-01",
+          "Xu hướng giá trị hàng · 2017–08/2018": 234223.4
+        },
+        {
+          "purchase_month": "2017-03-01",
+          "Xu hướng giá trị hàng · 2017–08/2018": 359198.85
+        }
+      ]
+    },
+    "orders_trend@overview": {
+      "id": 59,
+      "rows": 20,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT purchase_month AS purchase_month, SUM(delivered_orders) AS \"Xu hướng đơn đã giao · 2017–08/2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY purchase_month ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "purchase_month": "2017-01-01",
+          "Xu hướng đơn đã giao · 2017–08/2018": 750
+        },
+        {
+          "purchase_month": "2017-02-01",
+          "Xu hướng đơn đã giao · 2017–08/2018": 1653
+        },
+        {
+          "purchase_month": "2017-03-01",
+          "Xu hướng đơn đã giao · 2017–08/2018": 2546
+        }
+      ]
+    },
+    "category@overview": {
+      "id": 60,
+      "rows": 10,
+      "seconds": 0.118,
+      "status": "success",
+      "query": "SELECT category AS category, SUM(delivered_merchandise_value) AS \"Danh mục dẫn đầu · giá trị hàng\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Danh mục dẫn đầu · giá trị hàng\" DESC \n LIMIT 10;\n\n",
+      "data": [
+        {
+          "category": "health_beauty",
+          "Danh mục dẫn đầu · giá trị hàng": 103524.22
+        },
+        {
+          "category": "watches_gifts",
+          "Danh mục dẫn đầu · giá trị hàng": 95164.79
+        },
+        {
+          "category": "housewares",
+          "Danh mục dẫn đầu · giá trị hàng": 62583.3
+        }
+      ]
+    },
+    "state@overview": {
+      "id": 61,
+      "rows": 12,
+      "seconds": 0.113,
+      "status": "success",
+      "query": "SELECT state AS state, SUM(delivered_merchandise_value) AS \"Địa bàn người mua · giá trị hàng\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY state ORDER BY \"Địa bàn người mua · giá trị hàng\" DESC \n LIMIT 12;\n\n",
+      "data": [
+        {
+          "state": "SP",
+          "Địa bàn người mua · giá trị hàng": 321647.25
+        },
+        {
+          "state": "RJ",
+          "Địa bàn người mua · giá trị hàng": 97033.4
+        },
+        {
+          "state": "MG",
+          "Địa bàn người mua · giá trị hàng": 92328.16
+        }
+      ]
+    },
+    "ontime@overview": {
+      "id": 62,
+      "rows": 1,
+      "seconds": 0.147,
+      "status": "success",
+      "query": "SELECT CAST(SUM(on_time_delivery_count) AS DECIMAL) / NULLIF(SUM(known_delivery_date_count), 0) AS \"Giao đúng hẹn · đơn đủ điều kiện\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Giao đúng hẹn · đơn đủ điều kiện": 0.9662118258609487
+        }
+      ]
+    },
+    "median_days@overview": {
+      "id": 63,
+      "rows": 1,
+      "seconds": 0.145,
+      "status": "success",
+      "query": "SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY delivery_days) FILTER(WHERE known_delivery_date_count = 1) AS \"Trung vị giao hàng · ngày\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Trung vị giao hàng · ngày": 7.5017245370370365
+        }
+      ]
+    },
+    "insights@overview": {
+      "id": 64,
+      "rows": 3,
+      "seconds": 0.769,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH sales AS (WITH base AS (\n          SELECT m.*, (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS mom,\n            (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS yoy\n          FROM reporting.validated_sales_monthly m\n          LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n          LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n          WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n      SELECT release_id,month::text AS purchase_month,'Tháng '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Bán được bao nhiêu?',\n           COALESCE(to_char((delivered_merchandise_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL hàng delivered; '||COALESCE(to_char((delivered_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn; '||COALESCE(to_char((delivered_unique_customers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' khách phân biệt. AOV '||COALESCE(to_char((delivered_aov)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL/đơn.',\n           'Đối chiếu số đơn và giá trị bình quân với tháng trước.'),\n          ('02 · Biến động ra sao?',\n           'Giá trị hàng: MoM '||(CASE WHEN (mom)>=0 THEN '+' ELSE '' END||(CASE WHEN (mom) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(mom))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END))||'; YoY '||(CASE WHEN (yoy)>=0 THEN '+' ELSE '' END||(CASE WHEN (yoy) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(yoy))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END))||'.',\n           'Phân tích biến động theo danh mục và khu vực người mua.'),\n          ('03 · Hủy đơn bao nhiêu?',\n           COALESCE(to_char((canceled_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((total_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn có trạng thái canceled ('||(CASE WHEN (cancellation_rate) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(cancellation_rate))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||'). Mẫu số gồm mọi trạng thái đơn.',\n           'So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng.')) AS n(question,finding,follow_up)), commercial AS (WITH cats AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,category) AS rank,\n            sum(delivered_merchandise_value) OVER(PARTITION BY month) AS category_total\n          FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), ranked_sellers AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,seller_id) AS rank\n          FROM reporting.validated_seller_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), seller_summary AS (\n          SELECT month,count(*) AS sellers,sum(delivered_merchandise_value) AS seller_total,\n            sum(delivered_merchandise_value) FILTER(WHERE rank<=10) AS top10_value\n          FROM ranked_sellers GROUP BY month), states AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,state) AS rank,\n            sum(delivered_merchandise_value) OVER(PARTITION BY month) AS state_total\n          FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), base AS (\n          SELECT m.release_id,m.month,c.category,c.delivered_merchandise_value AS category_value,c.category_total,\n            s.sellers,s.seller_total,s.top10_value,g.state,g.delivered_merchandise_value AS state_value,g.state_total\n          FROM reporting.validated_sales_monthly m\n          LEFT JOIN cats c ON c.month=m.month AND c.rank=1\n          LEFT JOIN seller_summary s ON s.month=m.month\n          LEFT JOIN states g ON g.month=m.month AND g.rank=1\n          WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n      SELECT release_id,month::text AS purchase_month,'Tháng '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Category nào dẫn đầu?',\n           COALESCE(category,'Không có category')||': '||COALESCE(to_char((category_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL, chiếm '||(CASE WHEN (category_value/nullif(category_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(category_value/nullif(category_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị hàng delivered của tháng.',\n           'Đối chiếu giá trị với số dòng hàng của các danh mục dẫn đầu.'),\n          ('02 · Tập trung vào seller không?',\n           'Top 10 seller chiếm '||(CASE WHEN (top10_value/nullif(seller_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(top10_value/nullif(seller_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị; tổng '||COALESCE(to_char((sellers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' seller có quan sát trong tháng.',\n           'Theo dõi tỷ trọng nhóm dẫn đầu và thay đổi cơ cấu nhà bán hàng.'),\n          ('03 · Khách ở đâu đóng góp lớn?',\n           COALESCE(state,'Không có state')||': '||COALESCE(to_char((state_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL, chiếm '||(CASE WHEN (state_value/nullif(state_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(state_value/nullif(state_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị delivered theo buyer state.',\n           'Đối chiếu số đơn và giá trị bình quân tại các khu vực đóng góp lớn.')) AS n(question,finding,follow_up)), service AS (WITH orders AS (\n          SELECT month,sum(delivered_order_count) AS delivered,sum(known_delivery_date_count) AS eligible,\n            sum(on_time_delivery_count) AS on_time,\n            percentile_cont(0.5) WITHIN GROUP(ORDER BY delivery_days) FILTER(WHERE known_delivery_date_count=1) AS median_days\n          FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a' GROUP BY month), methods AS (\n          SELECT month,payment_method,sum(recorded_payment_value) AS amount,count(*) AS records\n          FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a' GROUP BY month,payment_method), ranked AS (\n          SELECT *,sum(amount) OVER(PARTITION BY month) AS total_amount,\n            row_number() OVER(PARTITION BY month ORDER BY amount DESC,payment_method) AS rank FROM methods), base AS (\n          SELECT '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid AS release_id,o.*,p.payment_method,p.amount,p.total_amount,p.records\n          FROM orders o LEFT JOIN ranked p ON p.month=o.month AND p.rank=1)\n      SELECT release_id,month::text AS purchase_month,'Tháng mua '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Giao có đúng hẹn?',\n           COALESCE(to_char((on_time)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((eligible)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn đủ điều kiện giao đúng hẹn ('||(CASE WHEN (on_time::numeric/nullif(eligible,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(on_time::numeric/nullif(eligible,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||').',\n           'So sánh tỷ lệ đúng hẹn giữa các tháng và khu vực có đủ quan sát.'),\n          ('02 · Mất bao lâu, đo được bao nhiêu?',\n           'Median '||COALESCE(to_char((median_days)::numeric,'FM999,999,999,999,990.0'),'không đủ dữ liệu')||' ngày. Có '||COALESCE(to_char((eligible)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((delivered)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn delivered đủ mốc ngày hợp lệ ('||(CASE WHEN (eligible::numeric/nullif(delivered,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(eligible::numeric/nullif(delivered,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||').',\n           'Đối chiếu thời gian giao và số đơn quan sát theo khu vực.'),\n          ('03 · Thanh toán chủ yếu bằng gì?',\n           COALESCE(payment_method,'Không có payment')||': '||COALESCE(to_char((amount)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL ('||(CASE WHEN (amount/nullif(total_amount,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(amount/nullif(total_amount,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' recorded amount), '||COALESCE(to_char((records)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' payment records.',\n           'Theo dõi cơ cấu phương thức và số kỳ thanh toán.')) AS n(question,finding,follow_up))\n          SELECT a.release_id,a.purchase_month,a.analysis_scope,\n            '01 · Bán hàng đang ở mức nào, thay đổi ra sao?' AS business_question,\n            a.data_finding||' '||b.data_finding AS data_finding,\n            'Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước.' AS follow_up\n          FROM sales a JOIN sales b USING(release_id,purchase_month)\n          WHERE a.business_question LIKE '01%' AND b.business_question LIKE '02%'\n          UNION ALL\n          SELECT release_id,purchase_month,analysis_scope,\n            '02 · Danh mục nào đóng góp lớn nhất?' AS business_question,data_finding,\n            'Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực.' AS follow_up\n          FROM commercial WHERE business_question LIKE '01%'\n          UNION ALL\n          SELECT a.release_id,a.purchase_month,a.analysis_scope,\n            '03 · Giao hàng ra sao, đo được bao nhiêu?' AS business_question,\n            a.data_finding||' '||b.data_finding AS data_finding,\n            'Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu.' AS follow_up\n          FROM service a JOIN service b USING(release_id,purchase_month)\n          WHERE a.business_question LIKE '01%' AND b.business_question LIKE '02%'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "01 · Bán hàng đang ở mức nào, thay đổi ra sao?",
+          "data_finding": "867,953.46 BRL hàng delivered; 6,159 đơn; 6,100 khách phân biệt. AOV 140.92 BRL/đơn. Giá trị hàng: MoM +1.39%; YoY +80.22%.",
+          "follow_up": "Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước."
+        },
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "02 · Danh mục nào đóng góp lớn nhất?",
+          "data_finding": "health_beauty: 103,524.22 BRL, chiếm 11.93% giá trị hàng delivered của tháng.",
+          "follow_up": "Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực."
+        },
+        {
+          "analysis_scope": "Tháng mua 2018-07",
+          "business_question": "03 · Giao hàng ra sao, đo được bao nhiêu?",
+          "data_finding": "5,948/6,156 đơn đủ điều kiện giao đúng hẹn (96.62%). Median 7.5 ngày. Có 6,156/6,159 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+          "follow_up": "Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu."
+        }
+      ]
+    },
+    "navigation@overview": {
+      "id": 65,
+      "rows": 1,
+      "seconds": 0.144,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\" aria-current=\"page\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\" aria-current=\"page\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    },
+    "value@sales": {
+      "id": 1,
+      "rows": 1,
+      "seconds": 0.108,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_merchandise_value) END AS \"Delivered merchandise · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Delivered merchandise · BRL": 867953.46
+        }
+      ]
+    },
+    "orders@sales": {
+      "id": 2,
+      "rows": 1,
+      "seconds": 0.108,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_orders) END AS \"Delivered orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Delivered orders": 6159
+        }
+      ]
+    },
+    "customers@sales": {
+      "id": 3,
+      "rows": 1,
+      "seconds": 0.108,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_unique_customers) END AS \"Distinct delivered customers\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Distinct delivered customers": 6100
+        }
+      ]
+    },
+    "aov@sales": {
+      "id": 4,
+      "rows": 1,
+      "seconds": 0.112,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_aov) END AS \"Delivered AOV · BRL/order\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Delivered AOV · BRL/order": 140.9244130540672
+        }
+      ]
+    },
+    "cancellation@sales": {
+      "id": 5,
+      "rows": 1,
+      "seconds": 0.121,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(cancellation_rate) END AS \"Cancellation rate\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Cancellation rate": 0.006516211061665607
+        }
+      ]
+    },
+    "mom@sales": {
+      "id": 36,
+      "rows": 1,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(value_mom) END AS \"Merchandise change · vs previous month\" \nFROM (SELECT m.release_id,m.month,m.month::text AS purchase_month,\n                  (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS value_mom,\n                  (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS value_yoy\n                  FROM reporting.validated_sales_monthly m LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n                  LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n                  WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Merchandise change · vs previous month": 0.013872102708041066
+        }
+      ]
+    },
+    "yoy@sales": {
+      "id": 37,
+      "rows": 1,
+      "seconds": 0.128,
+      "status": "success",
+      "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(value_yoy) END AS \"Merchandise change · vs same month last year\" \nFROM (SELECT m.release_id,m.month,m.month::text AS purchase_month,\n                  (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS value_mom,\n                  (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS value_yoy\n                  FROM reporting.validated_sales_monthly m LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n                  LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n                  WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Merchandise change · vs same month last year": 0.8022120307342631
+        }
+      ]
+    },
+    "value_trend@sales": {
+      "id": 38,
+      "rows": 20,
+      "seconds": 0.114,
+      "status": "success",
+      "query": "SELECT purchase_month AS purchase_month, SUM(delivered_merchandise_value) AS \"Monthly delivered merchandise · 2017–Aug 2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY purchase_month ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "purchase_month": "2017-01-01",
+          "Monthly delivered merchandise · 2017–Aug 2018": 111798.36
+        },
+        {
+          "purchase_month": "2017-02-01",
+          "Monthly delivered merchandise · 2017–Aug 2018": 234223.4
+        },
+        {
+          "purchase_month": "2017-03-01",
+          "Monthly delivered merchandise · 2017–Aug 2018": 359198.85
+        }
+      ]
+    },
+    "orders_trend@sales": {
+      "id": 39,
+      "rows": 20,
+      "seconds": 0.109,
+      "status": "success",
+      "query": "SELECT purchase_month AS purchase_month, SUM(delivered_orders) AS \"Monthly delivered orders · 2017–Aug 2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY purchase_month ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "purchase_month": "2017-01-01",
+          "Monthly delivered orders · 2017–Aug 2018": 750
+        },
+        {
+          "purchase_month": "2017-02-01",
+          "Monthly delivered orders · 2017–Aug 2018": 1653
+        },
+        {
+          "purchase_month": "2017-03-01",
+          "Monthly delivered orders · 2017–Aug 2018": 2546
+        }
+      ]
+    },
+    "daily@sales": {
+      "id": 8,
+      "rows": 31,
+      "seconds": 0.11,
+      "status": "success",
+      "query": "SELECT day_label AS day_label, SUM(delivered_merchandise_value) AS \"Daily delivered merchandise · selected month\" \nFROM (SELECT *,date_trunc('month',day)::date::text AS purchase_month,day::text AS day_label FROM reporting.validated_sales_daily WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY day_label ORDER BY day_label ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "day_label": "2018-07-01",
+          "Daily delivered merchandise · selected month": 23885.47
+        },
+        {
+          "day_label": "2018-07-02",
+          "Daily delivered merchandise · selected month": 22872.2
+        },
+        {
+          "day_label": "2018-07-03",
+          "Daily delivered merchandise · selected month": 26102.52
+        }
+      ]
+    },
+    "insights@sales": {
+      "id": 47,
+      "rows": 3,
+      "seconds": 0.166,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH base AS (\n          SELECT m.*, (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS mom,\n            (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS yoy\n          FROM reporting.validated_sales_monthly m\n          LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n          LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n          WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n      SELECT release_id,month::text AS purchase_month,'Tháng '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Bán được bao nhiêu?',\n           COALESCE(to_char((delivered_merchandise_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL hàng delivered; '||COALESCE(to_char((delivered_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn; '||COALESCE(to_char((delivered_unique_customers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' khách phân biệt. AOV '||COALESCE(to_char((delivered_aov)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL/đơn.',\n           'Đối chiếu số đơn và giá trị bình quân với tháng trước.'),\n          ('02 · Biến động ra sao?',\n           'Giá trị hàng: MoM '||(CASE WHEN (mom)>=0 THEN '+' ELSE '' END||(CASE WHEN (mom) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(mom))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END))||'; YoY '||(CASE WHEN (yoy)>=0 THEN '+' ELSE '' END||(CASE WHEN (yoy) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(yoy))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END))||'.',\n           'Phân tích biến động theo danh mục và khu vực người mua.'),\n          ('03 · Hủy đơn bao nhiêu?',\n           COALESCE(to_char((canceled_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((total_orders)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn có trạng thái canceled ('||(CASE WHEN (cancellation_rate) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(cancellation_rate))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||'). Mẫu số gồm mọi trạng thái đơn.',\n           'So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng.')) AS n(question,finding,follow_up)\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "01 · Bán được bao nhiêu?",
+          "data_finding": "867,953.46 BRL hàng delivered; 6,159 đơn; 6,100 khách phân biệt. AOV 140.92 BRL/đơn.",
+          "follow_up": "Đối chiếu số đơn và giá trị bình quân với tháng trước."
+        },
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "02 · Biến động ra sao?",
+          "data_finding": "Giá trị hàng: MoM +1.39%; YoY +80.22%.",
+          "follow_up": "Phân tích biến động theo danh mục và khu vực người mua."
+        },
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "03 · Hủy đơn bao nhiêu?",
+          "data_finding": "41/6,292 đơn có trạng thái canceled (0.65%). Mẫu số gồm mọi trạng thái đơn.",
+          "follow_up": "So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng."
+        }
+      ]
+    },
+    "navigation@sales": {
+      "id": 66,
+      "rows": 1,
+      "seconds": 0.133,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\" aria-current=\"page\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\" aria-current=\"page\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    },
+    "category@commercial": {
+      "id": 9,
+      "rows": 10,
+      "seconds": 0.122,
+      "status": "success",
+      "query": "SELECT category AS category, SUM(delivered_merchandise_value) AS \"Top 10 categories · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Top 10 categories · merchandise value\" DESC \n LIMIT 10;\n\n",
+      "data": [
+        {
+          "category": "health_beauty",
+          "Top 10 categories · merchandise value": 103524.22
+        },
+        {
+          "category": "watches_gifts",
+          "Top 10 categories · merchandise value": 95164.79
+        },
+        {
+          "category": "housewares",
+          "Top 10 categories · merchandise value": 62583.3
+        }
+      ]
+    },
+    "seller@commercial": {
+      "id": 10,
+      "rows": 10,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT seller_id AS seller_id, SUM(delivered_merchandise_value) AS \"Top 10 sellers · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_seller_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY seller_id ORDER BY \"Top 10 sellers · merchandise value\" DESC \n LIMIT 10;\n\n",
+      "data": [
+        {
+          "seller_id": "1025f0e2d44d7041d6cf58b6550e0bfa",
+          "Top 10 sellers · merchandise value": 17465.26
+        },
+        {
+          "seller_id": "04308b1ee57b6625f47df1d56f00eedf",
+          "Top 10 sellers · merchandise value": 16259.3
+        },
+        {
+          "seller_id": "612170e34b97004b3ba37eae81836b4c",
+          "Top 10 sellers · merchandise value": 15770.33
+        }
+      ]
+    },
+    "state@commercial": {
+      "id": 11,
+      "rows": 12,
+      "seconds": 0.116,
+      "status": "success",
+      "query": "SELECT state AS state, SUM(delivered_merchandise_value) AS \"Buyer state · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY state ORDER BY \"Buyer state · merchandise value\" DESC \n LIMIT 12;\n\n",
+      "data": [
+        {
+          "state": "SP",
+          "Buyer state · merchandise value": 321647.25
+        },
+        {
+          "state": "RJ",
+          "Buyer state · merchandise value": 97033.4
+        },
+        {
+          "state": "MG",
+          "Buyer state · merchandise value": 92328.16
+        }
+      ]
+    },
+    "category_items@commercial": {
+      "id": 12,
+      "rows": 10,
+      "seconds": 0.139,
+      "status": "success",
+      "query": "SELECT category AS category, SUM(delivered_item_rows) AS \"Top 10 categories · delivered item rows\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Top 10 categories · delivered item rows\" DESC \n LIMIT 10;\n\n",
+      "data": [
+        {
+          "category": "health_beauty",
+          "Top 10 categories · delivered item rows": 770
+        },
+        {
+          "category": "bed_bath_table",
+          "Top 10 categories · delivered item rows": 617
+        },
+        {
+          "category": "housewares",
+          "Top 10 categories · delivered item rows": 564
+        }
+      ]
+    },
+    "category_mix@commercial": {
+      "id": 35,
+      "rows": 6,
+      "seconds": 0.134,
+      "status": "success",
+      "query": "SELECT category AS category, SUM(delivered_merchandise_value) AS \"Category contribution · top 5 + others\" \nFROM (WITH ranked AS (\n                  SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,category) AS rank\n                  FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n                  SELECT release_id,month,month::text AS purchase_month,CASE WHEN rank<=5 THEN category ELSE 'Other categories' END AS category,\n                  sum(delivered_merchandise_value) AS delivered_merchandise_value\n                  FROM ranked GROUP BY release_id,month,CASE WHEN rank<=5 THEN category ELSE 'Other categories' END\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Category contribution · top 5 + others\" DESC \n LIMIT 6;\n\n",
+      "data": [
+        {
+          "category": "Other categories",
+          "Category contribution · top 5 + others": 498260.03
+        },
+        {
+          "category": "health_beauty",
+          "Category contribution · top 5 + others": 103524.22
+        },
+        {
+          "category": "watches_gifts",
+          "Category contribution · top 5 + others": 95164.79
+        }
+      ]
+    },
+    "state_aov@commercial": {
+      "id": 14,
+      "rows": 12,
+      "seconds": 0.12,
+      "status": "success",
+      "query": "SELECT state AS state, SUM(delivered_merchandise_value) / NULLIF(SUM(delivered_orders), 0) AS \"Delivered AOV by buyer state · BRL/order\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY state ORDER BY \"Delivered AOV by buyer state · BRL/order\" DESC \n LIMIT 12;\n\n",
+      "data": [
+        {
+          "state": "AC",
+          "Delivered AOV by buyer state · BRL/order": 367.4925
+        },
+        {
+          "state": "RR",
+          "Delivered AOV by buyer state · BRL/order": 302.94
+        },
+        {
+          "state": "PB",
+          "Delivered AOV by buyer state · BRL/order": 297.8172549019608
+        }
+      ]
+    },
+    "insights@commercial": {
+      "id": 48,
+      "rows": 3,
+      "seconds": 0.209,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH cats AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,category) AS rank,\n            sum(delivered_merchandise_value) OVER(PARTITION BY month) AS category_total\n          FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), ranked_sellers AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,seller_id) AS rank\n          FROM reporting.validated_seller_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), seller_summary AS (\n          SELECT month,count(*) AS sellers,sum(delivered_merchandise_value) AS seller_total,\n            sum(delivered_merchandise_value) FILTER(WHERE rank<=10) AS top10_value\n          FROM ranked_sellers GROUP BY month), states AS (\n          SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,state) AS rank,\n            sum(delivered_merchandise_value) OVER(PARTITION BY month) AS state_total\n          FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), base AS (\n          SELECT m.release_id,m.month,c.category,c.delivered_merchandise_value AS category_value,c.category_total,\n            s.sellers,s.seller_total,s.top10_value,g.state,g.delivered_merchandise_value AS state_value,g.state_total\n          FROM reporting.validated_sales_monthly m\n          LEFT JOIN cats c ON c.month=m.month AND c.rank=1\n          LEFT JOIN seller_summary s ON s.month=m.month\n          LEFT JOIN states g ON g.month=m.month AND g.rank=1\n          WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n      SELECT release_id,month::text AS purchase_month,'Tháng '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Category nào dẫn đầu?',\n           COALESCE(category,'Không có category')||': '||COALESCE(to_char((category_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL, chiếm '||(CASE WHEN (category_value/nullif(category_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(category_value/nullif(category_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị hàng delivered của tháng.',\n           'Đối chiếu giá trị với số dòng hàng của các danh mục dẫn đầu.'),\n          ('02 · Tập trung vào seller không?',\n           'Top 10 seller chiếm '||(CASE WHEN (top10_value/nullif(seller_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(top10_value/nullif(seller_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị; tổng '||COALESCE(to_char((sellers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' seller có quan sát trong tháng.',\n           'Theo dõi tỷ trọng nhóm dẫn đầu và thay đổi cơ cấu nhà bán hàng.'),\n          ('03 · Khách ở đâu đóng góp lớn?',\n           COALESCE(state,'Không có state')||': '||COALESCE(to_char((state_value)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL, chiếm '||(CASE WHEN (state_value/nullif(state_total,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(state_value/nullif(state_total,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' giá trị delivered theo buyer state.',\n           'Đối chiếu số đơn và giá trị bình quân tại các khu vực đóng góp lớn.')) AS n(question,finding,follow_up)\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "01 · Category nào dẫn đầu?",
+          "data_finding": "health_beauty: 103,524.22 BRL, chiếm 11.93% giá trị hàng delivered của tháng.",
+          "follow_up": "Đối chiếu giá trị với số dòng hàng của các danh mục dẫn đầu."
+        },
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "02 · Tập trung vào seller không?",
+          "data_finding": "Top 10 seller chiếm 14.15% giá trị; tổng 1,261 seller có quan sát trong tháng.",
+          "follow_up": "Theo dõi tỷ trọng nhóm dẫn đầu và thay đổi cơ cấu nhà bán hàng."
+        },
+        {
+          "analysis_scope": "Tháng 2018-07",
+          "business_question": "03 · Khách ở đâu đóng góp lớn?",
+          "data_finding": "SP: 321,647.25 BRL, chiếm 37.06% giá trị delivered theo buyer state.",
+          "follow_up": "Đối chiếu số đơn và giá trị bình quân tại các khu vực đóng góp lớn."
+        }
+      ]
+    },
+    "navigation@commercial": {
+      "id": 67,
+      "rows": 1,
+      "seconds": 0.13,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\" aria-current=\"page\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\" aria-current=\"page\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    },
+    "observed@customers": {
+      "id": 15,
+      "rows": 1,
+      "seconds": 0.223,
+      "status": "success",
+      "query": "SELECT COUNT(*) AS \"Observed delivered customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Observed delivered customers": 93358
+        }
+      ]
+    },
+    "repeat@customers": {
+      "id": 16,
+      "rows": 1,
+      "seconds": 0.23,
+      "status": "success",
+      "query": "SELECT CAST(COUNT(*) FILTER(WHERE delivered_orders >= 2) AS DECIMAL) / NULLIF(COUNT(*), 0) AS \"Repeat customer share\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Repeat customer share": 0.03000278497825575
+        }
+      ]
+    },
+    "repeat_value@customers": {
+      "id": 17,
+      "rows": 1,
+      "seconds": 0.309,
+      "status": "success",
+      "query": "SELECT SUM(observed_merchandise_value) FILTER(WHERE delivered_orders >= 2) / NULLIF(SUM(observed_merchandise_value), 0) AS \"Merchandise share from repeat customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Merchandise share from repeat customers": 0.05509275453808615
+        }
+      ]
+    },
+    "frequency@customers": {
+      "id": 18,
+      "rows": 3,
+      "seconds": 0.256,
+      "status": "success",
+      "query": "SELECT frequency_segment AS frequency_segment, COUNT(*) AS \"Observed delivered-order frequency\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table GROUP BY frequency_segment ORDER BY frequency_segment ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "frequency_segment": "1 delivered order",
+          "Observed delivered-order frequency": 90557
+        },
+        {
+          "frequency_segment": "2 delivered orders",
+          "Observed delivered-order frequency": 2573
+        },
+        {
+          "frequency_segment": "3+ delivered orders",
+          "Observed delivered-order frequency": 228
+        }
+      ]
+    },
+    "recency@customers": {
+      "id": 19,
+      "rows": 3,
+      "seconds": 0.259,
+      "status": "success",
+      "query": "SELECT recency_segment AS recency_segment, COUNT(*) AS \"Recency at 31 Aug 2018 · customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table GROUP BY recency_segment ORDER BY recency_segment ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "recency_segment": "0-90 days",
+          "Recency at 31 Aug 2018 · customers": 18211
+        },
+        {
+          "recency_segment": "181+ days",
+          "Recency at 31 Aug 2018 · customers": 55576
+        },
+        {
+          "recency_segment": "91-180 days",
+          "Recency at 31 Aug 2018 · customers": 19571
+        }
+      ]
+    },
+    "cohort@customers": {
+      "id": 41,
+      "rows": 99,
+      "seconds": 0.956,
+      "status": "success",
+      "query": "SELECT month_offset AS month_offset, cohort_label AS cohort_label, MAX(observed_retention) AS \"Return by cohort · months 1–6 (month 0 = 100%)\" \nFROM (SELECT *,cohort_month::text AS cohort_label FROM reporting.analytic_cohorts WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE month_offset > 0 AND cohort_label >= '2017-01-01' GROUP BY month_offset, cohort_label ORDER BY \"Return by cohort · months 1–6 (month 0 = 100%)\" DESC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "month_offset": 1,
+          "cohort_label": "2017-10-01",
+          "Return by cohort · months 1–6 (month 0 = 100%)": 0.007162661737523105
+        },
+        {
+          "month_offset": 1,
+          "cohort_label": "2017-09-01",
+          "Return by cohort · months 1–6 (month 0 = 100%)": 0.006993006993006993
+        },
+        {
+          "month_offset": 1,
+          "cohort_label": "2017-08-01",
+          "Return by cohort · months 1–6 (month 0 = 100%)": 0.006901651466600937
+        }
+      ]
+    },
+    "retention@customers": {
+      "id": 40,
+      "rows": 6,
+      "seconds": 0.938,
+      "status": "success",
+      "query": "SELECT month_offset AS month_offset, CAST(SUM(active_customers) AS DECIMAL) / NULLIF(SUM(cohort_size), 0) AS \"Observed return rate · months 1–6, eligible cohorts\" \nFROM (SELECT *,cohort_month::text AS cohort_label FROM reporting.analytic_cohorts WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE month_offset > 0 AND cohort_label >= '2017-01-01' GROUP BY month_offset ORDER BY month_offset ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "month_offset": 1,
+          "Observed return rate · months 1–6, eligible cohorts": 0.0048303622771707876
+        },
+        {
+          "month_offset": 2,
+          "Observed return rate · months 1–6, eligible cohorts": 0.0033703287613733165
+        },
+        {
+          "month_offset": 3,
+          "Observed return rate · months 1–6, eligible cohorts": 0.002555808474102472
+        }
+      ]
+    },
+    "insights@customers": {
+      "id": 49,
+      "rows": 3,
+      "seconds": 1.051,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH customer_totals AS (\n          SELECT count(*) AS customers,count(*) FILTER(WHERE delivered_orders>=2) AS repeat_customers,\n            count(*) FILTER(WHERE delivered_orders=1) AS single_customers,\n            sum(observed_merchandise_value) AS total_value,\n            sum(observed_merchandise_value) FILTER(WHERE delivered_orders>=2) AS repeat_value\n          FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'), m1 AS (\n          SELECT sum(active_customers) AS active,sum(cohort_size) AS eligible,count(*) AS cohorts\n          FROM reporting.analytic_cohorts WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a' AND month_offset=1 AND cohort_month>='2017-01-01'), base AS (\n          SELECT '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid AS release_id,c.*,m1.* FROM customer_totals c CROSS JOIN m1)\n      SELECT release_id,NULL::text AS purchase_month,'Toàn kỳ đến 31/08/2018' AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Bao nhiêu khách mua lại?',\n           COALESCE(to_char((repeat_customers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((customers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' khách có ít nhất 2 đơn delivered ('||(CASE WHEN (repeat_customers::numeric/nullif(customers,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(repeat_customers::numeric/nullif(customers,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||').',\n           'So sánh mức quay lại giữa các nhóm có cùng thời gian theo dõi.'),\n          ('02 · Nhóm mua lại đóng góp gì?',\n           'Khách mua lại đóng góp '||(CASE WHEN (repeat_value/nullif(total_value,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(repeat_value/nullif(total_value,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' merchandise toàn kỳ. '||COALESCE(to_char((single_customers)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' khách chỉ có 1 đơn được quan sát.',\n           'Xem cơ cấu mua lại và phân bố số lần mua của khách hàng.'),\n          ('03 · Có quay lại ở tháng kế?',\n           'M1: '||COALESCE(to_char((active)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((eligible)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' khách ('||(CASE WHEN (active::numeric/nullif(eligible,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(active::numeric/nullif(eligible,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||'), gộp '||COALESCE(to_char((cohorts)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' cohort từ 2017 đủ thời gian quan sát.',\n           'Đối chiếu mức quay lại cùng quy mô và thời gian theo dõi của từng nhóm.')) AS n(question,finding,follow_up)\n) AS virtual_table GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Toàn kỳ đến 31/08/2018",
+          "business_question": "01 · Bao nhiêu khách mua lại?",
+          "data_finding": "2,801/93,358 khách có ít nhất 2 đơn delivered (3.00%).",
+          "follow_up": "So sánh mức quay lại giữa các nhóm có cùng thời gian theo dõi."
+        },
+        {
+          "analysis_scope": "Toàn kỳ đến 31/08/2018",
+          "business_question": "02 · Nhóm mua lại đóng góp gì?",
+          "data_finding": "Khách mua lại đóng góp 5.51% merchandise toàn kỳ. 90,557 khách chỉ có 1 đơn được quan sát.",
+          "follow_up": "Xem cơ cấu mua lại và phân bố số lần mua của khách hàng."
+        },
+        {
+          "analysis_scope": "Toàn kỳ đến 31/08/2018",
+          "business_question": "03 · Có quay lại ở tháng kế?",
+          "data_finding": "M1: 420/86,950 khách (0.48%), gộp 19 cohort từ 2017 đủ thời gian quan sát.",
+          "follow_up": "Đối chiếu mức quay lại cùng quy mô và thời gian theo dõi của từng nhóm."
+        }
+      ]
+    },
+    "navigation@customers": {
+      "id": 68,
+      "rows": 1,
+      "seconds": 0.138,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\" aria-current=\"page\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\" aria-current=\"page\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    },
+    "ontime@service": {
+      "id": 22,
+      "rows": 1,
+      "seconds": 0.156,
+      "status": "success",
+      "query": "SELECT CAST(SUM(on_time_delivery_count) AS DECIMAL) / NULLIF(SUM(known_delivery_date_count), 0) AS \"On-time delivery · eligible orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "On-time delivery · eligible orders": 0.9662118258609487
+        }
+      ]
+    },
+    "median_days@service": {
+      "id": 23,
+      "rows": 1,
+      "seconds": 0.162,
+      "status": "success",
+      "query": "SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY delivery_days) FILTER(WHERE known_delivery_date_count = 1) AS \"Median delivery · days\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Median delivery · days": 7.5017245370370365
+        }
+      ]
+    },
+    "known@service": {
+      "id": 24,
+      "rows": 1,
+      "seconds": 0.149,
+      "status": "success",
+      "query": "SELECT SUM(known_delivery_date_count) AS \"Eligible delivery observations\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Eligible delivery observations": 6156
+        }
+      ]
+    },
+    "status@service": {
+      "id": 25,
+      "rows": 6,
+      "seconds": 0.155,
+      "status": "success",
+      "query": "SELECT order_status AS order_status, SUM(order_count) AS \"Accepted order status · orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY order_status ORDER BY \"Accepted order status · orders\" DESC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "order_status": "delivered",
+          "Accepted order status · orders": 6159
+        },
+        {
+          "order_status": "shipped",
+          "Accepted order status · orders": 60
+        },
+        {
+          "order_status": "canceled",
+          "Accepted order status · orders": 41
+        }
+      ]
+    },
+    "state_days@service": {
+      "id": 26,
+      "rows": 15,
+      "seconds": 0.159,
+      "status": "success",
+      "query": "SELECT buyer_state AS buyer_state, AVG(delivery_days) FILTER(WHERE known_delivery_date_count = 1) AS \"Average delivery days · buyer states\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY buyer_state ORDER BY \"Average delivery days · buyer states\" DESC \n LIMIT 15;\n\n",
+      "data": [
+        {
+          "buyer_state": "AP",
+          "Average delivery days · buyer states": 31.049104938271604
+        },
+        {
+          "buyer_state": "AL",
+          "Average delivery days · buyer states": 23.326137941919193
+        },
+        {
+          "buyer_state": "AM",
+          "Average delivery days · buyer states": 22.273317258230453
+        }
+      ]
+    },
+    "payment_method@service": {
+      "id": 27,
+      "rows": 4,
+      "seconds": 0.151,
+      "status": "success",
+      "query": "SELECT payment_method AS payment_method, SUM(recorded_payment_value) AS \"Recorded payment amount by method · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY payment_method ORDER BY \"Recorded payment amount by method · BRL\" DESC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "payment_method": "credit_card",
+          "Recorded payment amount by method · BRL": 803674.49
+        },
+        {
+          "payment_method": "boleto",
+          "Recorded payment amount by method · BRL": 198041.24
+        },
+        {
+          "payment_method": "debit_card",
+          "Recorded payment amount by method · BRL": 44866.18
+        }
+      ]
+    },
+    "installments@service": {
+      "id": 28,
+      "rows": 17,
+      "seconds": 0.142,
+      "status": "success",
+      "query": "SELECT payment_installments AS payment_installments, SUM(payment_record_count) AS \"Installments · payment records\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY payment_installments ORDER BY payment_installments ASC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "payment_installments": 1,
+          "Installments · payment records": 3435
+        },
+        {
+          "payment_installments": 2,
+          "Installments · payment records": 795
+        },
+        {
+          "payment_installments": 3,
+          "Installments · payment records": 585
+        }
+      ]
+    },
+    "insights@service": {
+      "id": 50,
+      "rows": 3,
+      "seconds": 0.415,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH orders AS (\n          SELECT month,sum(delivered_order_count) AS delivered,sum(known_delivery_date_count) AS eligible,\n            sum(on_time_delivery_count) AS on_time,\n            percentile_cont(0.5) WITHIN GROUP(ORDER BY delivery_days) FILTER(WHERE known_delivery_date_count=1) AS median_days\n          FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a' GROUP BY month), methods AS (\n          SELECT month,payment_method,sum(recorded_payment_value) AS amount,count(*) AS records\n          FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a' GROUP BY month,payment_method), ranked AS (\n          SELECT *,sum(amount) OVER(PARTITION BY month) AS total_amount,\n            row_number() OVER(PARTITION BY month ORDER BY amount DESC,payment_method) AS rank FROM methods), base AS (\n          SELECT '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid AS release_id,o.*,p.payment_method,p.amount,p.total_amount,p.records\n          FROM orders o LEFT JOIN ranked p ON p.month=o.month AND p.rank=1)\n      SELECT release_id,month::text AS purchase_month,'Tháng mua '||to_char(month,'YYYY-MM') AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Giao có đúng hẹn?',\n           COALESCE(to_char((on_time)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((eligible)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn đủ điều kiện giao đúng hẹn ('||(CASE WHEN (on_time::numeric/nullif(eligible,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(on_time::numeric/nullif(eligible,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||').',\n           'So sánh tỷ lệ đúng hẹn giữa các tháng và khu vực có đủ quan sát.'),\n          ('02 · Mất bao lâu, đo được bao nhiêu?',\n           'Median '||COALESCE(to_char((median_days)::numeric,'FM999,999,999,999,990.0'),'không đủ dữ liệu')||' ngày. Có '||COALESCE(to_char((eligible)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||'/'||COALESCE(to_char((delivered)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' đơn delivered đủ mốc ngày hợp lệ ('||(CASE WHEN (eligible::numeric/nullif(delivered,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(eligible::numeric/nullif(delivered,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||').',\n           'Đối chiếu thời gian giao và số đơn quan sát theo khu vực.'),\n          ('03 · Thanh toán chủ yếu bằng gì?',\n           COALESCE(payment_method,'Không có payment')||': '||COALESCE(to_char((amount)::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||' BRL ('||(CASE WHEN (amount/nullif(total_amount,0)) IS NULL THEN 'không đủ dữ liệu' ELSE COALESCE(to_char((100*(amount/nullif(total_amount,0)))::numeric,'FM999,999,999,999,990.00'),'không đủ dữ liệu')||'%' END)||' recorded amount), '||COALESCE(to_char((records)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' payment records.',\n           'Theo dõi cơ cấu phương thức và số kỳ thanh toán.')) AS n(question,finding,follow_up)\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Tháng mua 2018-07",
+          "business_question": "01 · Giao có đúng hẹn?",
+          "data_finding": "5,948/6,156 đơn đủ điều kiện giao đúng hẹn (96.62%).",
+          "follow_up": "So sánh tỷ lệ đúng hẹn giữa các tháng và khu vực có đủ quan sát."
+        },
+        {
+          "analysis_scope": "Tháng mua 2018-07",
+          "business_question": "02 · Mất bao lâu, đo được bao nhiêu?",
+          "data_finding": "Median 7.5 ngày. Có 6,156/6,159 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+          "follow_up": "Đối chiếu thời gian giao và số đơn quan sát theo khu vực."
+        },
+        {
+          "analysis_scope": "Tháng mua 2018-07",
+          "business_question": "03 · Thanh toán chủ yếu bằng gì?",
+          "data_finding": "credit_card: 803,674.49 BRL (75.35% recorded amount), 4,755 payment records.",
+          "follow_up": "Theo dõi cơ cấu phương thức và số kỳ thanh toán."
+        }
+      ]
+    },
+    "navigation@service": {
+      "id": 69,
+      "rows": 1,
+      "seconds": 0.13,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\" aria-current=\"page\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\" aria-current=\"page\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    },
+    "producer@trust": {
+      "id": 29,
+      "rows": 1,
+      "seconds": 0.116,
+      "status": "success",
+      "query": "SELECT state AS state, source_cut AS source_cut, started_at AS started_at, finished_at AS finished_at, pipeline_run_id AS pipeline_run_id \nFROM (SELECT * FROM reporting.pipeline_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table GROUP BY state, source_cut, started_at, finished_at, pipeline_run_id \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "state": "succeeded",
+          "source_cut": 1,
+          "started_at": 1792074813636.69,
+          "finished_at": 1792075074049.218,
+          "pipeline_run_id": "5ac008ff-3041-54cf-b03a-b7e76a5fa82f"
+        }
+      ]
+    },
+    "publication@trust": {
+      "id": 30,
+      "rows": 1,
+      "seconds": 0.135,
+      "status": "success",
+      "query": "SELECT published_at AS published_at, source_cut AS source_cut, model_version AS model_version, release_id AS release_id \nFROM (SELECT * FROM reporting.release_metadata WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table GROUP BY published_at, source_cut, model_version, release_id \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "published_at": 1792075072928.045,
+          "source_cut": 1,
+          "model_version": "2.0.0",
+          "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a"
+        }
+      ]
+    },
+    "warnings@trust": {
+      "id": 31,
+      "rows": 6,
+      "seconds": 0.125,
+      "status": "success",
+      "query": "SELECT rule_id AS rule_id, SUM(affected_records) AS \"Source warnings · affected occurrences\" \nFROM (SELECT * FROM reporting.quality_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table GROUP BY rule_id ORDER BY \"Source warnings · affected occurrences\" DESC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "rule_id": "DQ-COV-001",
+          "Source warnings · affected occurrences": 775
+        },
+        {
+          "rule_id": "DQ-CAT-001",
+          "Source warnings · affected occurrences": 610
+        },
+        {
+          "rule_id": "DQ-PAY-001",
+          "Source warnings · affected occurrences": 303
+        }
+      ]
+    },
+    "errors@trust": {
+      "id": 32,
+      "rows": 1,
+      "seconds": 0.107,
+      "status": "success",
+      "query": "SELECT COALESCE(SUM(affected_records) FILTER(WHERE severity = 'error'), 0) AS \"Quality error occurrences · producer run\" \nFROM (SELECT * FROM reporting.quality_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "Quality error occurrences · producer run": 0
+        }
+      ]
+    },
+    "attempts@trust": {
+      "id": 33,
+      "rows": 2,
+      "seconds": 0.356,
+      "status": "success",
+      "query": "SELECT state AS state, COUNT(*) AS \"Pipeline attempts · operational audit\" \nFROM (SELECT * FROM reporting.pipeline_health WHERE true\n) AS virtual_table GROUP BY state ORDER BY \"Pipeline attempts · operational audit\" DESC \n LIMIT 1000;\n\n",
+      "data": [
+        {
+          "state": "failed",
+          "Pipeline attempts · operational audit": 10
+        },
+        {
+          "state": "succeeded",
+          "Pipeline attempts · operational audit": 6
+        }
+      ]
+    },
+    "history@trust": {
+      "id": 34,
+      "rows": 12,
+      "seconds": 0.139,
+      "status": "success",
+      "query": "SELECT state AS state, started_at AS started_at, finished_at AS finished_at, error_category AS error_category, pipeline_run_id AS pipeline_run_id \nFROM (SELECT * FROM reporting.pipeline_health WHERE true\n) AS virtual_table GROUP BY state, started_at, finished_at, error_category, pipeline_run_id \n LIMIT 12;\n\n",
+      "data": [
+        {
+          "state": "failed",
+          "started_at": 1792062214059.3281,
+          "finished_at": 1792062282468.462,
+          "error_category": "RuntimeError",
+          "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee00"
+        },
+        {
+          "state": "failed",
+          "started_at": 1792070407888.387,
+          "finished_at": 1792070534185.689,
+          "error_category": "AssertionError",
+          "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee04"
+        },
+        {
+          "state": "succeeded",
+          "started_at": 1792071628410.6099,
+          "finished_at": 1792071902353.511,
+          "error_category": null,
+          "pipeline_run_id": "03a7356b-9951-5fb4-9339-60e106b47e8a"
+        }
+      ]
+    },
+    "insights@trust": {
+      "id": 51,
+      "rows": 3,
+      "seconds": 0.174,
+      "status": "success",
+      "query": "SELECT analysis_scope AS analysis_scope, business_question AS business_question, data_finding AS data_finding, follow_up AS follow_up \nFROM (WITH quality AS (\n          SELECT coalesce(sum(affected_records) FILTER(WHERE severity='error'),0) AS errors,\n            count(DISTINCT rule_id) FILTER(WHERE severity='warning' AND affected_records>0) AS warning_rules\n          FROM reporting.quality_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'), largest AS (\n          SELECT rule_id,affected_records FROM reporting.quality_health\n          WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f' AND severity='warning' AND affected_records>0\n          ORDER BY affected_records DESC,rule_id LIMIT 1), base AS (\n          SELECT r.release_id,r.source_cut,p.state,q.errors,q.warning_rules,l.rule_id,l.affected_records\n          FROM reporting.release_metadata r\n          JOIN reporting.pipeline_health p ON p.pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n          CROSS JOIN quality q LEFT JOIN largest l ON true WHERE r.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n      SELECT release_id,NULL::text AS purchase_month,'Release '||left(release_id::text,8)||' · producer' AS analysis_scope,\n        n.question AS business_question,n.finding AS data_finding,n.follow_up AS follow_up\n      FROM base CROSS JOIN LATERAL (VALUES \n          ('01 · Đang xem bản dữ liệu nào?',\n           'Release '||left(release_id::text,8)||'; source cut '||source_cut::text||'; producer state: '||state||'. Publication mới không tự thay bản này.',\n           'Đối chiếu provenance trước khi so báo cáo. Operational audit phía dưới là live, không phải producer của mọi release.'),\n          ('02 · Có lỗi/cảnh báo gì?',\n           COALESCE(to_char((errors)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' error occurrences; '||COALESCE(to_char((warning_rules)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' warning rules có ảnh hưởng trong producer đã pin. 0 error không có nghĩa nguồn hoàn toàn sạch.',\n           'Đọc chính sách chấp nhận từng rule; không cộng occurrences giữa rule thành số bản ghi lỗi phân biệt.'),\n          ('03 · Cảnh báo nào lớn nhất?',\n           COALESCE(rule_id,'Không có warning có ảnh hưởng')||': '||COALESCE(to_char((affected_records)::numeric,'FM999,999,999,999,990'),'không đủ dữ liệu')||' occurrences. '||CASE WHEN rule_id='DQ-COV-001' THEN 'Đơn nguồn thiếu item; giữ lại để đo coverage.' ELSE 'Đọc định nghĩa rule và grain trong quality policy.' END,\n           'Truy về nguồn và xem độ phủ metric bị ảnh hưởng; không tự điền tiền hoặc bỏ warning để làm dashboard đẹp.')) AS n(question,finding,follow_up)\n) AS virtual_table GROUP BY analysis_scope, business_question, data_finding, follow_up ORDER BY business_question ASC \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "analysis_scope": "Release 87f01740 · producer",
+          "business_question": "01 · Đang xem bản dữ liệu nào?",
+          "data_finding": "Release 87f01740; source cut 1; producer state: succeeded. Publication mới không tự thay bản này.",
+          "follow_up": "Đối chiếu provenance trước khi so báo cáo. Operational audit phía dưới là live, không phải producer của mọi release."
+        },
+        {
+          "analysis_scope": "Release 87f01740 · producer",
+          "business_question": "02 · Có lỗi/cảnh báo gì?",
+          "data_finding": "0 error occurrences; 6 warning rules có ảnh hưởng trong producer đã pin. 0 error không có nghĩa nguồn hoàn toàn sạch.",
+          "follow_up": "Đọc chính sách chấp nhận từng rule; không cộng occurrences giữa rule thành số bản ghi lỗi phân biệt."
+        },
+        {
+          "analysis_scope": "Release 87f01740 · producer",
+          "business_question": "03 · Cảnh báo nào lớn nhất?",
+          "data_finding": "DQ-COV-001: 775 occurrences. Đơn nguồn thiếu item; giữ lại để đo coverage.",
+          "follow_up": "Truy về nguồn và xem độ phủ metric bị ảnh hưởng; không tự điền tiền hoặc bỏ warning để làm dashboard đẹp."
+        }
+      ]
+    },
+    "navigation@trust": {
+      "id": 70,
+      "rows": 1,
+      "seconds": 0.153,
+      "status": "success",
+      "query": "SELECT nav_overview AS nav_overview, nav_sales AS nav_sales, nav_commercial AS nav_commercial, nav_customers AS nav_customers, nav_service AS nav_service, nav_trust AS nav_trust \nFROM (SELECT release_id,month::text AS purchase_month,replace('<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_overview,replace('<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_sales,replace('<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_commercial,replace('<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_customers,replace('<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_service,replace('<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%27__MONTH__%27%29%29%29%29%2CfilterState%3A%28label%3A%27__MONTH__%27%2Cvalue%3A%21%28%27__MONTH__%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\" aria-current=\"page\">Chất lượng dữ liệu</a>','__MONTH__',to_char(month,'YYYY-MM-DD')) AS nav_trust FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY nav_overview, nav_sales, nav_commercial, nav_customers, nav_service, nav_trust \n LIMIT 100;\n\n",
+      "data": [
+        {
+          "nav_overview": "<a href=\"/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29\" title=\"Tổng quan kinh doanh\">Tổng quan</a>",
+          "nav_sales": "<a href=\"/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29\" title=\"Hiệu quả bán hàng\">Bán hàng</a>",
+          "nav_commercial": "<a href=\"/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29\" title=\"Sản phẩm và nhà bán hàng\">Sản phẩm &amp; seller</a>",
+          "nav_customers": "<a href=\"/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29\" title=\"Khách hàng và mua lại\">Khách hàng</a>",
+          "nav_service": "<a href=\"/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29\" title=\"Giao hàng và thanh toán\">Giao &amp; thanh toán</a>",
+          "nav_trust": "<a href=\"/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29\" title=\"Chất lượng dữ liệu và vận hành\" aria-current=\"page\">Chất lượng dữ liệu</a>"
+        }
+      ]
+    }
+  },
+  "dashboards": {
+    "overview": "http://localhost:18088/superset/dashboard/olist-overview-87f01740/",
+    "sales": "http://localhost:18088/superset/dashboard/olist-sales-87f01740/",
+    "commercial": "http://localhost:18088/superset/dashboard/olist-commercial-87f01740/",
+    "customers": "http://localhost:18088/superset/dashboard/olist-customers-87f01740/",
+    "service": "http://localhost:18088/superset/dashboard/olist-service-87f01740/",
+    "trust": "http://localhost:18088/superset/dashboard/olist-trust-87f01740/"
+  },
+  "commentary": {
+    "overview": [
+      {
+        "passed": true,
+        "period": "2018-07-01",
+        "matched_fragments": [
+          [
+            "867,953.46 BRL",
+            "6,159 đơn",
+            "6,100 khách",
+            "140.92 BRL/đơn",
+            "MoM +1.39%",
+            "YoY +80.22%"
+          ],
+          [
+            "health_beauty",
+            "103,524.22 BRL",
+            "11.93%"
+          ],
+          [
+            "5,948/6,156",
+            "96.62%",
+            "7.5 ngày",
+            "6,156/6,159"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8",
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "01 · Bán hàng đang ở mức nào, thay đổi ra sao?",
+            "data_finding": "867,953.46 BRL hàng delivered; 6,159 đơn; 6,100 khách phân biệt. AOV 140.92 BRL/đơn. Giá trị hàng: MoM +1.39%; YoY +80.22%.",
+            "follow_up": "Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "02 · Danh mục nào đóng góp lớn nhất?",
+            "data_finding": "health_beauty: 103,524.22 BRL, chiếm 11.93% giá trị hàng delivered của tháng.",
+            "follow_up": "Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-07",
+            "business_question": "03 · Giao hàng ra sao, đo được bao nhiêu?",
+            "data_finding": "5,948/6,156 đơn đủ điều kiện giao đúng hẹn (96.62%). Median 7.5 ngày. Có 6,156/6,159 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+            "follow_up": "Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-06-01",
+        "matched_fragments": [
+          [
+            "856,077.86 BRL",
+            "6,099 đơn",
+            "6,061 khách",
+            "140.36 BRL/đơn",
+            "MoM -12.43%",
+            "YoY +102.90%"
+          ],
+          [
+            "health_beauty",
+            "106,745.72 BRL",
+            "12.47%"
+          ],
+          [
+            "6,025/6,096",
+            "98.84%",
+            "8.0 ngày",
+            "6,096/6,099"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8",
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "01 · Bán hàng đang ở mức nào, thay đổi ra sao?",
+            "data_finding": "856,077.86 BRL hàng delivered; 6,099 đơn; 6,061 khách phân biệt. AOV 140.36 BRL/đơn. Giá trị hàng: MoM -12.43%; YoY +102.90%.",
+            "follow_up": "Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "02 · Danh mục nào đóng góp lớn nhất?",
+            "data_finding": "health_beauty: 106,745.72 BRL, chiếm 12.47% giá trị hàng delivered của tháng.",
+            "follow_up": "Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-06",
+            "business_question": "03 · Giao hàng ra sao, đo được bao nhiêu?",
+            "data_finding": "6,025/6,096 đơn đủ điều kiện giao đúng hẹn (98.84%). Median 8.0 ngày. Có 6,096/6,099 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+            "follow_up": "Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2016-09-01",
+        "matched_fragments": [
+          [
+            "134.97 BRL",
+            "1 đơn",
+            "1 khách",
+            "134.97 BRL/đơn",
+            "MoM không đủ dữ liệu",
+            "YoY không đủ dữ liệu"
+          ],
+          [
+            "health_beauty",
+            "134.97 BRL",
+            "100.00%"
+          ],
+          [
+            "0/1",
+            "0.00%",
+            "54.8 ngày",
+            "1/1"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8",
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2016-09",
+            "business_question": "01 · Bán hàng đang ở mức nào, thay đổi ra sao?",
+            "data_finding": "134.97 BRL hàng delivered; 1 đơn; 1 khách phân biệt. AOV 134.97 BRL/đơn. Giá trị hàng: MoM không đủ dữ liệu; YoY không đủ dữ liệu.",
+            "follow_up": "Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước."
+          },
+          {
+            "analysis_scope": "Tháng 2016-09",
+            "business_question": "02 · Danh mục nào đóng góp lớn nhất?",
+            "data_finding": "health_beauty: 134.97 BRL, chiếm 100.00% giá trị hàng delivered của tháng.",
+            "follow_up": "Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2016-09",
+            "business_question": "03 · Giao hàng ra sao, đo được bao nhiêu?",
+            "data_finding": "0/1 đơn đủ điều kiện giao đúng hẹn (0.00%). Median 54.8 ngày. Có 1/1 đơn delivered đủ mốc ngày hợp lệ (100.00%).",
+            "follow_up": "Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-10-01",
+        "matched_fragments": [
+          [
+            "0.00 BRL",
+            "0 đơn",
+            "0 khách",
+            "không đủ dữ liệu BRL/đơn",
+            "MoM không đủ dữ liệu",
+            "YoY -100.00%"
+          ],
+          [
+            "Không có category",
+            "không đủ dữ liệu"
+          ],
+          [
+            "0/0",
+            "không đủ dữ liệu",
+            "không đủ dữ liệu ngày",
+            "0/0"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8",
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-10",
+            "business_question": "01 · Bán hàng đang ở mức nào, thay đổi ra sao?",
+            "data_finding": "0.00 BRL hàng delivered; 0 đơn; 0 khách phân biệt. AOV không đủ dữ liệu BRL/đơn. Giá trị hàng: MoM không đủ dữ liệu; YoY -100.00%.",
+            "follow_up": "Xem Bán hàng để so số đơn, giá trị bình quân và kỳ trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-10",
+            "business_question": "02 · Danh mục nào đóng góp lớn nhất?",
+            "data_finding": "Không có category: không đủ dữ liệu BRL, chiếm không đủ dữ liệu giá trị hàng delivered của tháng.",
+            "follow_up": "Xem Sản phẩm & seller để phân tích đóng góp theo danh mục và khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-10",
+            "business_question": "03 · Giao hàng ra sao, đo được bao nhiêu?",
+            "data_finding": "0/0 đơn đủ điều kiện giao đúng hẹn (không đủ dữ liệu). Median không đủ dữ liệu ngày. Có 0/0 đơn delivered đủ mốc ngày hợp lệ (không đủ dữ liệu).",
+            "follow_up": "Xem Giao & thanh toán để đối chiếu thời gian giao và độ phủ số liệu."
+          }
+        ]
+      }
+    ],
+    "sales": [
+      {
+        "passed": true,
+        "period": "2018-07-01",
+        "matched_fragments": [
+          [
+            "867,953.46 BRL",
+            "6,159 đơn",
+            "6,100 khách",
+            "140.92 BRL/đơn"
+          ],
+          [
+            "MoM +1.39%",
+            "YoY +80.22%"
+          ],
+          [
+            "41/6,292",
+            "0.65%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "01 · Bán được bao nhiêu?",
+            "data_finding": "867,953.46 BRL hàng delivered; 6,159 đơn; 6,100 khách phân biệt. AOV 140.92 BRL/đơn.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân với tháng trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "02 · Biến động ra sao?",
+            "data_finding": "Giá trị hàng: MoM +1.39%; YoY +80.22%.",
+            "follow_up": "Phân tích biến động theo danh mục và khu vực người mua."
+          },
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "03 · Hủy đơn bao nhiêu?",
+            "data_finding": "41/6,292 đơn có trạng thái canceled (0.65%). Mẫu số gồm mọi trạng thái đơn.",
+            "follow_up": "So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-06-01",
+        "matched_fragments": [
+          [
+            "856,077.86 BRL",
+            "6,099 đơn",
+            "6,061 khách",
+            "140.36 BRL/đơn"
+          ],
+          [
+            "MoM -12.43%",
+            "YoY +102.90%"
+          ],
+          [
+            "18/6,167",
+            "0.29%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "01 · Bán được bao nhiêu?",
+            "data_finding": "856,077.86 BRL hàng delivered; 6,099 đơn; 6,061 khách phân biệt. AOV 140.36 BRL/đơn.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân với tháng trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "02 · Biến động ra sao?",
+            "data_finding": "Giá trị hàng: MoM -12.43%; YoY +102.90%.",
+            "follow_up": "Phân tích biến động theo danh mục và khu vực người mua."
+          },
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "03 · Hủy đơn bao nhiêu?",
+            "data_finding": "18/6,167 đơn có trạng thái canceled (0.29%). Mẫu số gồm mọi trạng thái đơn.",
+            "follow_up": "So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2016-09-01",
+        "matched_fragments": [
+          [
+            "134.97 BRL",
+            "1 đơn",
+            "1 khách",
+            "134.97 BRL/đơn"
+          ],
+          [
+            "MoM không đủ dữ liệu",
+            "YoY không đủ dữ liệu"
+          ],
+          [
+            "2/4",
+            "50.00%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2016-09",
+            "business_question": "01 · Bán được bao nhiêu?",
+            "data_finding": "134.97 BRL hàng delivered; 1 đơn; 1 khách phân biệt. AOV 134.97 BRL/đơn.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân với tháng trước."
+          },
+          {
+            "analysis_scope": "Tháng 2016-09",
+            "business_question": "02 · Biến động ra sao?",
+            "data_finding": "Giá trị hàng: MoM không đủ dữ liệu; YoY không đủ dữ liệu.",
+            "follow_up": "Phân tích biến động theo danh mục và khu vực người mua."
+          },
+          {
+            "analysis_scope": "Tháng 2016-09",
+            "business_question": "03 · Hủy đơn bao nhiêu?",
+            "data_finding": "2/4 đơn có trạng thái canceled (50.00%). Mẫu số gồm mọi trạng thái đơn.",
+            "follow_up": "So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-10-01",
+        "matched_fragments": [
+          [
+            "0.00 BRL",
+            "0 đơn",
+            "0 khách",
+            "không đủ dữ liệu BRL/đơn"
+          ],
+          [
+            "MoM không đủ dữ liệu",
+            "YoY -100.00%"
+          ],
+          [
+            "4/4",
+            "100.00%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-10",
+            "business_question": "01 · Bán được bao nhiêu?",
+            "data_finding": "0.00 BRL hàng delivered; 0 đơn; 0 khách phân biệt. AOV không đủ dữ liệu BRL/đơn.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân với tháng trước."
+          },
+          {
+            "analysis_scope": "Tháng 2018-10",
+            "business_question": "02 · Biến động ra sao?",
+            "data_finding": "Giá trị hàng: MoM không đủ dữ liệu; YoY -100.00%.",
+            "follow_up": "Phân tích biến động theo danh mục và khu vực người mua."
+          },
+          {
+            "analysis_scope": "Tháng 2018-10",
+            "business_question": "03 · Hủy đơn bao nhiêu?",
+            "data_finding": "4/4 đơn có trạng thái canceled (100.00%). Mẫu số gồm mọi trạng thái đơn.",
+            "follow_up": "So sánh tỷ lệ hủy và cơ cấu trạng thái giữa các tháng."
+          }
+        ]
+      }
+    ],
+    "commercial": [
+      {
+        "passed": true,
+        "period": "2018-07-01",
+        "matched_fragments": [
+          [
+            "health_beauty",
+            "103,524.22 BRL",
+            "11.93%"
+          ],
+          [
+            "14.15%",
+            "1,261 seller"
+          ],
+          [
+            "SP",
+            "321,647.25 BRL",
+            "37.06%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "a50a4d7c57cc3810ed8682c9fa7fbbf978320db14af17ef978554207d612de2b",
+          "3c3e9f7624452c5a3bdad46305b492c1b83819fb723aee846564db7637e07502"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "01 · Category nào dẫn đầu?",
+            "data_finding": "health_beauty: 103,524.22 BRL, chiếm 11.93% giá trị hàng delivered của tháng.",
+            "follow_up": "Đối chiếu giá trị với số dòng hàng của các danh mục dẫn đầu."
+          },
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "02 · Tập trung vào seller không?",
+            "data_finding": "Top 10 seller chiếm 14.15% giá trị; tổng 1,261 seller có quan sát trong tháng.",
+            "follow_up": "Theo dõi tỷ trọng nhóm dẫn đầu và thay đổi cơ cấu nhà bán hàng."
+          },
+          {
+            "analysis_scope": "Tháng 2018-07",
+            "business_question": "03 · Khách ở đâu đóng góp lớn?",
+            "data_finding": "SP: 321,647.25 BRL, chiếm 37.06% giá trị delivered theo buyer state.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân tại các khu vực đóng góp lớn."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-06-01",
+        "matched_fragments": [
+          [
+            "health_beauty",
+            "106,745.72 BRL",
+            "12.47%"
+          ],
+          [
+            "14.97%",
+            "1,175 seller"
+          ],
+          [
+            "SP",
+            "340,596.94 BRL",
+            "39.79%"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+          "a50a4d7c57cc3810ed8682c9fa7fbbf978320db14af17ef978554207d612de2b",
+          "3c3e9f7624452c5a3bdad46305b492c1b83819fb723aee846564db7637e07502"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "01 · Category nào dẫn đầu?",
+            "data_finding": "health_beauty: 106,745.72 BRL, chiếm 12.47% giá trị hàng delivered của tháng.",
+            "follow_up": "Đối chiếu giá trị với số dòng hàng của các danh mục dẫn đầu."
+          },
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "02 · Tập trung vào seller không?",
+            "data_finding": "Top 10 seller chiếm 14.97% giá trị; tổng 1,175 seller có quan sát trong tháng.",
+            "follow_up": "Theo dõi tỷ trọng nhóm dẫn đầu và thay đổi cơ cấu nhà bán hàng."
+          },
+          {
+            "analysis_scope": "Tháng 2018-06",
+            "business_question": "03 · Khách ở đâu đóng góp lớn?",
+            "data_finding": "SP: 340,596.94 BRL, chiếm 39.79% giá trị delivered theo buyer state.",
+            "follow_up": "Đối chiếu số đơn và giá trị bình quân tại các khu vực đóng góp lớn."
+          }
+        ]
+      }
+    ],
+    "customers": [
+      {
+        "passed": true,
+        "period": "Toàn kỳ đến 31/08/2018",
+        "matched_fragments": [
+          [
+            "2,801/93,358",
+            "3.00%"
+          ],
+          [
+            "5.51%",
+            "90,557 khách"
+          ],
+          [
+            "420/86,950",
+            "0.48%",
+            "19 cohort"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "fd52647249ffc23ba74135b0b14ffa4323843f44895ad7a84510ca332b1595bf",
+          "b9ed6be31b84f730e7901ca0cd1d41cf7fe5aa9d96da2d1ced9b884ce7f51ce5"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Toàn kỳ đến 31/08/2018",
+            "business_question": "01 · Bao nhiêu khách mua lại?",
+            "data_finding": "2,801/93,358 khách có ít nhất 2 đơn delivered (3.00%).",
+            "follow_up": "So sánh mức quay lại giữa các nhóm có cùng thời gian theo dõi."
+          },
+          {
+            "analysis_scope": "Toàn kỳ đến 31/08/2018",
+            "business_question": "02 · Nhóm mua lại đóng góp gì?",
+            "data_finding": "Khách mua lại đóng góp 5.51% merchandise toàn kỳ. 90,557 khách chỉ có 1 đơn được quan sát.",
+            "follow_up": "Xem cơ cấu mua lại và phân bố số lần mua của khách hàng."
+          },
+          {
+            "analysis_scope": "Toàn kỳ đến 31/08/2018",
+            "business_question": "03 · Có quay lại ở tháng kế?",
+            "data_finding": "M1: 420/86,950 khách (0.48%), gộp 19 cohort từ 2017 đủ thời gian quan sát.",
+            "follow_up": "Đối chiếu mức quay lại cùng quy mô và thời gian theo dõi của từng nhóm."
+          }
+        ]
+      }
+    ],
+    "service": [
+      {
+        "passed": true,
+        "period": "2018-07-01",
+        "matched_fragments": [
+          [
+            "5,948/6,156",
+            "96.62%"
+          ],
+          [
+            "7.5 ngày",
+            "6,156/6,159",
+            "99.95%"
+          ],
+          [
+            "credit_card",
+            "803,674.49 BRL",
+            "75.35%",
+            "4,755 payment records"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "d9f85d7fd899b20d4ab500eb975116bc8ce65edf83c44ff1c389fc3e205b03aa",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng mua 2018-07",
+            "business_question": "01 · Giao có đúng hẹn?",
+            "data_finding": "5,948/6,156 đơn đủ điều kiện giao đúng hẹn (96.62%).",
+            "follow_up": "So sánh tỷ lệ đúng hẹn giữa các tháng và khu vực có đủ quan sát."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-07",
+            "business_question": "02 · Mất bao lâu, đo được bao nhiêu?",
+            "data_finding": "Median 7.5 ngày. Có 6,156/6,159 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+            "follow_up": "Đối chiếu thời gian giao và số đơn quan sát theo khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-07",
+            "business_question": "03 · Thanh toán chủ yếu bằng gì?",
+            "data_finding": "credit_card: 803,674.49 BRL (75.35% recorded amount), 4,755 payment records.",
+            "follow_up": "Theo dõi cơ cấu phương thức và số kỳ thanh toán."
+          }
+        ]
+      },
+      {
+        "passed": true,
+        "period": "2018-06-01",
+        "matched_fragments": [
+          [
+            "6,025/6,096",
+            "98.84%"
+          ],
+          [
+            "8.0 ngày",
+            "6,096/6,099",
+            "99.95%"
+          ],
+          [
+            "credit_card",
+            "811,508.56 BRL",
+            "79.26%",
+            "4,813 payment records"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+          "d9f85d7fd899b20d4ab500eb975116bc8ce65edf83c44ff1c389fc3e205b03aa",
+          "8f46d9e59d96ced4f83cba9854aa07255cbdfd711b1b4c653599821246482e44"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Tháng mua 2018-06",
+            "business_question": "01 · Giao có đúng hẹn?",
+            "data_finding": "6,025/6,096 đơn đủ điều kiện giao đúng hẹn (98.84%).",
+            "follow_up": "So sánh tỷ lệ đúng hẹn giữa các tháng và khu vực có đủ quan sát."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-06",
+            "business_question": "02 · Mất bao lâu, đo được bao nhiêu?",
+            "data_finding": "Median 8.0 ngày. Có 6,096/6,099 đơn delivered đủ mốc ngày hợp lệ (99.95%).",
+            "follow_up": "Đối chiếu thời gian giao và số đơn quan sát theo khu vực."
+          },
+          {
+            "analysis_scope": "Tháng mua 2018-06",
+            "business_question": "03 · Thanh toán chủ yếu bằng gì?",
+            "data_finding": "credit_card: 811,508.56 BRL (79.26% recorded amount), 4,813 payment records.",
+            "follow_up": "Theo dõi cơ cấu phương thức và số kỳ thanh toán."
+          }
+        ]
+      }
+    ],
+    "trust": [
+      {
+        "passed": true,
+        "period": "Release 87f01740 · producer",
+        "matched_fragments": [
+          [
+            "87f01740",
+            "source cut 1",
+            "producer state: succeeded"
+          ],
+          [
+            "0 error occurrences",
+            "6 warning rules"
+          ],
+          [
+            "DQ-COV-001",
+            "775 occurrences"
+          ]
+        ],
+        "oracle_sql_sha256": [
+          "b7518140e7b018a985264939af2a4c568ff1b68da8079b2628de21e57a699433",
+          "239d5888d468199d3b27590b8704934c736a256414cb93ea18f9561fe6291968"
+        ],
+        "rows": [
+          {
+            "analysis_scope": "Release 87f01740 · producer",
+            "business_question": "01 · Đang xem bản dữ liệu nào?",
+            "data_finding": "Release 87f01740; source cut 1; producer state: succeeded. Publication mới không tự thay bản này.",
+            "follow_up": "Đối chiếu provenance trước khi so báo cáo. Operational audit phía dưới là live, không phải producer của mọi release."
+          },
+          {
+            "analysis_scope": "Release 87f01740 · producer",
+            "business_question": "02 · Có lỗi/cảnh báo gì?",
+            "data_finding": "0 error occurrences; 6 warning rules có ảnh hưởng trong producer đã pin. 0 error không có nghĩa nguồn hoàn toàn sạch.",
+            "follow_up": "Đọc chính sách chấp nhận từng rule; không cộng occurrences giữa rule thành số bản ghi lỗi phân biệt."
+          },
+          {
+            "analysis_scope": "Release 87f01740 · producer",
+            "business_question": "03 · Cảnh báo nào lớn nhất?",
+            "data_finding": "DQ-COV-001: 775 occurrences. Đơn nguồn thiếu item; giữ lại để đo coverage.",
+            "follow_up": "Truy về nguồn và xem độ phủ metric bị ảnh hưởng; không tự điền tiền hoặc bỏ warning để làm dashboard đẹp."
+          }
+        ]
+      }
+    ]
+  },
+  "navigation": {
+    "overview": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ],
+    "sales": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ],
+    "commercial": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ],
+    "customers": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ],
+    "service": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ],
+    "trust": [
+      {
+        "passed": true,
+        "month": "2018-07-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-07-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-07-01%27%2Cvalue%3A%21%28%272018-07-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      },
+      {
+        "passed": true,
+        "month": "2018-06-01",
+        "same_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "links": {
+          "overview": "/superset/dashboard/olist-overview-87f01740/?native_filters=%28NATIVE_FILTER-month-overview%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-overview%2CownState%3A%28%29%29%29",
+          "sales": "/superset/dashboard/olist-sales-87f01740/?native_filters=%28NATIVE_FILTER-month-sales%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-sales%2CownState%3A%28%29%29%29",
+          "commercial": "/superset/dashboard/olist-commercial-87f01740/?native_filters=%28NATIVE_FILTER-month-commercial%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-commercial%2CownState%3A%28%29%29%29",
+          "customers": "/superset/dashboard/olist-customers-87f01740/?native_filters=%28NATIVE_FILTER-month-customers%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-customers%2CownState%3A%28%29%29%29",
+          "service": "/superset/dashboard/olist-service-87f01740/?native_filters=%28NATIVE_FILTER-month-service%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-service%2CownState%3A%28%29%29%29",
+          "trust": "/superset/dashboard/olist-trust-87f01740/?native_filters=%28NATIVE_FILTER-month-trust%3A%28extraFormData%3A%28filters%3A%21%28%28col%3Apurchase_month%2Cop%3AIN%2Cval%3A%21%28%272018-06-01%27%29%29%29%29%2CfilterState%3A%28label%3A%272018-06-01%27%2Cvalue%3A%21%28%272018-06-01%27%29%29%2Cid%3ANATIVE_FILTER-month-trust%2CownState%3A%28%29%29%29"
+        }
+      }
+    ]
+  },
+  "methodology": {
+    "overview": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    },
+    "sales": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    },
+    "commercial": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    },
+    "customers": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    },
+    "service": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    },
+    "trust": {
+      "passed": true,
+      "full_guides_in_chart_description": true,
+      "release_binding_preserved": true
+    }
+  },
+  "idempotency": {
+    "passed": true,
+    "same_catalog_and_context": true,
+    "asset_counts": {
+      "datasets": 44,
+      "charts": 65,
+      "dashboards": 6
+    }
+  },
+  "saved_queries": {
+    "categories": {
+      "id": 1,
+      "rows": 67,
+      "status": "success"
+    },
+    "cohorts": {
+      "id": 2,
+      "rows": 140,
+      "status": "success"
+    },
+    "customer_segments": {
+      "id": 3,
+      "rows": 3,
+      "status": "success"
+    },
+    "delivery": {
+      "id": 4,
+      "rows": 27,
+      "status": "success"
+    },
+    "monthly": {
+      "id": 5,
+      "rows": 25,
+      "status": "success"
+    },
+    "payments": {
+      "id": 6,
+      "rows": 4,
+      "status": "success"
+    },
+    "quality": {
+      "id": 7,
+      "rows": 6,
+      "status": "success"
+    },
+    "sellers": {
+      "id": 8,
+      "rows": 1261,
+      "status": "success"
+    }
+  },
+  "core_metricflow_parity": true,
+  "published_contexts_pinned": true,
+  "distinct_not_summed": true,
+  "commentary_numeric_parity": true
+}

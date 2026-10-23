@@ -1,0 +1,32 @@
+[project]
+name = "sales-customer-warehouse"
+version = "0.3.0"
+description = "Local Kimball Warehouse with dbt, MetricFlow, Airflow and verified releases"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[dependency-groups]
+design = [
+  "PyYAML==6.0.3",
+  "jsonschema==4.26.0",
+  "pglast>=7,<8",
+]
+runtime = [
+    "jsonschema==4.26.0",
+    "minio>=7.2,<8",
+    "psycopg[binary]>=3.2,<4",
+    "pyyaml==6.0.3",
+    "requests>=2.32.4,<3",
+]
+semantic = [
+  "dbt-core==1.12.6",
+  "dbt-postgres==1.11.0",
+  "dbt-metricflow==0.15.0",
+]
+test = [
+    "pytest>=8,<10",
+]
+
+[tool.uv]
+package = false
+

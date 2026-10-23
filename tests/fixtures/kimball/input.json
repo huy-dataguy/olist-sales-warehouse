@@ -1,0 +1,325 @@
+{
+  "metadata": {
+    "source_system": "synthetic_contract_fixture",
+    "scenario_id": "kimball-golden-v1",
+    "scd2_scenario_id": "scd2-effective-history-v1",
+    "currency": "BRL",
+    "business_effectivity": "explicit synthetic timestamps",
+    "not_real_olist": true
+  },
+  "customers": [
+    {
+      "customer_id": "ref_o1",
+      "customer_unique_id": "customer_a",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "postal_prefix": "01001"
+    },
+    {
+      "customer_id": "ref_o2",
+      "customer_unique_id": "customer_a",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "postal_prefix": "01001"
+    },
+    {
+      "customer_id": "ref_o3",
+      "customer_unique_id": "customer_b",
+      "city": "Rio",
+      "state": "RJ",
+      "postal_prefix": "20000"
+    },
+    {
+      "customer_id": "ref_o4",
+      "customer_unique_id": "customer_b",
+      "city": "Rio",
+      "state": "RJ",
+      "postal_prefix": "20000"
+    },
+    {
+      "customer_id": "ref_o5",
+      "customer_unique_id": "customer_c",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "postal_prefix": "01001"
+    },
+    {
+      "customer_id": "ref_o6",
+      "customer_unique_id": "customer_a",
+      "city": "Rio",
+      "state": "RJ",
+      "postal_prefix": "20000"
+    },
+    {
+      "customer_id": "ref_o7",
+      "customer_unique_id": "customer_a",
+      "city": "Sao Paulo",
+      "state": "SP",
+      "postal_prefix": "01001"
+    }
+  ],
+  "products": [
+    {
+      "product_id": "p1",
+      "category": "food"
+    },
+    {
+      "product_id": "p2",
+      "category": "beauty"
+    },
+    {
+      "product_id": "p3",
+      "category": null
+    }
+  ],
+  "sellers": [
+    {
+      "seller_id": "s1",
+      "state": "SP"
+    },
+    {
+      "seller_id": "s2",
+      "state": "RJ"
+    }
+  ],
+  "orders": [
+    {
+      "order_id": "o1",
+      "customer_id": "ref_o1",
+      "status": "delivered",
+      "purchased_at": "2024-01-01 10:00:00",
+      "approved_at": "2024-01-01 11:00:00",
+      "carrier_at": "2024-01-02 09:00:00",
+      "delivered_at": "2024-01-03 12:00:00",
+      "estimated_delivery_at": "2024-01-04 00:00:00"
+    },
+    {
+      "order_id": "o2",
+      "customer_id": "ref_o2",
+      "status": "delivered",
+      "purchased_at": "2024-01-01 12:00:00",
+      "approved_at": "2024-01-01 13:00:00",
+      "carrier_at": "2024-01-02 09:00:00",
+      "delivered_at": "2024-01-06 12:00:00",
+      "estimated_delivery_at": "2024-01-05 00:00:00"
+    },
+    {
+      "order_id": "o3",
+      "customer_id": "ref_o3",
+      "status": "canceled",
+      "purchased_at": "2024-01-03 10:00:00",
+      "approved_at": null,
+      "carrier_at": null,
+      "delivered_at": null,
+      "estimated_delivery_at": "2024-01-07 00:00:00"
+    },
+    {
+      "order_id": "o4",
+      "customer_id": "ref_o4",
+      "status": "delivered",
+      "purchased_at": "2024-02-01 10:00:00",
+      "approved_at": "2024-02-01 11:00:00",
+      "carrier_at": "2024-02-02 09:00:00",
+      "delivered_at": null,
+      "estimated_delivery_at": "2024-02-05 00:00:00"
+    },
+    {
+      "order_id": "o5",
+      "customer_id": "ref_o5",
+      "status": "unavailable",
+      "purchased_at": "2024-02-02 10:00:00",
+      "approved_at": null,
+      "carrier_at": null,
+      "delivered_at": null,
+      "estimated_delivery_at": "2024-02-06 00:00:00"
+    },
+    {
+      "order_id": "o6",
+      "customer_id": "ref_o6",
+      "status": "delivered",
+      "purchased_at": "2024-02-03 10:00:00",
+      "approved_at": "2024-02-03 11:00:00",
+      "carrier_at": "2024-02-04 09:00:00",
+      "delivered_at": "2024-02-06 18:00:00",
+      "estimated_delivery_at": "2024-02-06 00:00:00"
+    },
+    {
+      "order_id": "o7",
+      "customer_id": "ref_o7",
+      "status": "delivered",
+      "purchased_at": "2024-01-02 10:00:00",
+      "approved_at": "2024-01-02 11:00:00",
+      "carrier_at": "2024-01-03 09:00:00",
+      "delivered_at": "2024-01-05 18:00:00",
+      "estimated_delivery_at": "2024-01-05 00:00:00"
+    }
+  ],
+  "items": [
+    {
+      "order_id": "o1",
+      "order_item_id": 1,
+      "product_id": "p1",
+      "seller_id": "s1",
+      "price": "100.00",
+      "freight_value": "10.00"
+    },
+    {
+      "order_id": "o1",
+      "order_item_id": 2,
+      "product_id": "p2",
+      "seller_id": "s2",
+      "price": "50.00",
+      "freight_value": "5.00"
+    },
+    {
+      "order_id": "o2",
+      "order_item_id": 1,
+      "product_id": "p1",
+      "seller_id": "s1",
+      "price": "80.00",
+      "freight_value": "8.00"
+    },
+    {
+      "order_id": "o3",
+      "order_item_id": 1,
+      "product_id": "p2",
+      "seller_id": "s2",
+      "price": "40.00",
+      "freight_value": "4.00"
+    },
+    {
+      "order_id": "o4",
+      "order_item_id": 1,
+      "product_id": "p3",
+      "seller_id": "s1",
+      "price": "120.00",
+      "freight_value": "12.00"
+    },
+    {
+      "order_id": "o6",
+      "order_item_id": 1,
+      "product_id": "p1",
+      "seller_id": "s1",
+      "price": "60.00",
+      "freight_value": "6.00"
+    },
+    {
+      "order_id": "o6",
+      "order_item_id": 2,
+      "product_id": "p2",
+      "seller_id": "s2",
+      "price": "40.00",
+      "freight_value": "4.00"
+    },
+    {
+      "order_id": "o7",
+      "order_item_id": 1,
+      "product_id": "p2",
+      "seller_id": "s2",
+      "price": "50.00",
+      "freight_value": "5.00"
+    }
+  ],
+  "payments": [
+    {
+      "order_id": "o1",
+      "payment_sequential": 1,
+      "payment_type": "credit_card",
+      "payment_installments": 3,
+      "payment_value": "100.00"
+    },
+    {
+      "order_id": "o1",
+      "payment_sequential": 2,
+      "payment_type": "voucher",
+      "payment_installments": 1,
+      "payment_value": "65.00"
+    },
+    {
+      "order_id": "o2",
+      "payment_sequential": 1,
+      "payment_type": "credit_card",
+      "payment_installments": 1,
+      "payment_value": "88.00"
+    },
+    {
+      "order_id": "o3",
+      "payment_sequential": 1,
+      "payment_type": "credit_card",
+      "payment_installments": 1,
+      "payment_value": "44.00"
+    },
+    {
+      "order_id": "o4",
+      "payment_sequential": 1,
+      "payment_type": "boleto",
+      "payment_installments": 1,
+      "payment_value": "132.00"
+    },
+    {
+      "order_id": "o6",
+      "payment_sequential": 1,
+      "payment_type": "credit_card",
+      "payment_installments": 1,
+      "payment_value": "109.97"
+    },
+    {
+      "order_id": "o7",
+      "payment_sequential": 1,
+      "payment_type": "debit_card",
+      "payment_installments": 1,
+      "payment_value": "55.00"
+    }
+  ],
+  "scd2_arrivals": [
+    {
+      "product_id": "p1",
+      "valid_from": "2024-01-01 00:00:00",
+      "category": "food",
+      "allocated_key": 101
+    },
+    {
+      "product_id": "p1",
+      "valid_from": "2024-02-15 00:00:00",
+      "category": "health",
+      "allocated_key": 103
+    },
+    {
+      "product_id": "p1",
+      "valid_from": "2024-01-15 00:00:00",
+      "category": "wellness",
+      "allocated_key": 102
+    },
+    {
+      "product_id": "p1",
+      "valid_from": "2024-01-20 00:00:00",
+      "category": "wellness",
+      "allocated_key": 104
+    },
+    {
+      "product_id": "p1",
+      "valid_from": "2024-01-15 00:00:00",
+      "category": "wellness",
+      "allocated_key": 102
+    }
+  ],
+  "scd2_lookups": [
+    "2023-12-31 23:59:59",
+    "2024-01-10 00:00:00",
+    "2024-01-15 00:00:00",
+    "2024-02-15 00:00:00"
+  ],
+  "inferred_member": {
+    "natural_key": "seller_new",
+    "allocated_key": 501,
+    "initial": {
+      "is_inferred": true,
+      "state": null
+    },
+    "arriving": {
+      "is_inferred": false,
+      "state": "SP"
+    }
+  }
+}
+

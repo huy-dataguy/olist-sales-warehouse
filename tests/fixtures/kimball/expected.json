@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "authorship": "Manually specified business expectations, independent from verifier and future pipeline implementation.",
+    "scenario_id": "kimball-golden-v1"
+  },
+  "totals": {
+    "total_orders": 7,
+    "delivered_orders": 5,
+    "canceled_orders": 1,
+    "delivered_merchandise_value": "500.00",
+    "delivered_unique_customers": 2,
+    "delivered_item_rows": 7,
+    "delivered_aov": "100.00"
+  },
+  "monthly": {
+    "2024-01": {
+      "total_orders": 4,
+      "delivered_orders": 3,
+      "canceled_orders": 1,
+      "delivered_merchandise_value": "280.00",
+      "delivered_unique_customers": 1,
+      "delivered_item_rows": 4
+    },
+    "2024-02": {
+      "total_orders": 3,
+      "delivered_orders": 2,
+      "canceled_orders": 0,
+      "delivered_merchandise_value": "220.00",
+      "delivered_unique_customers": 2,
+      "delivered_item_rows": 3
+    }
+  },
+  "category_value": {
+    "food": "240.00",
+    "beauty": "140.00",
+    "Unknown": "120.00"
+  },
+  "seller_value": {
+    "s1": "360.00",
+    "s2": "140.00"
+  },
+  "buyer_state_value": {
+    "SP": "280.00",
+    "RJ": "220.00"
+  },
+  "buyer_state_customers": {
+    "SP": 1,
+    "RJ": 2
+  },
+  "quality": {
+    "orders_without_items": 1,
+    "orders_without_payments": 1,
+    "delivered_orders_without_delivery_timestamp": 1,
+    "products_without_category": 1,
+    "payment_difference_above_one_cent": 1,
+    "delivery_eligible_orders": 4,
+    "on_time_delivery_orders": 3
+  },
+  "fanout": {
+    "order_id": "o1",
+    "correct_merchandise": "150.00",
+    "naive_join_merchandise": "300.00",
+    "correct_payment": "165.00",
+    "naive_join_payment": "330.00"
+  },
+  "scd2_versions": [
+    {
+      "surrogate_key": 101,
+      "valid_from": "2024-01-01 00:00:00",
+      "valid_to": "2024-01-15 00:00:00",
+      "category": "food",
+      "is_current": false
+    },
+    {
+      "surrogate_key": 102,
+      "valid_from": "2024-01-15 00:00:00",
+      "valid_to": "2024-02-15 00:00:00",
+      "category": "wellness",
+      "is_current": false
+    },
+    {
+      "surrogate_key": 103,
+      "valid_from": "2024-02-15 00:00:00",
+      "valid_to": null,
+      "category": "health",
+      "is_current": true
+    }
+  ],
+  "scd2_lookup_keys": [
+    0,
+    101,
+    102,
+    103
+  ],
+  "inferred_member_key_after_enrichment": 501,
+  "ratios": {
+    "overall_aov": "100.00",
+    "overall_cancellation_rate": "0.142857142857142857",
+    "2024-01_aov": "93.333333333333333333",
+    "2024-01_cancellation_rate": "0.25",
+    "2024-02_aov": "110.00",
+    "2024-02_cancellation_rate": "0.00",
+    "incorrect_average_daily_aov": "96.25"
+  },
+  "zero_denominator_result": null
+}
+

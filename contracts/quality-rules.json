@@ -1,0 +1,147 @@
+{
+  "version": "2.0.0",
+  "default_invalid_row_admission_threshold": 0,
+  "known_source_warning_policy": "visible and source-linked; no fabricated balancing",
+  "rules": [
+    {
+      "id": "DQ-KEY-001",
+      "name": "natural_key_uniqueness",
+      "severity": "error",
+      "scope": "all accepted entities",
+      "expectation": "0 conflicting keys",
+      "layer": "source/normalized/working/store",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-FK-001",
+      "name": "same_release_dimension_references",
+      "severity": "error",
+      "scope": "all applicable fact dimension keys",
+      "expectation": "0 unresolved references after inferred/unknown policy",
+      "layer": "Warehouse release",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-GRAIN-001",
+      "name": "fact_grain_uniqueness",
+      "severity": "error",
+      "scope": "3 declared fact grains",
+      "expectation": "0 duplicate natural grains",
+      "layer": "work/store",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-COV-001",
+      "name": "orders_without_items",
+      "severity": "warning",
+      "scope": "accepted source orders",
+      "expectation": "775 only for the full pinned real snapshot; otherwise measure at cut",
+      "layer": "source/order fact",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-COV-002",
+      "name": "orders_without_payments",
+      "severity": "warning",
+      "scope": "accepted source orders",
+      "expectation": "1 only for the full pinned real snapshot; otherwise measure at cut",
+      "layer": "source/order fact",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-CAT-001",
+      "name": "missing_product_category",
+      "severity": "warning",
+      "scope": "accepted source products",
+      "expectation": "610 in full pinned real snapshot; preserve product and Unknown category",
+      "layer": "product dimension",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-TIME-001",
+      "name": "delivered_without_delivery_timestamp",
+      "severity": "warning",
+      "scope": "accepted delivered orders",
+      "expectation": "8 in full pinned real snapshot; retained in delivered count, excluded from timing eligibility",
+      "layer": "order fact",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-PAY-001",
+      "name": "payment_merchandise_freight_delta",
+      "severity": "warning",
+      "scope": "orders with both items and payments, all statuses",
+      "expectation": "abs(delta)>0.01; 303 in full pinned real snapshot",
+      "layer": "independently aggregated order totals",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-SOURCE-001",
+      "name": "source_to_fact_reconciliation",
+      "severity": "error",
+      "scope": "same accepted artifact/revision set",
+      "expectation": "exact keys/counts/money at cents; explain quarantined or missing-source coverage",
+      "layer": "all facts",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-OCC-001",
+      "name": "received_occurrence_accounting",
+      "severity": "error",
+      "scope": "each admitted/rejected batch receipt",
+      "expectation": "received=accepted+duplicate+rejected; distinct entities reported separately",
+      "layer": "admission ledger",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-TIME-002",
+      "name": "milestone_temporal_anomaly",
+      "severity": "warning",
+      "scope": "available source milestone pairs",
+      "expectation": "flag invalid chronology; exclude invalid duration; baseline to be measured",
+      "layer": "order fact",
+      "owner": "business-data-steward",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-SCD-001",
+      "name": "known_effectivity_overlap",
+      "severity": "error",
+      "scope": "Type2 members with declared effective time",
+      "expectation": "no overlaps; one current version; exact boundaries",
+      "layer": "isolated Type2 scenario and future versioned source",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-REL-001",
+      "name": "release_consistency",
+      "severity": "error",
+      "scope": "consumer dims/facts/metric exports",
+      "expectation": "same release/source_cut/versions; complete required model/export set",
+      "layer": "publication",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    },
+    {
+      "id": "DQ-LEASE-001",
+      "name": "owner_fencing",
+      "severity": "error",
+      "scope": "shared work and promotion",
+      "expectation": "current unexpired owner/fence only",
+      "layer": "orchestration/DB state",
+      "owner": "pipeline-owner",
+      "count_grain": "choose per-record or aggregate per rule/scope/cut, never both; stable issue identity makes retries idempotent"
+    }
+  ]
+}

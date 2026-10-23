@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:customers:1.0.0",
+  "title": "Olist customers source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "customer_unique_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "customer_zip_code_prefix": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]{5}$"
+    },
+    "customer_city": {
+      "type": "string",
+      "minLength": 1
+    },
+    "customer_state": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Z]{2}$"
+    }
+  },
+  "required": [
+    "customer_id",
+    "customer_unique_id",
+    "customer_zip_code_prefix",
+    "customer_city",
+    "customer_state"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_customers_dataset.csv",
+  "x-natural-key": [
+    "customer_id"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

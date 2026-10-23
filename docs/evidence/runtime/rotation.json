@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "role": "salesdw_bi",
+  "old_connection_denied": true,
+  "new_connection_succeeded": true,
+  "metabase_connection_updated": true,
+  "rotated_at": "20261015T135957Z",
+  "follow_up": "Recreate long-lived Airflow containers to remount the atomic runtime-secret file; no other credentials changed."
+}

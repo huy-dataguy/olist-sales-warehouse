@@ -1,0 +1,101 @@
+version: 2
+# dbt Core 1.12.6's V2 parser drops fill_nulls_with. Legacy YAML preserves it.
+models:
+  - name: time_spine
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+semantic_models:
+  - name: orders
+    model: ref('metric_orders')
+    defaults: {agg_time_dimension: order_date}
+    entities:
+      - {name: order, type: primary, expr: order_key}
+      - {name: buyer_geography, type: foreign, expr: buyer_geography_key}
+    dimensions:
+      - name: order_date
+        type: time
+        type_params: {time_granularity: day}
+    measures:
+      - {name: order_count_measure, agg: sum, expr: order_count}
+      - {name: delivered_orders_measure, agg: sum, expr: delivered_order_count}
+      - {name: canceled_orders_measure, agg: sum, expr: canceled_order_count}
+      - {name: delivered_customers_measure, agg: count_distinct, expr: delivered_customer_key}
+  - name: order_items
+    model: ref('metric_order_items')
+    defaults: {agg_time_dimension: order_date}
+    entities:
+      - {name: order_item, type: primary, expr: order_item_key}
+      - {name: product, type: foreign, expr: product_key}
+      - {name: seller, type: foreign, expr: seller_key}
+      - {name: buyer_geography, type: foreign, expr: buyer_geography_key}
+    dimensions:
+      - name: order_date
+        type: time
+        type_params: {time_granularity: day}
+    measures:
+      - {name: merchandise_measure, agg: sum, expr: delivered_merchandise_value}
+      - {name: item_rows_measure, agg: sum, expr: delivered_item_rows}
+  - name: products
+    model: ref('dim_product')
+    entities:
+      - {name: product, type: primary, expr: product_key}
+    dimensions:
+      - {name: category, type: categorical}
+  - name: sellers
+    model: ref('dim_seller')
+    entities:
+      - {name: seller, type: primary, expr: seller_key}
+    dimensions:
+      - {name: seller_id, type: categorical}
+  - name: buyer_geographies
+    model: ref('dim_buyer_geography')
+    entities:
+      - {name: buyer_geography, type: primary, expr: buyer_geography_key}
+    dimensions:
+      - {name: state, type: categorical}
+metrics:
+  - name: total_orders
+    label: Total orders
+    type: simple
+    type_params:
+      measure: {name: order_count_measure, fill_nulls_with: 0}
+  - name: delivered_orders
+    label: Delivered orders
+    type: simple
+    type_params:
+      measure: {name: delivered_orders_measure, fill_nulls_with: 0}
+  - name: canceled_orders
+    label: Canceled orders
+    type: simple
+    type_params:
+      measure: {name: canceled_orders_measure, fill_nulls_with: 0}
+  - name: delivered_unique_customers
+    label: Distinct delivered customers
+    type: simple
+    type_params:
+      measure: {name: delivered_customers_measure, fill_nulls_with: 0}
+  - name: delivered_merchandise_value
+    label: Delivered merchandise value
+    type: simple
+    type_params:
+      measure: {name: merchandise_measure, fill_nulls_with: 0}
+  - name: delivered_item_rows
+    label: Delivered item rows
+    type: simple
+    type_params:
+      measure: {name: item_rows_measure, fill_nulls_with: 0}
+  - name: delivered_aov
+    label: Delivered average order value
+    type: ratio
+    type_params:
+      numerator: delivered_merchandise_value
+      denominator: delivered_orders
+  - name: cancellation_rate
+    label: Cancellation rate
+    type: ratio
+    type_params:
+      numerator: canceled_orders
+      denominator: total_orders

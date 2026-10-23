@@ -1,0 +1,15 @@
+version: '3.3.0'
+implementation: bi/bootstrap_superset.py
+source: contracts/dashboard-contract.json
+business_filter: release_id
+policy: Every business SQL card must use the same required explicit published release.
+commentary: Query-backed answers with period, interpretation, next investigation and limits on every report page.
+presentation: Compact business-facing context and findings; full methodology in chart descriptions/docs, technical provenance on the trust page; no repeated instructional panels.
+navigation: Executive entry plus five specialist pages; retain release and selected month, without filtering fixed customer/trust business scope.
+dashboards:
+  - overview
+  - sales
+  - commercial
+  - customers
+  - service
+  - trust

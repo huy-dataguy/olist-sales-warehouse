@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:category_translation:1.0.0",
+  "title": "Olist category_translation source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "product_category_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_category_name_english": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "product_category_name",
+    "product_category_name_english"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "product_category_name_translation.csv",
+  "x-natural-key": [
+    "product_category_name"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

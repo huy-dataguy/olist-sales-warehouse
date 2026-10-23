@@ -1,0 +1,63 @@
+{
+  "database": "sales_dw_restore_20261015_133251",
+  "simulated": true,
+  "passed": true,
+  "checks": {
+    "unknown_schema": {
+      "run_id": "190df904-64ec-42ba-93d4-a437c8302553",
+      "batch": {
+        "state": "failed",
+        "received_occurrences": 0,
+        "rejected_occurrences": 0
+      },
+      "source_cut_and_publication_unchanged": true,
+      "raw_sha256": "b2ecbf3015d01fe801ec8cb49c023c9cb3aac5e7d8855fab38452eabda7a593b"
+    },
+    "bad_status": {
+      "run_id": "618e7a00-6c7f-4f38-a977-92c90e9629f7",
+      "batch": {
+        "state": "failed",
+        "received_occurrences": 5,
+        "rejected_occurrences": 5
+      },
+      "source_cut_and_publication_unchanged": true,
+      "raw_sha256": "0fe5299ec3e5ec17d409d67c012d15a01279ed5a828c35faa4d29119042b4300"
+    },
+    "duplicate_conflict": {
+      "run_id": "c52e234f-2a6d-4c93-8f53-88ce1dc2099b",
+      "batch": {
+        "state": "failed",
+        "received_occurrences": 6,
+        "rejected_occurrences": 6
+      },
+      "source_cut_and_publication_unchanged": true,
+      "raw_sha256": "9714969597b4f879d4bea9a9ebbb2e0b9f013943a25bf5546383e0b9838d9f2b"
+    },
+    "equal_revision": {
+      "run_id": "c8dffec9-cedf-47f5-b5ff-d7ea2a89d67e",
+      "batch": {
+        "state": "failed",
+        "received_occurrences": 5,
+        "rejected_occurrences": 5
+      },
+      "source_cut_and_publication_unchanged": true,
+      "raw_sha256": "0588c07ac0e42cbd2b7811a95476ebeb016253a19f7074f83817cb941664fa3f"
+    },
+    "fencing": {
+      "one_concurrent_winner": true,
+      "fence_increased": true,
+      "stale_owner_denied": true
+    },
+    "effectivity": {
+      "late_interval_split": true,
+      "as_of_boundaries": true,
+      "postgres_overlap_denied": true,
+      "candidate_rolled_back": true
+    },
+    "source_loss": {
+      "recovered_from_s3": true,
+      "corrupt_local_artifact_rejected": true,
+      "real_archive_untouched": true
+    }
+  }
+}

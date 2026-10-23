@@ -1,0 +1,28 @@
+{
+  "source_system": "olist",
+  "dataset": "olistbr/brazilian-ecommerce",
+  "version": 2,
+  "checked_on": "2026-10-15",
+  "source_url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+  "download_url": "https://www.kaggle.com/api/v1/datasets/download/olistbr/brazilian-ecommerce",
+  "local_artifact": "data/raw/olist/brazilian-ecommerce-v2.zip",
+  "bytes": 44717580,
+  "sha256": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+  "license_metadata": "CC BY-NC-SA 4.0",
+  "publisher": "Olist",
+  "feeds_v1": [
+    "olist_customers_dataset.csv",
+    "olist_products_dataset.csv",
+    "olist_sellers_dataset.csv",
+    "olist_orders_dataset.csv",
+    "olist_order_items_dataset.csv",
+    "olist_order_payments_dataset.csv",
+    "product_category_name_translation.csv"
+  ],
+  "excluded_members_v1": [
+    "olist_order_reviews_dataset.csv",
+    "olist_geolocation_dataset.csv"
+  ],
+  "verification_scope": "Archive downloaded and fully profiled; not loaded into a running Warehouse."
+}
+

@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "database": "sales_dw_restore_20261015_133251",
+  "published_run": "d80869ab-52e3-412c-bdae-7f4de7f77283",
+  "new_lease_owner": "41e1f942-f6c7-40b1-920a-afd38ee22f52",
+  "acknowledged_release": "49c450dd-bdd1-5284-bfe4-dfed46e3c76d",
+  "current_pointer": "335a46ff-0ecb-5b9e-a844-2bcbafa86559",
+  "publish_ack": {
+    "release_id": "49c450dd-bdd1-5284-bfe4-dfed46e3c76d",
+    "state": "published",
+    "recovered_ack": true
+  },
+  "finish_ack": {
+    "state": "succeeded",
+    "release_id": "49c450dd-bdd1-5284-bfe4-dfed46e3c76d",
+    "publish_ack_replay": true,
+    "lease_cleanup": "already_expired_or_reassigned"
+  },
+  "newer_owner_intact": true,
+  "pointer_unchanged": true,
+  "no_duplicate_publication": true
+}

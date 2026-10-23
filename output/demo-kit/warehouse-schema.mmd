@@ -1,0 +1,112 @@
+erDiagram
+    DIM_CUSTOMER {
+        uuid release_id PK
+        bigint customer_key PK
+        text customer_unique_id
+    }
+    DIM_PRODUCT {
+        uuid release_id PK
+        bigint product_key PK
+        text product_id
+        text category_source
+        text category_english
+    }
+    DIM_SELLER {
+        uuid release_id PK
+        bigint seller_key PK
+        text seller_id
+        text seller_city
+        text seller_state
+    }
+    DIM_BUYER_GEOGRAPHY {
+        uuid release_id PK
+        bigint buyer_geography_key PK
+        text postal_prefix
+        text city
+        text state
+    }
+    DIM_DATE {
+        uuid release_id PK
+        int date_key PK
+        date full_date
+        date month_start
+    }
+    DIM_ORDER_STATUS {
+        uuid release_id PK
+        bigint order_status_key PK
+        text status_code
+        boolean is_delivered
+        boolean is_canceled
+    }
+    DIM_PAYMENT_METHOD {
+        uuid release_id PK
+        bigint payment_method_key PK
+        text payment_type
+    }
+    FCT_ORDERS {
+        uuid release_id PK
+        text order_key PK
+        text source_system
+        text order_id
+        bigint customer_key FK
+        bigint buyer_geography_key FK
+        bigint order_status_key FK
+        int purchase_date_key FK
+        int approved_date_key FK
+        int carrier_date_key FK
+        int delivered_date_key FK
+        int estimated_delivery_date_key FK
+        int order_count
+        int delivered_order_count
+        int canceled_order_count
+        numeric item_merchandise_total
+    }
+    DIM_CUSTOMER ||--o{ FCT_ORDERS : customer_key
+    DIM_BUYER_GEOGRAPHY ||--o{ FCT_ORDERS : buyer_geography_key
+    DIM_ORDER_STATUS ||--o{ FCT_ORDERS : order_status_key
+    DIM_DATE ||--o{ FCT_ORDERS : purchase_date_key
+    DIM_DATE ||--o{ FCT_ORDERS : approved_date_key
+    DIM_DATE ||--o{ FCT_ORDERS : carrier_date_key
+    DIM_DATE ||--o{ FCT_ORDERS : delivered_date_key
+    DIM_DATE ||--o{ FCT_ORDERS : estimated_delivery_date_key
+    FCT_ORDER_ITEMS {
+        uuid release_id PK
+        text order_item_key PK
+        text source_system
+        text order_id
+        int order_item_id
+        bigint customer_key FK
+        bigint buyer_geography_key FK
+        bigint order_status_key FK
+        int purchase_date_key FK
+        bigint product_key FK
+        bigint seller_key FK
+        numeric merchandise_value
+        numeric freight_value
+        int item_row_count
+    }
+    DIM_CUSTOMER ||--o{ FCT_ORDER_ITEMS : customer_key
+    DIM_BUYER_GEOGRAPHY ||--o{ FCT_ORDER_ITEMS : buyer_geography_key
+    DIM_ORDER_STATUS ||--o{ FCT_ORDER_ITEMS : order_status_key
+    DIM_DATE ||--o{ FCT_ORDER_ITEMS : purchase_date_key
+    DIM_PRODUCT ||--o{ FCT_ORDER_ITEMS : product_key
+    DIM_SELLER ||--o{ FCT_ORDER_ITEMS : seller_key
+    FCT_PAYMENTS {
+        uuid release_id PK
+        text payment_key PK
+        text source_system
+        text order_id
+        int payment_sequential
+        bigint customer_key FK
+        bigint buyer_geography_key FK
+        bigint order_status_key FK
+        int purchase_date_key FK
+        bigint payment_method_key FK
+        numeric recorded_payment_value
+        int payment_record_count
+    }
+    DIM_CUSTOMER ||--o{ FCT_PAYMENTS : customer_key
+    DIM_BUYER_GEOGRAPHY ||--o{ FCT_PAYMENTS : buyer_geography_key
+    DIM_ORDER_STATUS ||--o{ FCT_PAYMENTS : order_status_key
+    DIM_DATE ||--o{ FCT_PAYMENTS : purchase_date_key
+    DIM_PAYMENT_METHOD ||--o{ FCT_PAYMENTS : payment_method_key

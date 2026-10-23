@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:sellers:1.0.0",
+  "title": "Olist sellers source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "seller_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "seller_zip_code_prefix": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]{5}$"
+    },
+    "seller_city": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seller_state": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Z]{2}$"
+    }
+  },
+  "required": [
+    "seller_id",
+    "seller_zip_code_prefix",
+    "seller_city",
+    "seller_state"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_sellers_dataset.csv",
+  "x-natural-key": [
+    "seller_id"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

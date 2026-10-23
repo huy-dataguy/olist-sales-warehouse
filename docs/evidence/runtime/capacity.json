@@ -1,0 +1,47 @@
+{
+  "free_bytes": 77439406080,
+  "total_bytes": 265779703808,
+  "global_docker_inventory": [
+    {
+      "Active": "5",
+      "Reclaimable": "2.467GB (16%)",
+      "Size": "14.62GB",
+      "TotalCount": "8",
+      "Type": "Images"
+    },
+    {
+      "Active": "7",
+      "Reclaimable": "0B (0%)",
+      "Size": "118.8MB",
+      "TotalCount": "7",
+      "Type": "Containers"
+    },
+    {
+      "Active": "2",
+      "Reclaimable": "0B (0%)",
+      "Size": "13.43GB",
+      "TotalCount": "4",
+      "Type": "Local Volumes"
+    },
+    {
+      "Active": "0",
+      "Reclaimable": "4.591GB",
+      "Size": "6.613GB",
+      "TotalCount": "108",
+      "Type": "Build Cache"
+    }
+  ],
+  "project_container_stats": "{\"BlockIO\":\"0B / 35.2MB\",\"CPUPerc\":\"0.16%\",\"Container\":\"07ee4b143c09efd39b8e025a61ac6ff70fcd32ffb3fe844d6f4ad965ae551c75\",\"ID\":\"07ee4b143c09\",\"MemPerc\":\"15.66%\",\"MemUsage\":\"219.2MiB / 1.367GiB\",\"Name\":\"salesdw-airflow-api-1\",\"NetIO\":\"318kB / 277kB\",\"PIDs\":\"6\"}\n{\"BlockIO\":\"393kB / 40.9MB\",\"CPUPerc\":\"3.95%\",\"Container\":\"cbb40c7512b0c67b8b633d90fc3eb1108d5637364521c68531db92f326aae6f7\",\"ID\":\"cbb40c7512b0\",\"MemPerc\":\"7.52%\",\"MemUsage\":\"308.1MiB / 4GiB\",\"Name\":\"salesdw-airflow-scheduler-1\",\"NetIO\":\"84.3MB / 41.9MB\",\"PIDs\":\"9\"}\n{\"BlockIO\":\"0B / 33.7MB\",\"CPUPerc\":\"1.14%\",\"Container\":\"022926da61a458d0009f6a1d2af4c76e0bd4c029f73de9b3a65a19c56006eca9\",\"ID\":\"022926da61a4\",\"MemPerc\":\"14.86%\",\"MemUsage\":\"152.1MiB / 1GiB\",\"Name\":\"salesdw-airflow-dag-processor-1\",\"NetIO\":\"9.01MB / 9.64MB\",\"PIDs\":\"2\"}\n{\"BlockIO\":\"81.9kB / 0B\",\"CPUPerc\":\"0.01%\",\"Container\":\"3ab5f63d6dec08c2b94eaf24b5e8b3d29d440a29c15dd5e7879939c03dce4c67\",\"ID\":\"3ab5f63d6dec\",\"MemPerc\":\"11.47%\",\"MemUsage\":\"14.68MiB / 128MiB\",\"Name\":\"salesdw-dbt-docs-1\",\"NetIO\":\"5.84kB / 126B\",\"PIDs\":\"1\"}\n{\"BlockIO\":\"231MB / 6.99MB\",\"CPUPerc\":\"1.09%\",\"Container\":\"e334de4d8488c74682ecdf573a2d210b9fc5d875f1a9696f988eb392263902c9\",\"ID\":\"e334de4d8488\",\"MemPerc\":\"66.16%\",\"MemUsage\":\"1.323GiB / 2GiB\",\"Name\":\"salesdw-metabase-1\",\"NetIO\":\"14.4MB / 15MB\",\"PIDs\":\"132\"}\n{\"BlockIO\":\"12.1GB / 22.5GB\",\"CPUPerc\":\"7.81%\",\"Container\":\"cb60c5182c54813510aee3c794dabf2020375768c0ffd71a446398e33ec0086e\",\"ID\":\"cb60c5182c54\",\"MemPerc\":\"22.12%\",\"MemUsage\":\"453MiB / 2GiB\",\"Name\":\"salesdw-postgres-1\",\"NetIO\":\"261MB / 360MB\",\"PIDs\":\"31\"}\n{\"BlockIO\":\"0B / 3.38MB\",\"CPUPerc\":\"0.00%\",\"Container\":\"6b301d0c1e4d1cb2ba9a5ed24077c91aa85e26f2ac272d0fd600f0eef12965f4\",\"ID\":\"6b301d0c1e4d\",\"MemPerc\":\"7.70%\",\"MemUsage\":\"78.89MiB / 1GiB\",\"Name\":\"salesdw-minio-1\",\"NetIO\":\"181kB / 582MB\",\"PIDs\":\"17\"}\n",
+  "project_artifact_bytes": "866781745\tvar\n44718595\tdata\n",
+  "hard_budget_gb": 70,
+  "conservative_footprint_bytes": 36693300340,
+  "below_70gb": true,
+  "footprint_method": "global Docker df + project var/data + 1 GB margin; overcounts shared/unrelated resources",
+  "retention_mode": "inventory only; no deletions",
+  "protected": [
+    "immutable raw",
+    "all retained published releases",
+    "most recent verified backup"
+  ],
+  "measured_at": "2026-10-15T14:46:32.893614+00:00"
+}

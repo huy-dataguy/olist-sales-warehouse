@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Đầu ra phải có bằng chứng, không chỉ có sơ đồ</title>
+<desc id="desc">Tách ba lớp: đã kiểm chứng offline • gate runtime phải chạy sau • mục tiêu vận hành phải đo.. Sơ đồ thiết kế; chưa nghiệm thu runtime.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">DESIGN BASELINE 2.0  /  15.10.2026</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Đầu ra phải có bằng chứng, không chỉ có sơ đồ</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Tách ba lớp: đã kiểm chứng offline • gate runtime phải chạy sau • mục tiêu vận hành phải đo.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">THIẾT KẾ, CHƯA NGHIỆM THU HỆ THỐNG   |   09 / 09</text>
+<rect x="72" y="230" width="856" height="423" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="250" width="5" height="383" rx="2" fill="#087E79"/>
+<text x="98" y="274" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="804">CURRENT / OFFLINE</text>
+<text x="98" y="314.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="804">Đã có bằng chứng thật</text>
+<text x="98" y="364.99" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="804">Nguồn đã tải + checksum + profile</text>
+<text x="98" y="415.49" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="804">451.535 dòng đã kiểm tra source contracts</text>
+<text x="98" y="465.99" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="804">137 kiểm tra thiết kế / fixture / DDL tĩnh</text>
+<text x="98" y="516.49" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="804">5 semantic checks offline, không kết nối DB</text>
+<text x="98" y="566.99" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="804">20 requirements + 20 work items có traceability</text>
+<rect x="960" y="230" width="888" height="423" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="960" y="250" width="5" height="383" rx="2" fill="#966119"/>
+<text x="986" y="274" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#966119" text-anchor="start" data-max-width="836">PLANNED / RUNTIME GATES</text>
+<text x="986" y="314.0" font-family="DejaVu Sans" font-size="29" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="836">Phải chứng minh khi triển khai</text>
+<text x="986" y="364.99" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="836">Docker boot + controlled migration + dữ liệu vào DB</text>
+<text x="986" y="414.11" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="836">MetricFlow thực thi thật, source / SQL / KPI parity</text>
+<text x="986" y="463.23" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="836">Replay, failure recovery, concurrent publication</text>
+<text x="986" y="512.35" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="836">3 dashboard pin release + quyền truy cập đúng</text>
+<text x="986" y="561.47" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="836">22 scenario đã đặc tả; restore drill có đo thời gian</text>
+<text x="72" y="707" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">MỤC TIÊU THIẾT KẾ - CHƯA PHẢI KẾT QUẢ ĐÃ ĐO</text>
+<rect x="72" y="735" width="408" height="132" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="96" y="783" font-family="DejaVu Sans" font-size="31" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="360">≤ 10 phút</text>
+<text x="96" y="825" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="360">Batch accepted → published</text>
+<rect x="528" y="735" width="408" height="132" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="552" y="783" font-family="DejaVu Sans" font-size="31" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="360">p95 ≤ 5 giây</text>
+<text x="552" y="825" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="360">Query dashboard • 1-2 người xem</text>
+<rect x="984" y="735" width="408" height="132" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1008" y="783" font-family="DejaVu Sans" font-size="31" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="360">RPO ≤ 24 giờ</text>
+<text x="1008" y="825" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="360">Logical failure; backup + raw</text>
+<rect x="1440" y="735" width="408" height="132" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1464" y="783" font-family="DejaVu Sans" font-size="31" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="360">RTO ≤ 30 phút</text>
+<text x="1464" y="825" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="360">Restore trên host khỏe</text>
+<rect x="72" y="897" width="1776" height="82" rx="18" fill="#EAF1FD"/>
+<text x="96" y="935" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1728">GIỚI HẠN VẬN HÀNH</text>
+<text x="96" y="967.0" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1728"></text>
+<text x="482" y="947" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1318">&lt;70 GB toàn bộ footprint • Một máy, không HA • Backup cùng host không bảo vệ mất host</text>
+</svg>

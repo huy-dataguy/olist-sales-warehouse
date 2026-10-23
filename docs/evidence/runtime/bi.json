@@ -1,0 +1,139 @@
+{
+  "passed": true,
+  "metabase_version": {
+    "date": "2026-10-14",
+    "tag": "v0.64.2.5",
+    "hash": "43a24f6"
+  },
+  "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+  "dashboards": {
+    "sales_overview": "http://localhost:13000/dashboard/2?release_id=87f01740-0523-5fd4-be0e-eb52acb2842a&purchase_month=2018-08-01&pipeline_run_id=5ac008ff-3041-54cf-b03a-b7e76a5fa82f",
+    "commercial_performance": "http://localhost:13000/dashboard/3?release_id=87f01740-0523-5fd4-be0e-eb52acb2842a&purchase_month=2018-08-01&pipeline_run_id=5ac008ff-3041-54cf-b03a-b7e76a5fa82f",
+    "data_pipeline_health": "http://localhost:13000/dashboard/4?release_id=87f01740-0523-5fd4-be0e-eb52acb2842a&purchase_month=2018-08-01&pipeline_run_id=5ac008ff-3041-54cf-b03a-b7e76a5fa82f"
+  },
+  "cards": {
+    "sales_overview/delivered_value": {
+      "card_id": 40,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "sales_overview/delivered_orders": {
+      "card_id": 41,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "sales_overview/delivered_aov": {
+      "card_id": 42,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "sales_overview/delivered_customers": {
+      "card_id": 43,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "sales_overview/cancellation_rate": {
+      "card_id": 44,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "sales_overview/daily_value_trend": {
+      "card_id": 45,
+      "status": "completed",
+      "rows": 31,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "commercial_performance/category_value": {
+      "card_id": 46,
+      "status": "completed",
+      "rows": 10,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "commercial_performance/seller_value": {
+      "card_id": 47,
+      "status": "completed",
+      "rows": 10,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "commercial_performance/buyer_state_value": {
+      "card_id": 48,
+      "status": "completed",
+      "rows": 26,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "commercial_performance/category_rows": {
+      "card_id": 49,
+      "status": "completed",
+      "rows": 10,
+      "required_parameters": [
+        "release_id",
+        "purchase_month"
+      ]
+    },
+    "data_pipeline_health/pipeline_state": {
+      "card_id": 50,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "pipeline_run_id"
+      ]
+    },
+    "data_pipeline_health/published_at": {
+      "card_id": 51,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "release_id"
+      ]
+    },
+    "data_pipeline_health/source_coverage_warnings": {
+      "card_id": 52,
+      "status": "completed",
+      "rows": 6,
+      "required_parameters": [
+        "pipeline_run_id"
+      ]
+    },
+    "data_pipeline_health/quality_failures": {
+      "card_id": 53,
+      "status": "completed",
+      "rows": 1,
+      "required_parameters": [
+        "pipeline_run_id"
+      ]
+    }
+  },
+  "scope": "API-created OSS dashboards, native card query success and explicit parameter mappings. Browser acceptance is separate."
+}

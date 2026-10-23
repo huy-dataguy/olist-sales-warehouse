@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-19",
+  "pdf_pages": 9,
+  "tables": 10,
+  "columns": 165,
+  "dimensional_fk_roles": 19,
+  "migration_sha256": "4c2f018e5ae6d06a7534bfc9139c47fda0d34a6d581f6f3cdfc23a2a01cc4848",
+  "scope": "Offline diagram authoring only; no runtime/migration/data changes",
+  "output_sha256": {
+    "README.md": "8fb88acf01123237a04084950ef15a14bb759733b5fc978138e34f0a13fd7ddd",
+    "all-prompts.md": "e675af810f9681a33029c2a6865fe65055da185f88d41715c446173c3462f167",
+    "architecture-prompt.md": "94d2c16a76921702ef6dc21cb6ebeb761907a4553b9e83d6f01b7e7bd440a0dc",
+    "brief.md": "ef03d4aff988c7b0baad4442551a4980b02d174305e13a26e77b5f1d824f1837",
+    "diagram-generation-brief.pdf": "717195c7e1283539a27aeb88de530bfc74360db859b7d7fd72ca4beb9cffc79c",
+    "erd-prompt.md": "6f058d3608df5c7c1f0612f0c78e6a53d5941390e57c6407131fecf1cf220353",
+    "review-prompt.md": "125ab252868159ee57eb24e66d574e08d4dce5eba54efb7cd7acaa55f48c6011",
+    "schema-reference.json": "ed1945b80493330b8fd327f649fc8c14024fcac4378611290dad442c8f84bda6",
+    "warehouse-full-schema.mmd": "6d08bb80f5809904a5df7dc12aca736f91a2a27b59ee801246da4d2f2acba47e"
+  }
+}

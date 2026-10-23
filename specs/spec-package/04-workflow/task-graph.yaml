@@ -1,0 +1,220 @@
+version: 1
+tasks:
+  - id: TASK-001
+    requirement_id: REQ-001
+    description: "Source contracts, provenance and independent baselines"
+    depends_on: []
+    artifacts:
+      - "scripts/profile_source.py"
+      - "contracts/source-catalog.json"
+      - "docs/evidence/source-profile.json"
+    verification: [V-001]
+    risk: medium
+    human_gate: false
+  - id: TASK-002
+    requirement_id: REQ-002
+    description: "Pinned local raw storage and receipt/manifest lifecycle"
+    depends_on: [TASK-001]
+    artifacts:
+      - "infra/compose.yaml"
+      - "src/sales_dw/raw_storage.py"
+      - "contracts/source-batch.schema.json"
+    verification: [V-002]
+    risk: medium
+    human_gate: false
+  - id: TASK-003
+    requirement_id: REQ-003
+    description: "Versioned source admission into the secured pre-provisioned target"
+    depends_on: [TASK-002, TASK-015]
+    artifacts:
+      - "src/sales_dw/admission.py"
+      - "scripts/verify_load.sh"
+    verification: [V-003]
+    risk: high
+    human_gate: true
+  - id: TASK-004
+    requirement_id: REQ-004
+    description: "Kimball dbt working dimensions/facts at a fixed source cut"
+    depends_on: [TASK-003, TASK-013, TASK-018]
+    artifacts:
+      - "dbt/models/facts"
+      - "dbt/models/intermediate"
+    verification: [V-004]
+    risk: medium
+    human_gate: false
+  - id: TASK-005
+    requirement_id: REQ-005
+    description: "Release-bound local MetricFlow and independent result parity"
+    depends_on: [TASK-004, TASK-017]
+    artifacts:
+      - "dbt/models/semantic_input"
+      - "dbt/models/semantic/semantic_models.yml"
+      - "src/sales_dw/export_metrics.py"
+    verification: [V-005]
+    risk: medium
+    human_gate: false
+  - id: TASK-006
+    requirement_id: REQ-006
+    description: "Executive overview and five specialist Superset dashboards, release/month-preserving navigation and question-driven analysis"
+    depends_on: [TASK-005, TASK-008]
+    artifacts:
+      - "bi/dashboard-spec.yml"
+      - "bi/bootstrap_superset.py"
+      - "bi/superset_navigation.py"
+      - "scripts/verify_superset_browser.py"
+    verification: [V-006]
+    risk: medium
+    human_gate: false
+  - id: TASK-007
+    requirement_id: REQ-007
+    description: "Grain/source/payment/key quality and occurrence accounting"
+    depends_on: [TASK-004]
+    artifacts:
+      - "dbt/models/quality"
+      - "dbt/tests"
+      - "src/sales_dw/quality.py"
+    verification: [V-007]
+    risk: medium
+    human_gate: false
+  - id: TASK-008
+    requirement_id: REQ-008
+    description: "Airflow dependency/retry/status and structured operational metadata"
+    depends_on: [TASK-005, TASK-007, TASK-017]
+    artifacts:
+      - "orchestration/dags/sales_warehouse_pipeline.py"
+      - "src/sales_dw/state_events.py"
+    verification: [V-008]
+    risk: medium
+    human_gate: false
+  - id: TASK-009
+    requirement_id: REQ-009
+    description: "Replay, late/corrected data and rebuild equivalence"
+    depends_on: [TASK-008, TASK-018]
+    artifacts:
+      - "tests/scenarios"
+      - "scripts/verify_replay.sh"
+    verification: [V-009]
+    risk: medium
+    human_gate: false
+  - id: TASK-010
+    requirement_id: REQ-010
+    description: "Failure injection, acknowledgement and recovery runbooks"
+    depends_on: [TASK-008, TASK-009]
+    artifacts:
+      - "scripts/verify_recovery.sh"
+      - "docs/operations/recovery.md"
+    verification: [V-010]
+    risk: medium
+    human_gate: false
+  - id: TASK-011
+    requirement_id: REQ-011
+    description: "Recorded PostgreSQL plan/buffer/runtime measurements"
+    depends_on: [TASK-004]
+    artifacts:
+      - "sql/benchmarks"
+      - "scripts/verify_performance.sh"
+    verification: [V-011]
+    risk: medium
+    human_gate: false
+  - id: TASK-012
+    requirement_id: REQ-012
+    description: "Full local runtime acceptance and interview/evidence handoff"
+    depends_on: [TASK-006, TASK-010, TASK-011, TASK-014, TASK-015, TASK-016, TASK-019, TASK-020]
+    artifacts:
+      - "docs/demo-runbook.md"
+      - "scripts/verify_e2e.sh"
+      - "specs/executable-dossier/dossier.json"
+    verification: [V-012]
+    risk: medium
+    human_gate: false
+  - id: TASK-013
+    requirement_id: REQ-013
+    description: "Conformed dimensions, stable key registry and Kimball integrity"
+    depends_on: [TASK-003]
+    artifacts:
+      - "dbt/models/dimensions"
+      - "src/sales_dw/key_registry.py"
+      - "sql/verification/kimball_integrity.sql"
+    verification: [V-013]
+    risk: medium
+    human_gate: false
+  - id: TASK-014
+    requirement_id: REQ-014
+    description: "Explicit SCD2 effectivity, inferred members and late-arrival proof"
+    depends_on: [TASK-013]
+    artifacts:
+      - "src/sales_dw/effectivity.py"
+      - "tests/integration/test_effectivity.py"
+      - "tests/fixtures/kimball"
+    verification: [V-014]
+    risk: medium
+    human_gate: false
+  - id: TASK-015
+    requirement_id: REQ-015
+    description: "Controlled schema foundation, least-privilege roles, secrets and rotation"
+    depends_on: [TASK-002]
+    artifacts:
+      - "infra/security"
+      - "db/migrations/001_schema.sql"
+      - "db/migrations/002_roles.sql"
+      - "scripts/migrate.sh"
+      - "scripts/verify_security.sh"
+    verification: [V-015]
+    risk: high
+    human_gate: true
+  - id: TASK-016
+    requirement_id: REQ-016
+    description: "Consistent backup, isolated restore and validated rollback"
+    depends_on: [TASK-008, TASK-017]
+    artifacts:
+      - "scripts/backup.sh"
+      - "scripts/restore.sh"
+      - "scripts/verify_restore.sh"
+    verification: [V-016]
+    risk: high
+    human_gate: true
+  - id: TASK-017
+    requirement_id: REQ-017
+    description: "Immutable full Warehouse snapshots, fenced publication and pinned consumers"
+    depends_on: [TASK-004, TASK-007, TASK-018]
+    artifacts:
+      - "src/sales_dw/snapshot_release.py"
+      - "src/sales_dw/release_context.py"
+      - "src/sales_dw/publish_release.py"
+    verification: [V-017]
+    risk: high
+    human_gate: false
+  - id: TASK-018
+    requirement_id: REQ-018
+    description: "Accepted-version source cut, model checkpoints and fencing protocol"
+    depends_on: [TASK-003]
+    artifacts:
+      - "src/sales_dw/source_versions.py"
+      - "src/sales_dw/leases.py"
+      - "dbt/macros/source_at_cut.sql"
+    verification: [V-018]
+    risk: medium
+    human_gate: false
+  - id: TASK-019
+    requirement_id: REQ-019
+    description: "CI/integration gates, locks and reviewed migration/change workflow"
+    depends_on: [TASK-008, TASK-014, TASK-015]
+    artifacts:
+      - ".github/workflows/ci.yml"
+      - ".github/workflows/integration.yml"
+      - "docs/change-management.md"
+    verification: [V-019]
+    risk: medium
+    human_gate: false
+  - id: TASK-020
+    requirement_id: REQ-020
+    description: "SLO/health/capacity/retention and timed operational checks"
+    depends_on: [TASK-008, TASK-011, TASK-016]
+    artifacts:
+      - "configs/operations.yml"
+      - "scripts/verify_operations.sh"
+      - "docs/operations"
+    verification: [V-020]
+    risk: medium
+    human_gate: false
+

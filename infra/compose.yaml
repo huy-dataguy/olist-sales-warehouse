@@ -1,0 +1,279 @@
+name: salesdw
+x-logging: &logging
+  driver: json-file
+  options: {max-size: "10m", max-file: "3"}
+x-worker: &worker
+  logging: *logging
+  image: salesdw-runtime:0.3.0
+  build:
+    context: ..
+    dockerfile: infra/Dockerfile.runtime
+    target: runtime
+  user: "${LOCAL_UID:-1000}:0"
+  environment:
+    SALES_DW_ROOT: /workspace
+    SALES_DW_CONFIG: /run/secrets/runtime.json
+    PYTHONPATH: /workspace/src
+    DBT_SEND_ANONYMOUS_USAGE_STATS: "false"
+  volumes:
+    - ../src:/workspace/src:ro
+    - ../dbt:/workspace/dbt:ro
+    - ../contracts:/workspace/contracts:ro
+    - ../data:/workspace/data:ro
+    - ../db:/workspace/db:ro
+    - ../scripts:/workspace/scripts:ro
+    - ../bi:/workspace/bi:ro
+    - ../analysis:/workspace/analysis:ro
+    - ../tests:/workspace/tests:ro
+    - ../docs/evidence:/workspace/docs/evidence:ro
+    - ../var/runs:/workspace/var/runs
+    - ../var/evidence:/workspace/var/evidence
+    - ../var/source-cache:/workspace/var/source-cache
+    - ../var/bi:/workspace/var/bi
+    - ../var/backups:/workspace/var/backups
+    - ../var/docs:/workspace/var/docs
+    - ../var/analysis:/workspace/var/analysis
+    - ../var/secrets/runtime.json:/run/secrets/runtime.json:ro
+    - ../var/secrets/bi_admin.json:/run/secrets/bi_admin.json:ro
+    - ../var/secrets/superset_admin.json:/run/secrets/superset_admin.json:ro
+  networks: [private]
+  mem_limit: 3g
+  cpus: 2
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  tmpfs: [/tmp]
+
+services:
+  postgres:
+    logging: *logging
+    image: postgres:17.11-bookworm@sha256:3645570cccdfa447589da9f57dd740faa29b30938e861289a5574b6ca6b03826
+    environment:
+      POSTGRES_USER: salesdw_bootstrap
+      POSTGRES_DB: sales_dw
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../var/secrets/postgres_password:/run/secrets/postgres_password:ro
+    command: [postgres, -c, shared_buffers=256MB, -c, max_connections=90, -c, max_wal_size=1GB, -c, log_min_duration_statement=1000]
+    networks: [private]
+    mem_limit: 2g
+    cpus: 2
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U salesdw_bootstrap -d sales_dw"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  minio:
+    logging: *logging
+    image: salesdw-minio:7aac2a2
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.minio
+    user: "${LOCAL_UID:-1000}:0"
+    volumes:
+      - rawdata:/data
+      - ../var/secrets/minio_root_user:/run/secrets/minio_root_user:ro
+      - ../var/secrets/minio_root_password:/run/secrets/minio_root_password:ro
+    ports: ["127.0.0.1:19001:9001"]
+    networks: [private, ui]
+    mem_limit: 1g
+    cpus: 1
+    restart: unless-stopped
+
+  worker:
+    <<: *worker
+    profiles: [tools]
+
+  migrate:
+    <<: *worker
+    profiles: [tools]
+    entrypoint: [python, /workspace/scripts/migrate.py]
+    volumes:
+      - ../src:/workspace/src:ro
+      - ../scripts:/workspace/scripts:ro
+      - ../db:/workspace/db:ro
+      - ../var:/workspace/var
+      - ../var/secrets/bootstrap.json:/run/secrets/bootstrap.json:ro
+      - ../var/secrets/runtime.json:/run/secrets/runtime.json:ro
+
+  dbt-docs:
+    image: salesdw-runtime:0.3.0
+    profiles: [docs]
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, -m, http.server, "8081", --directory, /docs]
+    volumes: ["../var/docs:/docs:ro"]
+    ports: ["127.0.0.1:18081:8081"]
+    networks: [ui]
+    mem_limit: 128m
+    logging: *logging
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+  metabase:
+    profiles: [legacy-bi]
+    logging: *logging
+    image: metabase/metabase@sha256:241654921d7b4ecaf7d584c715745379b94619e3d94764b4240895022fc7daae
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [sh, /workspace/infra/metabase-entrypoint.sh]
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_HOST: postgres
+      MB_DB_PORT: "5432"
+      MB_DB_DBNAME: metabase_meta
+      MB_DB_USER: salesdw_metabase
+      JAVA_OPTS: -Xmx768m
+      MB_ANON_TRACKING_ENABLED: "false"
+    volumes:
+      - ./metabase-entrypoint.sh:/workspace/infra/metabase-entrypoint.sh:ro
+      - ../var/secrets/metabase_password:/run/secrets/metabase_password:ro
+    ports: ["127.0.0.1:13000:3000"]
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [private, ui]
+    mem_limit: 2g
+    cpus: 1
+    restart: unless-stopped
+
+  superset-init: &superset
+    image: salesdw-superset:6.1.0
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.superset
+    profiles: [tools]
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, /workspace/infra/superset-entrypoint.py]
+    command: [init]
+    environment:
+      SUPERSET_CONFIG_PATH: /workspace/infra/superset_config.py
+      SUPERSET_ENV: production
+      SALES_DW_SUPERSET_MIGRATION_APPROVED: salesdw
+    volumes:
+      - ./superset_config.py:/workspace/infra/superset_config.py:ro
+      - ./superset-entrypoint.py:/workspace/infra/superset-entrypoint.py:ro
+      - ../var/secrets/superset.json:/run/secrets/superset.json:ro
+      - ../var/secrets/superset_admin.json:/run/secrets/superset_admin.json:ro
+      - ../var/superset:/app/superset_home
+      - ../bi:/workspace/bi:ro
+      - ../analysis:/workspace/analysis:ro
+      - ../contracts:/workspace/contracts:ro
+      - ../var/bi:/workspace/var/bi
+      - ../var/evidence:/workspace/var/evidence
+      - ../var/secrets/superset_warehouse.json:/run/secrets/superset_warehouse.json:ro
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [private, ui]
+    mem_limit: 2g
+    cpus: 2
+    logging: *logging
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+
+  superset:
+    <<: *superset
+    profiles: []
+    command: [serve]
+    ports: ["127.0.0.1:18088:8088"]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8088/health', timeout=5)"]
+      interval: 10s
+      timeout: 6s
+      retries: 30
+
+  airflow-init:
+    logging: *logging
+    image: salesdw-airflow:3.1.8
+    build:
+      context: ..
+      dockerfile: infra/Dockerfile.runtime
+      target: airflow
+    profiles: [tools]
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, /workspace/infra/airflow-entrypoint.py]
+    command: [db, migrate]
+    environment: &airflow-env
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__AUTH_MANAGER: airflow.api_fastapi.auth.managers.simple.simple_auth_manager.SimpleAuthManager
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: "demo:admin"
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: /opt/airflow/logs/simple_auth_passwords.json
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+      AIRFLOW__CORE__PARALLELISM: "2"
+      AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: "1"
+      AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-api:8080/execution/
+      AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+      AIRFLOW__API__BASE_URL: http://localhost:18080
+      AIRFLOW__API_AUTH__JWT_SECRET: "${AIRFLOW_JWT_SECRET:?run scripts/prepare_local.py}"
+      SALES_DW_ROOT: /workspace
+      SALES_DW_CONFIG: /run/secrets/runtime.json
+      PYTHONPATH: /workspace/src
+    volumes: &airflow-volumes
+      - ./airflow-entrypoint.py:/workspace/infra/airflow-entrypoint.py:ro
+      - ../var/secrets/airflow_connection:/run/secrets/airflow_connection:ro
+      - ../var/secrets/runtime.json:/run/secrets/runtime.json:ro
+      - ../orchestration/dags:/opt/airflow/dags:ro
+      - ../src:/workspace/src:ro
+      - ../dbt:/workspace/dbt:ro
+      - ../contracts:/workspace/contracts:ro
+      - ../data:/workspace/data:ro
+      - ../db:/workspace/db:ro
+      - ../scripts:/workspace/scripts:ro
+      - ../bi:/workspace/bi:ro
+      - ../docs/evidence:/workspace/docs/evidence:ro
+      - ../var/runs:/workspace/var/runs
+      - ../var/evidence:/workspace/var/evidence
+      - ../var/source-cache:/workspace/var/source-cache
+      - ../var/bi:/workspace/var/bi
+      - ../var/airflow-logs:/opt/airflow/logs
+    networks: [private]
+    mem_limit: 2g
+
+  airflow-api:
+    logging: *logging
+    image: salesdw-airflow:3.1.8
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, /workspace/infra/airflow-entrypoint.py]
+    command: [api-server]
+    environment: *airflow-env
+    volumes: *airflow-volumes
+    ports: ["127.0.0.1:18080:8080"]
+    networks: [private, ui]
+    mem_limit: 1400m
+    restart: unless-stopped
+
+  airflow-scheduler:
+    logging: *logging
+    image: salesdw-airflow:3.1.8
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, /workspace/infra/airflow-entrypoint.py]
+    command: [scheduler]
+    environment: *airflow-env
+    volumes: *airflow-volumes
+    networks: [private]
+    mem_limit: 4g
+    cpus: 2
+    restart: unless-stopped
+
+  airflow-dag-processor:
+    logging: *logging
+    image: salesdw-airflow:3.1.8
+    user: "${LOCAL_UID:-1000}:0"
+    entrypoint: [python, /workspace/infra/airflow-entrypoint.py]
+    command: [dag-processor]
+    environment: *airflow-env
+    volumes: *airflow-volumes
+    networks: [private]
+    mem_limit: 1g
+    restart: unless-stopped
+
+networks:
+  private:
+    internal: true
+  ui: {}
+
+volumes:
+  pgdata:
+  rawdata:

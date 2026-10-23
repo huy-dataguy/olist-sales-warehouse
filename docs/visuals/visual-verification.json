@@ -1,0 +1,105 @@
+{
+  "checked_at_utc": "2026-10-15T10:01:33.588023+00:00",
+  "scope": "Diagram export/label bounds, file render and presentation controls only. Not system runtime proof.",
+  "slide_count": 9,
+  "source_rows_in_scope": 451535,
+  "tooling": {
+    "chrome": "150.0.7871.46",
+    "pillow": "12.3.0",
+    "playwright": "1.63.0"
+  },
+  "checks": [
+    {
+      "slide": "01-objectives-input-output",
+      "labels": 35,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "02-source-data-and-baseline",
+      "labels": 49,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "03-system-architecture",
+      "labels": 50,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "04-kimball-bus-matrix",
+      "labels": 62,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "05-dimensional-constellation",
+      "labels": 43,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "06-airflow-pipeline-and-recovery",
+      "labels": 53,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "07-semantic-layer-and-correct-metrics",
+      "labels": 31,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "08-release-publication-and-isolation",
+      "labels": 36,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    },
+    {
+      "slide": "09-evidence-operations-and-success",
+      "labels": 32,
+      "text_overflow": [],
+      "png_dimensions": [
+        3840,
+        2160
+      ]
+    }
+  ],
+  "gallery_controls_passed": true,
+  "mobile_gallery_no_overflow": true,
+  "pdf": "output/pdf/project-architecture.pdf",
+  "pdf_pages": 9,
+  "pdf_page_points": [
+    1440,
+    810
+  ],
+  "pdf_sha256": "fc77e444cbe7605f9db0d8db4c78a4da96724998a95439108118f897b5abcef9",
+  "passed": true,
+  "issues": []
+}

@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Download the pinned Olist archive and run source contracts (needs Kaggle secrets)
+        type: boolean
+        default: false
+      runtime:
+        description: Build services and run the full local demo on an ephemeral runner (needs ~16 GB RAM)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: salesdw-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Tests and offline contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - run: uv sync --frozen --group design --group semantic --group runtime --group test
+      - run: make test
+      - run: make verify-spec
+      - run: make verify-semantic-offline
+      # The raw archive is licence-restricted and never committed; committed
+      # contracts, fixtures and DDL are validated on every run.
+      - run: uv run --frozen --group design python scripts/verify_design_contracts.py
+      - run: make prepare && docker compose --env-file .env -f infra/compose.yaml config --quiet
+      - run: uv run python -m compileall -q src scripts orchestration
+
+  source-contracts:
+    name: Source contracts (optional)
+    if: github.event_name == 'workflow_dispatch' && inputs.source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - run: uv sync --frozen --group design --group semantic --group runtime --group test
+      - run: make source
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      - run: make verify-design
+
+  real-source-runtime:
+    name: Full local demo (optional)
+    if: github.event_name == 'workflow_dispatch' && inputs.runtime
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - run: make demo
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      - if: always()
+        run: docker compose --env-file .env -f infra/compose.yaml ps

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Workflow thực tế của Airflow</title>
+<desc id="desc">DAG sales_warehouse_pipeline | 9 tasks | 02:00 mỗi ngày | tối đa 2 retries, cách nhau 30 giây.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Workflow thực tế của Airflow</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">DAG sales_warehouse_pipeline | 9 tasks | 02:00 mỗi ngày | tối đa 2 retries, cách nhau 30 giây.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   06 / 10</text>
+<rect x="72" y="239" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="259" width="5" height="204" rx="2" fill="#2458B5"/>
+<text x="98" y="283" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="260">01  raw</text>
+<text x="98" y="323.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Raw + receipt</text>
+<text x="98" y="367.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Hash, manifest, MinIO</text>
+<text x="98" y="411.04" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Giữ artifact nguyên gốc</text>
+<polyline points="390,361 430,361" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="438" y="239" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="438" y="259" width="5" height="204" rx="2" fill="#2458B5"/>
+<text x="464" y="283" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="260">02  validate</text>
+<text x="464" y="323.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Schema + key</text>
+<text x="464" y="354.44" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">checks</text>
+<text x="464" y="398.88" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Kiểu, null, trạng thái</text>
+<text x="464" y="442.48" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Lỗi → quarantine / fail</text>
+<polyline points="756,361 796,361" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="804" y="239" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="804" y="259" width="5" height="204" rx="2" fill="#2458B5"/>
+<text x="830" y="283" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="260">03  load</text>
+<text x="830" y="323.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Landing commit</text>
+<text x="830" y="367.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Source versions + ledger</text>
+<text x="830" y="411.04" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Batch dedup / source cut</text>
+<polyline points="1122,361 1162,361" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="1170" y="239" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1170" y="259" width="5" height="204" rx="2" fill="#2458B5"/>
+<text x="1196" y="283" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="260">04  lease</text>
+<text x="1196" y="323.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Owner + fencing</text>
+<text x="1196" y="367.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Khóa logic có hạn</text>
+<text x="1196" y="411.04" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Cố định cut cho build</text>
+<polyline points="1488,361 1528,361" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="1536" y="239" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1536" y="259" width="5" height="204" rx="2" fill="#2458B5"/>
+<text x="1562" y="283" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="260">05  build</text>
+<text x="1562" y="323.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">dbt models + tests</text>
+<text x="1562" y="367.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Staging, dims, facts</text>
+<text x="1562" y="411.04" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Incremental + checkpoint</text>
+<polyline points="1692,483 1692,536" fill="none" stroke="#6650A8" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-purple)"/>
+<rect x="1536" y="540" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1536" y="560" width="5" height="204" rx="2" fill="#087E79"/>
+<text x="1562" y="584" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="260">06  snapshot</text>
+<text x="1562" y="624.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Freeze Kimball</text>
+<text x="1562" y="668.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">10 relations / release</text>
+<text x="1562" y="712.0400000000001" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Grain, FK, hash, totals</text>
+<polyline points="1530,662 1491,662" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="1170" y="540" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1170" y="560" width="5" height="204" rx="2" fill="#087E79"/>
+<text x="1196" y="584" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="260">07  semantic</text>
+<text x="1196" y="624.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">MetricFlow +</text>
+<text x="1196" y="655.44" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">parity</text>
+<text x="1196" y="699.88" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">5 exports cùng release</text>
+<text x="1196" y="743.48" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Native CLI + SQL oracle</text>
+<polyline points="1164,662 1125,662" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="804" y="540" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="804" y="560" width="5" height="204" rx="2" fill="#087E79"/>
+<text x="830" y="584" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="260">08  publish</text>
+<text x="830" y="624.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Atomic publication</text>
+<text x="830" y="668.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Mọi gate phải đạt</text>
+<text x="830" y="712.0400000000001" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Pointer + audit event</text>
+<polyline points="798,662 759,662" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="438" y="540" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="438" y="560" width="5" height="204" rx="2" fill="#087E79"/>
+<text x="464" y="584" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="260">09  finish</text>
+<text x="464" y="624.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Run succeeded</text>
+<text x="464" y="668.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Chỉ sau publish commit</text>
+<text x="464" y="712.0400000000001" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">ACK retry an toàn</text>
+<rect x="72" y="540" width="312" height="244" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="560" width="5" height="204" rx="2" fill="#6650A8"/>
+<text x="98" y="584" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="260">BI METADATA</text>
+<text x="98" y="624.0" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="260">Superset handoff</text>
+<text x="98" y="668.44" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Bước riêng, không task</text>
+<text x="98" y="712.0400000000001" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="260">Giữ URL đã pin release</text>
+<polyline points="432,662 390,662" fill="none" stroke="#6650A8" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-purple)" stroke-dasharray="8 7"/>
+<rect x="72" y="822" width="856" height="152" rx="18" fill="#FCECEF"/>
+<text x="96" y="860" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#AE3949" text-anchor="start" data-max-width="808">FAILURE ĐƯỢC GHI ĐÚNG</text>
+<text x="96" y="892.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">Task terminal fail → ledger failed; downstream upstream_failed;</text>
+<text x="96" y="925.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">không đổi published release. Không có task thông báo che lỗi.</text>
+<rect x="960" y="822" width="888" height="152" rx="18" fill="#E5F5F1"/>
+<text x="984" y="860" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="840">ĐÃ TÁI HIỆN TRÊN RUNTIME</text>
+<text x="984" y="892.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">Load thử 1 lỗi, thử 2 thành công. Raw lỗi cả 3 lần → DAG failed. Replay</text>
+<text x="984" y="925.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">và late-arrival kiểm riêng trong database cô lập.</text>
+</svg>

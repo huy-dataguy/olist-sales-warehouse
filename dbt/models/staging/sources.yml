@@ -1,0 +1,18 @@
+version: 2
+sources:
+  - name: landing
+    schema: landing
+    description: "Immutable accepted Olist source versions. Every staging model selects the same committed source_cut. Source event age is not operational freshness."
+    tables:
+      - name: source_versions
+        description: "One accepted observation per entity/natural key/committed source cut; payload and immutable artifact lineage retained."
+        columns:
+          - name: source_version_id
+            description: "Deterministic source observation identity, not a Kimball dimension surrogate key."
+            data_tests: [unique, not_null]
+          - name: source_cut
+            description: "Committed admission boundary. Identity allocation alone is not commit order."
+            data_tests: [not_null]
+          - name: record_sha256
+            description: "Canonical source payload fingerprint."
+            data_tests: [not_null]

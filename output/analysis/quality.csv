@@ -1,0 +1,7 @@
+rule_id,severity,affected_records
+DQ-CAT-001,warning,610
+DQ-COV-001,warning,775
+DQ-COV-002,warning,1
+DQ-PAY-001,warning,303
+DQ-TIME-001,warning,8
+DQ-TIME-002,warning,166

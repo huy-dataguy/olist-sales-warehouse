@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:products:1.0.0",
+  "title": "Olist products source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "product_category_name": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "product_name_lenght": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_description_lenght": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_photos_qty": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_weight_g": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_length_cm": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_height_cm": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    },
+    "product_width_cm": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[0-9]+$"
+        }
+      ]
+    }
+  },
+  "required": [
+    "product_id",
+    "product_category_name",
+    "product_name_lenght",
+    "product_description_lenght",
+    "product_photos_qty",
+    "product_weight_g",
+    "product_length_cm",
+    "product_height_cm",
+    "product_width_cm"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_products_dataset.csv",
+  "x-natural-key": [
+    "product_id"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

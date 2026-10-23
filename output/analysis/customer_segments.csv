@@ -1,0 +1,4 @@
+frequency_segment,customers,delivered_orders,observed_merchandise_value,average_recency_days
+1 delivered order,90557,90557,12493089.36,240.0254094106474375
+2 delivered orders,2573,5146,631274.90,223.4057520404197435
+3+ delivered orders,228,775,97133.85,203.7938596491228070

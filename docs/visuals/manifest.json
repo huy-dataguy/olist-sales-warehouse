@@ -1,0 +1,121 @@
+{
+  "design_baseline": "2.0.0",
+  "slides": [
+    {
+      "number": 1,
+      "slug": "01-objectives-input-output",
+      "title": "Từ dữ liệu rời rạc đến số liệu đáng tin cậy",
+      "svg": "svg/01-objectives-input-output.svg",
+      "png": "png/01-objectives-input-output.png",
+      "sources": [
+        "docs/PRODUCTION_DESIGN.md",
+        "contracts/dashboard-contract.json",
+        "docs/evidence/source-profile.json"
+      ],
+      "speaker_notes": "Mở đầu bằng kết quả doanh nghiệp cần: số đơn, giá trị hàng, khách hàng và hiệu quả sản phẩm đáng tin cậy. Nguồn là Olist thật; đây là portfolio độc lập, không phải kiến trúc đã biết của Abbott hay Concentrix. Nêu ba lớp đầu ra: dữ liệu phân tích, KPI thống nhất và bằng chứng vận hành. Các đầu ra runtime vẫn là mục tiêu nghiệm thu."
+    },
+    {
+      "number": 2,
+      "slug": "02-source-data-and-baseline",
+      "title": "Dữ liệu thật đủ để làm và đối soát",
+      "svg": "svg/02-source-data-and-baseline.svg",
+      "png": "png/02-source-data-and-baseline.png",
+      "sources": [
+        "data/source-manifest.json",
+        "docs/evidence/source-profile.json",
+        "contracts/source-catalog.json"
+      ],
+      "speaker_notes": "Cho thấy dự án có dữ liệu thật trước khi nói công nghệ. Phân biệt customer_id theo tham chiếu đơn với customer_unique_id bền vững. Baseline trên hình được tính trực tiếp từ nguồn, chưa phải kết quả Warehouse. Các cảnh báo dữ liệu là đặc tính cần giải thích, không tự ý xóa cho sạch. Không có CDC, timestamp cập nhật nguồn hay lịch sử business-effective; thay đổi vận hành được mô phỏng có nhãn riêng."
+    },
+    {
+      "number": 3,
+      "slug": "03-system-architecture",
+      "title": "Kiến trúc tổng thể: nguồn → Warehouse → BI",
+      "svg": "svg/03-system-architecture.svg",
+      "png": "png/03-system-architecture.png",
+      "sources": [
+        "specs/spec-package/02-architecture/production-local.md",
+        "specs/spec-package/03-data/semantic-and-metrics.md"
+      ],
+      "speaker_notes": "Đi theo số thứ tự 1 đến 8. Hàng trên tiếp nhận và lưu phiên bản nguồn; hàng dưới đi từ phải sang trái để mô tả xử lý đến consumer. Working models không được BI đọc. MetricFlow thực thi trên một release cụ thể; Metabase đọc exports đã công bố, không giả định native connector. Atomic publication chỉ là giao dịch PostgreSQL; cập nhật link Metabase nằm ngoài giao dịch đó."
+    },
+    {
+      "number": 4,
+      "slug": "04-kimball-bus-matrix",
+      "title": "Kimball: thiết kế theo business process và grain",
+      "svg": "svg/04-kimball-bus-matrix.svg",
+      "png": "png/04-kimball-bus-matrix.png",
+      "sources": [
+        "specs/spec-package/03-data/kimball-design.md",
+        "contracts/warehouse-model.json"
+      ],
+      "speaker_notes": "Giải thích bốn bước Kimball: chọn process, khai báo grain, chọn dimensions, chọn facts. Ngày trên payment là purchase context, không phải ngày thanh toán vì nguồn không có. Product/seller chỉ thuộc sales-line grain; không phân bổ payment về sản phẩm khi chưa có hợp đồng. Order ID là degenerate dimension, không phải lý do để join các fact nguyên tử."
+    },
+    {
+      "number": 5,
+      "slug": "05-dimensional-constellation",
+      "title": "Warehouse constellation: ba fact, bảy dimension",
+      "svg": "svg/05-dimensional-constellation.svg",
+      "png": "png/05-dimensional-constellation.png",
+      "sources": [
+        "docs/warehouse-erd.md",
+        "specs/spec-package/03-data/kimball-design.md",
+        "db/design/001_warehouse_schema.sql"
+      ],
+      "speaker_notes": "Đây là sơ đồ logic rút gọn, không phải toàn bộ DDL. Bốn dimension chung ở phía trên kết nối độc lập vào mỗi fact. Product và seller chỉ nối vào item fact; payment method chỉ nối payment fact. Mỗi FK vật lý gồm release_id và dimension key; không có FK fact-to-fact. SCD2 chỉ minh chứng bằng fixture có thời điểm hiệu lực rõ ràng, không gán lịch sử giả cho snapshot Olist."
+    },
+    {
+      "number": 6,
+      "slug": "06-airflow-pipeline-and-recovery",
+      "title": "Pipeline: mỗi bước có trách nhiệm và điểm kiểm soát",
+      "svg": "svg/06-airflow-pipeline-and-recovery.svg",
+      "png": "png/06-airflow-pipeline-and-recovery.png",
+      "sources": [
+        "specs/spec-package/02-architecture/production-local.md",
+        "contracts/operational-scenarios.json",
+        "contracts/state-machines.json"
+      ],
+      "speaker_notes": "Trình bày happy path, sau đó chỉ vào đường lỗi. Lỗi schema hoặc business invariant không được retry mù hay đánh dấu thành công. Raw/object storage và load DB không phải một distributed transaction. Receipt, batch, source cut và release là các identity khác nhau. Chứng minh sau triển khai: replay không tăng business rows, model checkpoint chỉ tiến khi thành công và failed tasks không bị notification che khuất."
+    },
+    {
+      "number": 7,
+      "slug": "07-semantic-layer-and-correct-metrics",
+      "title": "Semantic Layer: định nghĩa một lần, tính đúng grain",
+      "svg": "svg/07-semantic-layer-and-correct-metrics.svg",
+      "png": "png/07-semantic-layer-and-correct-metrics.png",
+      "sources": [
+        "specs/spec-package/03-data/semantic-and-metrics.md",
+        "contracts/metric-catalog.json",
+        "tests/fixtures/kimball/expected.json"
+      ],
+      "speaker_notes": "Hai fact không join nguyên tử. Từng fact được aggregate theo purchase period và buyer state, rồi drill-across ở cùng grain. Ví dụ nhỏ là fixture tổng hợp, không phải số liệu Olist: một đơn có hai item tổng 150 và hai payment; join chéo thành 300. Metabase nhận kết quả từ MetricFlow exports. Distinct phải query tại đúng kỳ; order-level AOV không được group product/seller theo hợp đồng hiện tại."
+    },
+    {
+      "number": 8,
+      "slug": "08-release-publication-and-isolation",
+      "title": "Không để pipeline chạy dở làm sai báo cáo",
+      "svg": "svg/08-release-publication-and-isolation.svg",
+      "png": "png/08-release-publication-and-isolation.png",
+      "sources": [
+        "specs/spec-package/02-architecture/production-local.md",
+        "contracts/release.schema.json",
+        "contracts/dashboard-contract.json"
+      ],
+      "speaker_notes": "Dùng R0 và R1 làm nhãn release minh họa. R0 tiếp tục phục vụ trong lúc R1 được build và kiểm tra. MetricFlow phải bind R1 trên mọi connection; thiếu binding thì fail closed. Publish đổi pointer bằng giao dịch DB dưới lease fence. Browser ghim một release cho tất cả card để tránh chart A đọc R0 và chart B đọc R1. Metabase API không nằm trong giao dịch PostgreSQL; delivery lag được theo dõi riêng. Chưa có chứng cứ runtime cho các cơ chế này."
+    },
+    {
+      "number": 9,
+      "slug": "09-evidence-operations-and-success",
+      "title": "Đầu ra phải có bằng chứng, không chỉ có sơ đồ",
+      "svg": "svg/09-evidence-operations-and-success.svg",
+      "png": "png/09-evidence-operations-and-success.png",
+      "sources": [
+        "docs/evidence/README.md",
+        "docs/evidence/design-contracts.json",
+        "docs/evidence/semantic-probe.json",
+        "specs/spec-package/08-operations/operating-model.md"
+      ],
+      "speaker_notes": "Kết thúc bằng trạng thái trung thực: 137 checks là kiểm tra thiết kế, không phải 137 kiểm thử hệ thống. Năm semantic checks hiện tại không kết nối database. 22 kịch bản vận hành đã được đặc tả, chưa chạy. RPO/RTO và thời gian pipeline là mục tiêu trên một host khỏe, không phải SLA đã đo; backup cùng máy không bảo vệ mất host. Khi demo sau triển khai, chạy một happy path, một replay và một failure recovery rồi trình bày output + evidence."
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "database": "sales_dw_restore_incremental_20261015c",
+  "simulated_delivery": true,
+  "source_payloads_unchanged": true,
+  "phases": [
+    {
+      "run_id": "9955915e-7023-4b33-9417-268890dafce6",
+      "month": "2017-01",
+      "plan": "integration-monthly-inferred",
+      "validation": {
+        "counts": {
+          "customers": 99441,
+          "orders": 800,
+          "order_items": 955,
+          "payments": 850,
+          "products": 32950,
+          "sellers": 3095,
+          "category_translation": 71
+        },
+        "received": 138162,
+        "invalid": 0
+      },
+      "load": {
+        "source_cut": 1,
+        "new_versions": 138162,
+        "duplicate_occurrences": 0,
+        "receipt_id": "f8e533b0-c89a-4917-87e1-bfae039bcc8c"
+      },
+      "build": {
+        "allocated_keys": {
+          "customer": 96096,
+          "product": 32951,
+          "seller": 3095,
+          "buyer_geography": 15034,
+          "order_status": 6,
+          "payment_method": 4
+        },
+        "dbt_nodes": 93,
+        "failures": [],
+        "artifacts": "var/runs/9955915e-7023-4b33-9417-268890dafce6/dbt"
+      },
+      "quality": {
+        "rows": {
+          "dim_customer": 96098,
+          "dim_product": 32953,
+          "dim_seller": 3097,
+          "dim_buyer_geography": 15036,
+          "dim_date": 5481,
+          "dim_order_status": 8,
+          "dim_payment_method": 6,
+          "fct_orders": 800,
+          "fct_order_items": 955,
+          "fct_payments": 850
+        },
+        "money_and_identity_checks": {
+          "items": true,
+          "freight": true,
+          "payments": true,
+          "customers": true,
+          "known_order_keys": true
+        },
+        "source_warnings": {
+          "missing_items": 11,
+          "missing_payments": 0,
+          "missing_delivery_timestamp": 0,
+          "payment_delta": 7,
+          "temporal_anomaly": 0,
+          "missing_category": 611
+        }
+      }
+    },
+    {
+      "run_id": "f9ce2cc5-46ef-4be0-a00a-c61573fff4c3",
+      "month": "2017-02",
+      "plan": "integration-monthly-withheld",
+      "validation": {
+        "counts": {
+          "customers": 99441,
+          "orders": 1780,
+          "order_items": 1951,
+          "payments": 1885,
+          "products": 32951,
+          "sellers": 3095,
+          "category_translation": 71
+        },
+        "received": 141174,
+        "invalid": 0
+      },
+      "load": {
+        "source_cut": 2,
+        "new_versions": 5617,
+        "duplicate_occurrences": 135557,
+        "receipt_id": "7061fe79-3194-400b-86f7-dbe7eaabf4c2"
+      },
+      "build": {
+        "allocated_keys": {
+          "customer": 0,
+          "product": 0,
+          "seller": 0,
+          "buyer_geography": 0,
+          "order_status": 1,
+          "payment_method": 0
+        },
+        "dbt_nodes": 93,
+        "failures": [],
+        "artifacts": "var/runs/f9ce2cc5-46ef-4be0-a00a-c61573fff4c3/dbt"
+      },
+      "quality": {
+        "rows": {
+          "dim_customer": 96098,
+          "dim_product": 32953,
+          "dim_seller": 3097,
+          "dim_buyer_geography": 15036,
+          "dim_date": 5481,
+          "dim_order_status": 9,
+          "dim_payment_method": 6,
+          "fct_orders": 2580,
+          "fct_order_items": 2906,
+          "fct_payments": 2735
+        },
+        "money_and_identity_checks": {
+          "items": true,
+          "freight": true,
+          "payments": true,
+          "customers": true,
+          "known_order_keys": true
+        },
+        "source_warnings": {
+          "missing_items": 58,
+          "missing_payments": 1,
+          "missing_delivery_timestamp": 0,
+          "payment_delta": 19,
+          "temporal_anomaly": 0,
+          "missing_category": 610
+        }
+      }
+    },
+    {
+      "run_id": "5a4957da-66dc-4d2b-9f71-39644a4a6b5b",
+      "month": "2017-02",
+      "plan": "integration-late-child",
+      "validation": {
+        "counts": {
+          "customers": 99441,
+          "orders": 1780,
+          "order_items": 1951,
+          "payments": 1886,
+          "products": 32951,
+          "sellers": 3095,
+          "category_translation": 71
+        },
+        "received": 141175,
+        "invalid": 0
+      },
+      "load": {
+        "source_cut": 3,
+        "new_versions": 1,
+        "duplicate_occurrences": 141174,
+        "receipt_id": "5c5d59f0-93c4-41b0-b4c7-65ec6f5678fc"
+      },
+      "build": {
+        "allocated_keys": {
+          "customer": 0,
+          "product": 0,
+          "seller": 0,
+          "buyer_geography": 0,
+          "order_status": 0,
+          "payment_method": 0
+        },
+        "dbt_nodes": 93,
+        "failures": [],
+        "artifacts": "var/runs/5a4957da-66dc-4d2b-9f71-39644a4a6b5b/dbt"
+      },
+      "quality": {
+        "rows": {
+          "dim_customer": 96098,
+          "dim_product": 32953,
+          "dim_seller": 3097,
+          "dim_buyer_geography": 15036,
+          "dim_date": 5481,
+          "dim_order_status": 9,
+          "dim_payment_method": 6,
+          "fct_orders": 2580,
+          "fct_order_items": 2906,
+          "fct_payments": 2736
+        },
+        "money_and_identity_checks": {
+          "items": true,
+          "freight": true,
+          "payments": true,
+          "customers": true,
+          "known_order_keys": true
+        },
+        "source_warnings": {
+          "missing_items": 58,
+          "missing_payments": 0,
+          "missing_delivery_timestamp": 0,
+          "payment_delta": 19,
+          "temporal_anomaly": 0,
+          "missing_category": 610
+        }
+      }
+    },
+    {
+      "run_id": "d2233e38-d656-4d82-a5d7-d4b639e7fddc",
+      "month": "2017-02",
+      "plan": "integration-late-child",
+      "validation": {
+        "counts": {
+          "customers": 99441,
+          "orders": 1780,
+          "order_items": 1951,
+          "payments": 1886,
+          "products": 32951,
+          "sellers": 3095,
+          "category_translation": 71
+        },
+        "received": 141175,
+        "invalid": 0
+      },
+      "load": {
+        "source_cut": 3,
+        "new_versions": 0,
+        "duplicate_occurrences": 141175,
+        "receipt_id": "3058a6c6-d3eb-4ae9-b9ba-960097ff87fd"
+      },
+      "build": {
+        "allocated_keys": {
+          "customer": 0,
+          "product": 0,
+          "seller": 0,
+          "buyer_geography": 0,
+          "order_status": 0,
+          "payment_method": 0
+        },
+        "dbt_nodes": 93,
+        "failures": [],
+        "artifacts": "var/runs/d2233e38-d656-4d82-a5d7-d4b639e7fddc/dbt"
+      },
+      "quality": {
+        "rows": {
+          "dim_customer": 96098,
+          "dim_product": 32953,
+          "dim_seller": 3097,
+          "dim_buyer_geography": 15036,
+          "dim_date": 5481,
+          "dim_order_status": 9,
+          "dim_payment_method": 6,
+          "fct_orders": 2580,
+          "fct_order_items": 2906,
+          "fct_payments": 2736
+        },
+        "money_and_identity_checks": {
+          "items": true,
+          "freight": true,
+          "payments": true,
+          "customers": true,
+          "known_order_keys": true
+        },
+        "source_warnings": {
+          "missing_items": 58,
+          "missing_payments": 0,
+          "missing_delivery_timestamp": 0,
+          "payment_delta": 19,
+          "temporal_anomaly": 0,
+          "missing_category": 610
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "inferred_enrichment": {
+    "before": {
+      "product_key": 111579,
+      "is_inferred": true
+    },
+    "after": {
+      "product_key": 111579,
+      "is_inferred": false
+    },
+    "same_key": true,
+    "fact_reference_preserved": true
+  },
+  "late_child": {
+    "order_id": "807f4ef550f104708e2190eca7e4c37a",
+    "before": {
+      "payment_record_count": 0,
+      "recorded_payment_total": null
+    },
+    "after": {
+      "payment_record_count": 1,
+      "recorded_payment_total": "205.71"
+    },
+    "parent_recomputed": true
+  },
+  "replay_identical": true,
+  "full_incremental_equivalent": true,
+  "stable_registry": true,
+  "logical_hashes": {
+    "dim_customer": {
+      "n": 96098,
+      "sha": "b7882981f926b37491cd0854f48b8b82d58df1d48b6dfb3337021e75db797c8b"
+    },
+    "dim_product": {
+      "n": 32953,
+      "sha": "6ead34570e489d3b35d6687715f7e987fde6f8ada576d1f1fbe80f9f577b7a5f"
+    },
+    "dim_seller": {
+      "n": 3097,
+      "sha": "e284f89b05dbd526d8fd56f2cd4e2fb15da9de71465e3947aff3734de7763e5e"
+    },
+    "dim_buyer_geography": {
+      "n": 15036,
+      "sha": "55d4a4e216e177e799db986a7ab2279f20aacd9021e67de4741a6dc4530522ae"
+    },
+    "dim_date": {
+      "n": 5481,
+      "sha": "5e1408c894987283429e08f378c46b3e41c4fd5126c3cba92fea7a0d1a9dc84e"
+    },
+    "dim_order_status": {
+      "n": 9,
+      "sha": "6aaa3fd903bdf42f06671785b45fa09cdaee3a0adbaffe10a90bcd71d1f17c05"
+    },
+    "dim_payment_method": {
+      "n": 6,
+      "sha": "c432c7c6b6aa85b6fdba217b2a7533022f066ca8a97fa011188c18490dc79765"
+    },
+    "fct_orders": {
+      "n": 2580,
+      "sha": "4dfbe3b68ebea748a8988bd89a29fbba59d08c3e1eaa5389c804d3d1d132c4c5"
+    },
+    "fct_order_items": {
+      "n": 2906,
+      "sha": "98b7f4836f22819cedf3941acc12f5fdd6b9438e6fef5f97732a5cf4aa5046c3"
+    },
+    "fct_payments": {
+      "n": 2736,
+      "sha": "1c781a229c9d9f89b7bbfb8330a457acbae71f33ea5e5f0d51e6577b25d8e762"
+    }
+  }
+}

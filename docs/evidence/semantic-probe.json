@@ -1,0 +1,95 @@
+{
+  "checked_at_utc": "2026-10-23T07:15:53.798252+00:00",
+  "scope": "Offline parse, discovery, PostgreSQL SQL generation and invalid-dimension rejection only; no warehouse connection, data execution or DDL.",
+  "python": "3.12.3",
+  "package_pins": {
+    "dbt-core": "1.12.6",
+    "dbt-postgres": "1.11.0",
+    "dbt-metricflow": "0.15.0",
+    "metricflow": "0.213.0"
+  },
+  "manifest_dbt_version": "1.12.6",
+  "semantic_manifest_sha256": "bbd09051277882d21a5d8941ca322ebe32deb1c69f3d5fa361c953f1e140f92b",
+  "checks": [
+    {
+      "case": "dbt_parse",
+      "command": [
+        "/home/dataguy/Documents/projects/abbott/.venv/bin/dbt",
+        "parse",
+        "--profiles-dir",
+        "/home/dataguy/Documents/projects/abbott/research/semantic_probe",
+        "--no-partial-parse"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "07:15:40  Running with dbt=1.12.6\n07:15:40  Registered adapter: postgres=1.11.0\n07:15:41  Performance info: /home/dataguy/Documents/projects/abbott/research/semantic_probe/target/perf_info.json\n",
+      "stderr": ""
+    },
+    {
+      "case": "metric_discovery",
+      "command": [
+        "/home/dataguy/Documents/projects/abbott/.venv/bin/mf",
+        "list",
+        "metrics"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "\n\n⠋ 🔍 Looking for all available metrics...\n\n⠙ 🔍 Looking for all available metrics...\n✔ 🌱 We've found 3 metrics.\nThe list below shows metrics in the format of \"metric_name: list of available dimensions\"\n• delivered_aov: buyer_geography__state, metric_time\n• delivered_merchandise_value: buyer_geography__state, metric_time, order_item__order_date, product__category\n• delivered_orders: buyer_geography__state, metric_time, order__order_date\n\n",
+      "stderr": ""
+    },
+    {
+      "case": "cross_grain_ratio_sql",
+      "command": [
+        "/home/dataguy/Documents/projects/abbott/.venv/bin/mf",
+        "query",
+        "--metrics",
+        "delivered_merchandise_value,delivered_orders,delivered_aov",
+        "--group-by",
+        "metric_time__month,buyer_geography__state",
+        "--explain"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "\n\n⠋ Initiating query…\n\n⠙ Initiating query…\n✔ Success 🦄 - query completed after 0.05 seconds\n🔎 SQL (remove --explain to see data or add --show-dataflow-plan to see the generated dataflow plan):\n\nWITH rss_10001_cte AS (\n  SELECT\n    state\n    , buyer_geography_key AS buyer_geography\n  FROM \"compile_only\".\"probe\".\"dim_buyer_geography\" dim_buyer_geography_src_10000\n)\n\n, cm_3_cte AS (\n  SELECT\n    DATE_TRUNC('month', fct_order_items_src_10000.order_date) AS metric_time__month\n    , rss_10001_cte.state AS buyer_geography__state\n    , SUM(fct_order_items_src_10000.delivered_merchandise_value) AS delivered_merchandise_value\n  FROM \"compile_only\".\"probe\".\"fct_order_items\" fct_order_items_src_10000\n  LEFT OUTER JOIN\n    rss_10001_cte\n  ON\n    fct_order_items_src_10000.buyer_geography_key = rss_10001_cte.buyer_geography\n  GROUP BY\n    DATE_TRUNC('month', fct_order_items_src_10000.order_date)\n    , rss_10001_cte.state\n)\n\n, cm_4_cte AS (\n  SELECT\n    DATE_TRUNC('month', fct_orders_src_10000.order_date) AS metric_time__month\n    , rss_10001_cte.state AS buyer_geography__state\n    , SUM(fct_orders_src_10000.delivered_order_count) AS delivered_orders\n  FROM \"compile_only\".\"probe\".\"fct_orders\" fct_orders_src_10000\n  LEFT OUTER JOIN\n    rss_10001_cte\n  ON\n    fct_orders_src_10000.buyer_geography_key = rss_10001_cte.buyer_geography\n  GROUP BY\n    DATE_TRUNC('month', fct_orders_src_10000.order_date)\n    , rss_10001_cte.state\n)\n\nSELECT\n  COALESCE(cm_3_cte.metric_time__month, cm_4_cte.metric_time__month, subq_20.metric_time__month) AS metric_time__month\n  , COALESCE(cm_3_cte.buyer_geography__state, cm_4_cte.buyer_geography__state, subq_20.buyer_geography__state) AS buyer_geography__state\n  , MAX(cm_3_cte.delivered_merchandise_value) AS delivered_merchandise_value\n  , MAX(cm_4_cte.delivered_orders) AS delivered_orders\n  , MAX(CAST(subq_20.delivered_merchandise_value AS DOUBLE PRECISION) / CAST(NULLIF(subq_20.delivered_orders, 0) AS DOUBLE PRECISION)) AS delivered_aov\nFROM cm_3_cte\nFULL OUTER JOIN\n  cm_4_cte\nON\n  (\n    cm_3_cte.buyer_geography__state = cm_4_cte.buyer_geography__state\n  ) AND (\n    cm_3_cte.metric_time__month = cm_4_cte.metric_time__month\n  )\nFULL OUTER JOIN (\n  SELECT\n    COALESCE(cm_3_cte.metric_time__month, cm_4_cte.metric_time__month) AS metric_time__month\n    , COALESCE(cm_3_cte.buyer_geography__state, cm_4_cte.buyer_geography__state) AS buyer_geography__state\n    , MAX(cm_3_cte.delivered_merchandise_value) AS delivered_merchandise_value\n    , MAX(cm_4_cte.delivered_orders) AS delivered_orders\n  FROM cm_3_cte\n  FULL OUTER JOIN\n    cm_4_cte\n  ON\n    (\n      cm_3_cte.buyer_geography__state = cm_4_cte.buyer_geography__state\n    ) AND (\n      cm_3_cte.metric_time__month = cm_4_cte.metric_time__month\n    )\n  GROUP BY\n    COALESCE(cm_3_cte.metric_time__month, cm_4_cte.metric_time__month)\n    , COALESCE(cm_3_cte.buyer_geography__state, cm_4_cte.buyer_geography__state)\n) subq_20\nON\n  (\n    COALESCE(cm_3_cte.buyer_geography__state, cm_4_cte.buyer_geography__state) = subq_20.buyer_geography__state\n  ) AND (\n    COALESCE(cm_3_cte.metric_time__month, cm_4_cte.metric_time__month) = subq_20.metric_time__month\n  )\nGROUP BY\n  COALESCE(cm_3_cte.metric_time__month, cm_4_cte.metric_time__month, subq_20.metric_time__month)\n  , COALESCE(cm_3_cte.buyer_geography__state, cm_4_cte.buyer_geography__state, subq_20.buyer_geography__state)\n\n",
+      "stderr": ""
+    },
+    {
+      "case": "item_category_sql",
+      "command": [
+        "/home/dataguy/Documents/projects/abbott/.venv/bin/mf",
+        "query",
+        "--metrics",
+        "delivered_merchandise_value",
+        "--group-by",
+        "metric_time__month,product__category",
+        "--explain"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "\n\n⠋ Initiating query…\n\n⠙ Initiating query…\n✔ Success 🦄 - query completed after 0.03 seconds\n🔎 SQL (remove --explain to see data or add --show-dataflow-plan to see the generated dataflow plan):\n\nSELECT\n  DATE_TRUNC('month', fct_order_items_src_10000.order_date) AS metric_time__month\n  , dim_products_src_10000.category AS product__category\n  , SUM(fct_order_items_src_10000.delivered_merchandise_value) AS delivered_merchandise_value\nFROM \"compile_only\".\"probe\".\"fct_order_items\" fct_order_items_src_10000\nLEFT OUTER JOIN\n  \"compile_only\".\"probe\".\"dim_products\" dim_products_src_10000\nON\n  fct_order_items_src_10000.product_key = dim_products_src_10000.product_key\nGROUP BY\n  DATE_TRUNC('month', fct_order_items_src_10000.order_date)\n  , dim_products_src_10000.category\n\n",
+      "stderr": ""
+    },
+    {
+      "case": "reject_order_metric_product_fanout",
+      "command": [
+        "/home/dataguy/Documents/projects/abbott/.venv/bin/mf",
+        "query",
+        "--metrics",
+        "delivered_orders",
+        "--group-by",
+        "product__category",
+        "--explain"
+      ],
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "\n\n⠋ Initiating query…\n\n⠙ Initiating query…\nERROR: Got error(s) during query resolution.\n\nError #1:\n  Message:\n\n    The given input does not match any of the available group-by-items for\n    SimpleMetric('delivered_orders'). Common issues are:\n\n      * Incorrect names.\n      * No valid join paths exist from the measure to the group-by-item.\n        (fan-out join support is pending).\n      * There are multiple matching join paths.\n        (disambiguation support is pending).\n\n    Suggestions:\n      [\n        'order__customer',\n        'order__buyer_geography',\n        'metric_time__day',\n        'order__order_date__day',\n        'buyer_geography',\n        'order',\n      ]\n\n  Query Input:\n\n    product__category\n\n  Issue Location:\n\n    [Resolve Query(['delivered_orders'])]\n      -> [Resolve SimpleMetric('delivered_orders')]\n\nLog File:: /home/dataguy/Documents/projects/abbott/research/semantic_probe/logs/metricflow.log\nArtifact Path: /home/dataguy/Documents/projects/abbott/research/semantic_probe/target/semantic_manifest.json\nArtifact Modified Time: 2026-10-23T14:15:42.064911\n\nIf you think you found a bug, please report it here:\n    https://github.com/dbt-labs/metricflow/issues\n\n\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}

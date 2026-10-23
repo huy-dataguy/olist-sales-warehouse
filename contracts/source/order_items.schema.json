@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:order_items:1.0.0",
+  "title": "Olist order_items source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "order_item_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+$"
+    },
+    "product_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "seller_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "shipping_limit_date": {
+      "type": "string",
+      "minLength": 1,
+      "format": "olist-timestamp"
+    },
+    "price": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+    },
+    "freight_value": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+    }
+  },
+  "required": [
+    "order_id",
+    "order_item_id",
+    "product_id",
+    "seller_id",
+    "shipping_limit_date",
+    "price",
+    "freight_value"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_order_items_dataset.csv",
+  "x-natural-key": [
+    "order_id",
+    "order_item_id"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

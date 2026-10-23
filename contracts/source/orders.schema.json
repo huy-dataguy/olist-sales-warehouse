@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:orders:1.0.0",
+  "title": "Olist orders source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "customer_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "order_status": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "approved",
+        "canceled",
+        "created",
+        "delivered",
+        "invoiced",
+        "processing",
+        "shipped",
+        "unavailable"
+      ]
+    },
+    "order_purchase_timestamp": {
+      "type": "string",
+      "minLength": 1,
+      "format": "olist-timestamp"
+    },
+    "order_approved_at": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "format": "olist-timestamp"
+        }
+      ]
+    },
+    "order_delivered_carrier_date": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "format": "olist-timestamp"
+        }
+      ]
+    },
+    "order_delivered_customer_date": {
+      "anyOf": [
+        {
+          "const": ""
+        },
+        {
+          "type": "string",
+          "minLength": 1,
+          "format": "olist-timestamp"
+        }
+      ]
+    },
+    "order_estimated_delivery_date": {
+      "type": "string",
+      "minLength": 1,
+      "format": "olist-timestamp"
+    }
+  },
+  "required": [
+    "order_id",
+    "customer_id",
+    "order_status",
+    "order_purchase_timestamp",
+    "order_approved_at",
+    "order_delivered_carrier_date",
+    "order_delivered_customer_date",
+    "order_estimated_delivery_date"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_orders_dataset.csv",
+  "x-natural-key": [
+    "order_id"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+

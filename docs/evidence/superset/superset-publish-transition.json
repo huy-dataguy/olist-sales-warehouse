@@ -1,0 +1,1826 @@
+{
+  "passed": true,
+  "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+  "dashboards": {
+    "sales": {
+      "url": "http://localhost:18088/superset/dashboard/olist-sales-87f01740/",
+      "charts": {
+        "2": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_orders) END AS \"Delivered orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Delivered orders": 6159
+            }
+          ]
+        },
+        "4": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_aov) END AS \"Delivered AOV · BRL/order\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Delivered AOV · BRL/order": 140.9244130540672
+            }
+          ]
+        },
+        "3": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_unique_customers) END AS \"Distinct delivered customers\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Distinct delivered customers": 6100
+            }
+          ]
+        },
+        "5": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(cancellation_rate) END AS \"Cancellation rate\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Cancellation rate": 0.006516211061665607
+            }
+          ]
+        },
+        "1": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(delivered_merchandise_value) END AS \"Delivered merchandise · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Delivered merchandise · BRL": 867953.46
+            }
+          ]
+        },
+        "37": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(value_yoy) END AS \"Merchandise change · vs same month last year\" \nFROM (SELECT m.release_id,m.month,m.month::text AS purchase_month,\n                  (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS value_mom,\n                  (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS value_yoy\n                  FROM reporting.validated_sales_monthly m LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n                  LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n                  WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Merchandise change · vs same month last year": 0.8022120307342631
+            }
+          ]
+        },
+        "36": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CASE WHEN COUNT(*) = 1 THEN MAX(value_mom) END AS \"Merchandise change · vs previous month\" \nFROM (SELECT m.release_id,m.month,m.month::text AS purchase_month,\n                  (m.delivered_merchandise_value-p.delivered_merchandise_value)/nullif(p.delivered_merchandise_value,0) AS value_mom,\n                  (m.delivered_merchandise_value-y.delivered_merchandise_value)/nullif(y.delivered_merchandise_value,0) AS value_yoy\n                  FROM reporting.validated_sales_monthly m LEFT JOIN reporting.validated_sales_monthly p ON p.release_id=m.release_id AND p.month=m.month-interval '1 month'\n                  LEFT JOIN reporting.validated_sales_monthly y ON y.release_id=m.release_id AND y.month=m.month-interval '1 year'\n                  WHERE m.release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Merchandise change · vs previous month": 0.013872102708041066
+            }
+          ]
+        },
+        "8": {
+          "status": "success",
+          "rows": 31,
+          "query": "SELECT day_label AS day_label, SUM(delivered_merchandise_value) AS \"Daily delivered merchandise · selected month\" \nFROM (SELECT *,date_trunc('month',day)::date::text AS purchase_month,day::text AS day_label FROM reporting.validated_sales_daily WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY day_label ORDER BY \"Daily delivered merchandise · selected month\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "day_label": "2018-07-01",
+              "Daily delivered merchandise · selected month": 23885.47
+            },
+            {
+              "day_label": "2018-07-02",
+              "Daily delivered merchandise · selected month": 22872.2
+            },
+            {
+              "day_label": "2018-07-03",
+              "Daily delivered merchandise · selected month": 26102.52
+            },
+            {
+              "day_label": "2018-07-04",
+              "Daily delivered merchandise · selected month": 35149.77
+            },
+            {
+              "day_label": "2018-07-05",
+              "Daily delivered merchandise · selected month": 28490.43
+            },
+            {
+              "day_label": "2018-07-06",
+              "Daily delivered merchandise · selected month": 18739.64
+            },
+            {
+              "day_label": "2018-07-07",
+              "Daily delivered merchandise · selected month": 8816.76
+            },
+            {
+              "day_label": "2018-07-08",
+              "Daily delivered merchandise · selected month": 14064.7
+            },
+            {
+              "day_label": "2018-07-09",
+              "Daily delivered merchandise · selected month": 19360.95
+            },
+            {
+              "day_label": "2018-07-10",
+              "Daily delivered merchandise · selected month": 18127.59
+            },
+            {
+              "day_label": "2018-07-11",
+              "Daily delivered merchandise · selected month": 17719.1
+            },
+            {
+              "day_label": "2018-07-12",
+              "Daily delivered merchandise · selected month": 19551.98
+            },
+            {
+              "day_label": "2018-07-13",
+              "Daily delivered merchandise · selected month": 27644.23
+            },
+            {
+              "day_label": "2018-07-14",
+              "Daily delivered merchandise · selected month": 21542.92
+            },
+            {
+              "day_label": "2018-07-15",
+              "Daily delivered merchandise · selected month": 29518.6
+            },
+            {
+              "day_label": "2018-07-16",
+              "Daily delivered merchandise · selected month": 29990.09
+            },
+            {
+              "day_label": "2018-07-17",
+              "Daily delivered merchandise · selected month": 29532.13
+            },
+            {
+              "day_label": "2018-07-18",
+              "Daily delivered merchandise · selected month": 40860.9
+            },
+            {
+              "day_label": "2018-07-19",
+              "Daily delivered merchandise · selected month": 38426.79
+            },
+            {
+              "day_label": "2018-07-20",
+              "Daily delivered merchandise · selected month": 31898.19
+            },
+            {
+              "day_label": "2018-07-21",
+              "Daily delivered merchandise · selected month": 20845.68
+            },
+            {
+              "day_label": "2018-07-22",
+              "Daily delivered merchandise · selected month": 25903.42
+            },
+            {
+              "day_label": "2018-07-23",
+              "Daily delivered merchandise · selected month": 39296.34
+            },
+            {
+              "day_label": "2018-07-24",
+              "Daily delivered merchandise · selected month": 39903.0
+            },
+            {
+              "day_label": "2018-07-25",
+              "Daily delivered merchandise · selected month": 40183.26
+            },
+            {
+              "day_label": "2018-07-26",
+              "Daily delivered merchandise · selected month": 34744.03
+            },
+            {
+              "day_label": "2018-07-27",
+              "Daily delivered merchandise · selected month": 28104.86
+            },
+            {
+              "day_label": "2018-07-28",
+              "Daily delivered merchandise · selected month": 24813.32
+            },
+            {
+              "day_label": "2018-07-29",
+              "Daily delivered merchandise · selected month": 29453.61
+            },
+            {
+              "day_label": "2018-07-30",
+              "Daily delivered merchandise · selected month": 37606.96
+            },
+            {
+              "day_label": "2018-07-31",
+              "Daily delivered merchandise · selected month": 44804.02
+            }
+          ]
+        },
+        "38": {
+          "status": "success",
+          "rows": 20,
+          "query": "SELECT purchase_month AS purchase_month, SUM(delivered_merchandise_value) AS \"Monthly delivered merchandise · 2017–Aug 2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY \"Monthly delivered merchandise · 2017–Aug 2018\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "purchase_month": "2017-01-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 111798.36
+            },
+            {
+              "purchase_month": "2017-02-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 234223.4
+            },
+            {
+              "purchase_month": "2017-03-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 359198.85
+            },
+            {
+              "purchase_month": "2017-04-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 340669.68
+            },
+            {
+              "purchase_month": "2017-05-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 489338.25
+            },
+            {
+              "purchase_month": "2017-06-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 421923.37
+            },
+            {
+              "purchase_month": "2017-07-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 481604.52
+            },
+            {
+              "purchase_month": "2017-08-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 554699.7
+            },
+            {
+              "purchase_month": "2017-09-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 607399.67
+            },
+            {
+              "purchase_month": "2017-10-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 648247.65
+            },
+            {
+              "purchase_month": "2017-11-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 987765.37
+            },
+            {
+              "purchase_month": "2017-12-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 726033.19
+            },
+            {
+              "purchase_month": "2018-01-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 924645.0
+            },
+            {
+              "purchase_month": "2018-02-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 826437.13
+            },
+            {
+              "purchase_month": "2018-03-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 953356.25
+            },
+            {
+              "purchase_month": "2018-04-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 973534.09
+            },
+            {
+              "purchase_month": "2018-05-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 977544.69
+            },
+            {
+              "purchase_month": "2018-06-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 856077.86
+            },
+            {
+              "purchase_month": "2018-07-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 867953.46
+            },
+            {
+              "purchase_month": "2018-08-01",
+              "Monthly delivered merchandise · 2017–Aug 2018": 838576.64
+            }
+          ]
+        },
+        "39": {
+          "status": "success",
+          "rows": 20,
+          "query": "SELECT purchase_month AS purchase_month, SUM(delivered_orders) AS \"Monthly delivered orders · 2017–Aug 2018\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_sales_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month >= '2017-01-01' AND purchase_month < '2018-09-01' GROUP BY purchase_month ORDER BY \"Monthly delivered orders · 2017–Aug 2018\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "purchase_month": "2017-01-01",
+              "Monthly delivered orders · 2017–Aug 2018": 750.0
+            },
+            {
+              "purchase_month": "2017-02-01",
+              "Monthly delivered orders · 2017–Aug 2018": 1653.0
+            },
+            {
+              "purchase_month": "2017-03-01",
+              "Monthly delivered orders · 2017–Aug 2018": 2546.0
+            },
+            {
+              "purchase_month": "2017-04-01",
+              "Monthly delivered orders · 2017–Aug 2018": 2303.0
+            },
+            {
+              "purchase_month": "2017-05-01",
+              "Monthly delivered orders · 2017–Aug 2018": 3546.0
+            },
+            {
+              "purchase_month": "2017-06-01",
+              "Monthly delivered orders · 2017–Aug 2018": 3135.0
+            },
+            {
+              "purchase_month": "2017-07-01",
+              "Monthly delivered orders · 2017–Aug 2018": 3872.0
+            },
+            {
+              "purchase_month": "2017-08-01",
+              "Monthly delivered orders · 2017–Aug 2018": 4193.0
+            },
+            {
+              "purchase_month": "2017-09-01",
+              "Monthly delivered orders · 2017–Aug 2018": 4150.0
+            },
+            {
+              "purchase_month": "2017-10-01",
+              "Monthly delivered orders · 2017–Aug 2018": 4478.0
+            },
+            {
+              "purchase_month": "2017-11-01",
+              "Monthly delivered orders · 2017–Aug 2018": 7289.0
+            },
+            {
+              "purchase_month": "2017-12-01",
+              "Monthly delivered orders · 2017–Aug 2018": 5513.0
+            },
+            {
+              "purchase_month": "2018-01-01",
+              "Monthly delivered orders · 2017–Aug 2018": 7069.0
+            },
+            {
+              "purchase_month": "2018-02-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6555.0
+            },
+            {
+              "purchase_month": "2018-03-01",
+              "Monthly delivered orders · 2017–Aug 2018": 7003.0
+            },
+            {
+              "purchase_month": "2018-04-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6798.0
+            },
+            {
+              "purchase_month": "2018-05-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6749.0
+            },
+            {
+              "purchase_month": "2018-06-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6099.0
+            },
+            {
+              "purchase_month": "2018-07-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6159.0
+            },
+            {
+              "purchase_month": "2018-08-01",
+              "Monthly delivered orders · 2017–Aug 2018": 6351.0
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "screenshot": "var/evidence/superset-screenshots/sales.png"
+    },
+    "commercial": {
+      "url": "http://localhost:18088/superset/dashboard/olist-commercial-87f01740/",
+      "charts": {
+        "12": {
+          "status": "success",
+          "rows": 10,
+          "query": "SELECT category AS category, SUM(delivered_item_rows) AS \"Top 10 categories · delivered item rows\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Top 10 categories · delivered item rows\" DESC \n LIMIT 10;\n\n",
+          "data": [
+            {
+              "category": "auto",
+              "Top 10 categories · delivered item rows": 341.0
+            },
+            {
+              "category": "baby",
+              "Top 10 categories · delivered item rows": 214.0
+            },
+            {
+              "category": "bed_bath_table",
+              "Top 10 categories · delivered item rows": 617.0
+            },
+            {
+              "category": "computers_accessories",
+              "Top 10 categories · delivered item rows": 418.0
+            },
+            {
+              "category": "furniture_decor",
+              "Top 10 categories · delivered item rows": 436.0
+            },
+            {
+              "category": "health_beauty",
+              "Top 10 categories · delivered item rows": 770.0
+            },
+            {
+              "category": "housewares",
+              "Top 10 categories · delivered item rows": 564.0
+            },
+            {
+              "category": "sports_leisure",
+              "Top 10 categories · delivered item rows": 460.0
+            },
+            {
+              "category": "telephony",
+              "Top 10 categories · delivered item rows": 221.0
+            },
+            {
+              "category": "watches_gifts",
+              "Top 10 categories · delivered item rows": 521.0
+            }
+          ]
+        },
+        "11": {
+          "status": "success",
+          "rows": 12,
+          "query": "SELECT state AS state, SUM(delivered_merchandise_value) AS \"Buyer state · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY state ORDER BY \"Buyer state · merchandise value\" DESC \n LIMIT 12;\n\n",
+          "data": [
+            {
+              "state": "BA",
+              "Buyer state · merchandise value": 41869.01
+            },
+            {
+              "state": "DF",
+              "Buyer state · merchandise value": 22685.44
+            },
+            {
+              "state": "ES",
+              "Buyer state · merchandise value": 30001.36
+            },
+            {
+              "state": "GO",
+              "Buyer state · merchandise value": 20503.3
+            },
+            {
+              "state": "MG",
+              "Buyer state · merchandise value": 92328.16
+            },
+            {
+              "state": "PB",
+              "Buyer state · merchandise value": 15188.68
+            },
+            {
+              "state": "PE",
+              "Buyer state · merchandise value": 24359.04
+            },
+            {
+              "state": "PR",
+              "Buyer state · merchandise value": 45108.95
+            },
+            {
+              "state": "RJ",
+              "Buyer state · merchandise value": 97033.4
+            },
+            {
+              "state": "RS",
+              "Buyer state · merchandise value": 39333.14
+            },
+            {
+              "state": "SC",
+              "Buyer state · merchandise value": 30923.99
+            },
+            {
+              "state": "SP",
+              "Buyer state · merchandise value": 321647.25
+            }
+          ]
+        },
+        "9": {
+          "status": "success",
+          "rows": 10,
+          "query": "SELECT category AS category, SUM(delivered_merchandise_value) AS \"Top 10 categories · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Top 10 categories · merchandise value\" DESC \n LIMIT 10;\n\n",
+          "data": [
+            {
+              "category": "auto",
+              "Top 10 categories · merchandise value": 43466.79
+            },
+            {
+              "category": "bed_bath_table",
+              "Top 10 categories · merchandise value": 54405.23
+            },
+            {
+              "category": "computers_accessories",
+              "Top 10 categories · merchandise value": 41063.31
+            },
+            {
+              "category": "furniture_decor",
+              "Top 10 categories · merchandise value": 45393.59
+            },
+            {
+              "category": "garden_tools",
+              "Top 10 categories · merchandise value": 25639.88
+            },
+            {
+              "category": "health_beauty",
+              "Top 10 categories · merchandise value": 103524.22
+            },
+            {
+              "category": "housewares",
+              "Top 10 categories · merchandise value": 62583.3
+            },
+            {
+              "category": "sports_leisure",
+              "Top 10 categories · merchandise value": 54015.89
+            },
+            {
+              "category": "telephony",
+              "Top 10 categories · merchandise value": 26492.68
+            },
+            {
+              "category": "watches_gifts",
+              "Top 10 categories · merchandise value": 95164.79
+            }
+          ]
+        },
+        "10": {
+          "status": "success",
+          "rows": 10,
+          "query": "SELECT seller_id AS seller_id, SUM(delivered_merchandise_value) AS \"Top 10 sellers · merchandise value\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_seller_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY seller_id ORDER BY \"Top 10 sellers · merchandise value\" DESC \n LIMIT 10;\n\n",
+          "data": [
+            {
+              "seller_id": "1025f0e2d44d7041d6cf58b6550e0bfa",
+              "Top 10 sellers · merchandise value": 17465.26
+            },
+            {
+              "seller_id": "04308b1ee57b6625f47df1d56f00eedf",
+              "Top 10 sellers · merchandise value": 16259.3
+            },
+            {
+              "seller_id": "612170e34b97004b3ba37eae81836b4c",
+              "Top 10 sellers · merchandise value": 15770.33
+            },
+            {
+              "seller_id": "6560211a19b47992c3666cc44a7e94c0",
+              "Top 10 sellers · merchandise value": 13237.0
+            },
+            {
+              "seller_id": "2eb70248d66e0e3ef83659f71b244378",
+              "Top 10 sellers · merchandise value": 13036.28
+            },
+            {
+              "seller_id": "fa1c13f2614d7b5c4749cbc52fecda94",
+              "Top 10 sellers · merchandise value": 12010.66
+            },
+            {
+              "seller_id": "53243585a1d6dc2643021fd1853d8905",
+              "Top 10 sellers · merchandise value": 9397.8
+            },
+            {
+              "seller_id": "966cb4760537b1404caedd472cc610a5",
+              "Top 10 sellers · merchandise value": 9197.6
+            },
+            {
+              "seller_id": "4869f7a5dfa277a7dca6462dcf3b52b2",
+              "Top 10 sellers · merchandise value": 8280.3
+            },
+            {
+              "seller_id": "8fb791022c1fc8909664f48ab7dc636d",
+              "Top 10 sellers · merchandise value": 8119.95
+            }
+          ]
+        },
+        "14": {
+          "status": "success",
+          "rows": 12,
+          "query": "SELECT state AS state, SUM(delivered_merchandise_value) / NULLIF(SUM(delivered_orders), 0) AS \"Delivered AOV by buyer state · BRL/order\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.validated_buyer_state_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY state ORDER BY \"Delivered AOV by buyer state · BRL/order\" DESC \n LIMIT 12;\n\n",
+          "data": [
+            {
+              "state": "AC",
+              "Delivered AOV by buyer state · BRL/order": 367.4925
+            },
+            {
+              "state": "AP",
+              "Delivered AOV by buyer state · BRL/order": 225.14
+            },
+            {
+              "state": "ES",
+              "Delivered AOV by buyer state · BRL/order": 245.9127868852459
+            },
+            {
+              "state": "GO",
+              "Delivered AOV by buyer state · BRL/order": 183.06517857142856
+            },
+            {
+              "state": "MT",
+              "Delivered AOV by buyer state · BRL/order": 225.52425531914895
+            },
+            {
+              "state": "PA",
+              "Delivered AOV by buyer state · BRL/order": 231.5077192982456
+            },
+            {
+              "state": "PB",
+              "Delivered AOV by buyer state · BRL/order": 297.8172549019608
+            },
+            {
+              "state": "PE",
+              "Delivered AOV by buyer state · BRL/order": 179.11058823529413
+            },
+            {
+              "state": "PI",
+              "Delivered AOV by buyer state · BRL/order": 216.6709375
+            },
+            {
+              "state": "RN",
+              "Delivered AOV by buyer state · BRL/order": 290.18724137931036
+            },
+            {
+              "state": "RO",
+              "Delivered AOV by buyer state · BRL/order": 281.4875
+            },
+            {
+              "state": "RR",
+              "Delivered AOV by buyer state · BRL/order": 302.94
+            }
+          ]
+        },
+        "35": {
+          "status": "success",
+          "rows": 6,
+          "query": "SELECT category AS category, SUM(delivered_merchandise_value) AS \"Category contribution · top 5 + others\" \nFROM (WITH ranked AS (\n                  SELECT *,row_number() OVER(PARTITION BY month ORDER BY delivered_merchandise_value DESC,category) AS rank\n                  FROM reporting.validated_product_monthly WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a')\n                  SELECT release_id,month,month::text AS purchase_month,CASE WHEN rank<=5 THEN category ELSE 'Other categories' END AS category,\n                  sum(delivered_merchandise_value) AS delivered_merchandise_value\n                  FROM ranked GROUP BY release_id,month,CASE WHEN rank<=5 THEN category ELSE 'Other categories' END\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY category ORDER BY \"Category contribution · top 5 + others\" DESC \n LIMIT 6;\n\n",
+          "data": [
+            {
+              "category": "Other categories",
+              "Category contribution · top 5 + others": 498260.03,
+              "Category contribution · top 5 + others__contribution": 0.5740630724601293
+            },
+            {
+              "category": "health_beauty",
+              "Category contribution · top 5 + others": 103524.22,
+              "Category contribution · top 5 + others__contribution": 0.1192739297335136
+            },
+            {
+              "category": "watches_gifts",
+              "Category contribution · top 5 + others": 95164.79,
+              "Category contribution · top 5 + others__contribution": 0.10964273360924214
+            },
+            {
+              "category": "housewares",
+              "Category contribution · top 5 + others": 62583.3,
+              "Category contribution · top 5 + others__contribution": 0.07210444209762122
+            },
+            {
+              "category": "bed_bath_table",
+              "Category contribution · top 5 + others": 54405.23,
+              "Category contribution · top 5 + others__contribution": 0.06268219726896417
+            },
+            {
+              "category": "sports_leisure",
+              "Category contribution · top 5 + others": 54015.89,
+              "Category contribution · top 5 + others__contribution": 0.06223362483052951
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "screenshot": "var/evidence/superset-screenshots/commercial.png"
+    },
+    "customers": {
+      "url": "http://localhost:18088/superset/dashboard/olist-customers-87f01740/",
+      "charts": {
+        "15": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT COUNT(*) AS \"Observed delivered customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Observed delivered customers": 93358
+            }
+          ]
+        },
+        "16": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CAST(COUNT(*) FILTER(WHERE delivered_orders >= 2) AS DECIMAL) / NULLIF(COUNT(*), 0) AS \"Repeat customer share\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Repeat customer share": 0.03000278497825575
+            }
+          ]
+        },
+        "18": {
+          "status": "success",
+          "rows": 3,
+          "query": "SELECT frequency_segment AS frequency_segment, COUNT(*) AS \"Observed delivered-order frequency\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table GROUP BY frequency_segment ORDER BY \"Observed delivered-order frequency\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "frequency_segment": "1 delivered order",
+              "Observed delivered-order frequency": 90557.0
+            },
+            {
+              "frequency_segment": "2 delivered orders",
+              "Observed delivered-order frequency": 2573.0
+            },
+            {
+              "frequency_segment": "3+ delivered orders",
+              "Observed delivered-order frequency": 228.0
+            }
+          ]
+        },
+        "19": {
+          "status": "success",
+          "rows": 3,
+          "query": "SELECT recency_segment AS recency_segment, COUNT(*) AS \"Recency at 31 Aug 2018 · customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table GROUP BY recency_segment ORDER BY \"Recency at 31 Aug 2018 · customers\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "recency_segment": "0-90 days",
+              "Recency at 31 Aug 2018 · customers": 18211.0
+            },
+            {
+              "recency_segment": "181+ days",
+              "Recency at 31 Aug 2018 · customers": 55576.0
+            },
+            {
+              "recency_segment": "91-180 days",
+              "Recency at 31 Aug 2018 · customers": 19571.0
+            }
+          ]
+        },
+        "17": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT SUM(observed_merchandise_value) FILTER(WHERE delivered_orders >= 2) / NULLIF(SUM(observed_merchandise_value), 0) AS \"Merchandise share from repeat customers\" \nFROM (SELECT * FROM reporting.analytic_customers WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Merchandise share from repeat customers": 0.05509275453808615
+            }
+          ]
+        },
+        "41": {
+          "status": "success",
+          "rows": 99,
+          "query": "SELECT month_offset AS month_offset, cohort_label AS cohort_label, MAX(observed_retention) AS \"Return by cohort · months 1–6 (month 0 = 100%)\" \nFROM (SELECT *,cohort_month::text AS cohort_label FROM reporting.analytic_cohorts WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE month_offset > 0 AND cohort_label >= '2017-01-01' GROUP BY month_offset, cohort_label ORDER BY cohort_label DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.005210959825180703,
+              "rank": 0.9090909090909091
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004253147329023477,
+              "rank": 0.8181818181818182
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0027220142905750254,
+              "rank": 0.42424242424242425
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.00522594528127882,
+              "rank": 0.9191919191919192
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.00261297264063941,
+              "rank": 0.37373737373737376
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2018-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0018444512757454657,
+              "rank": 0.20202020202020202
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.005925250683682771,
+              "rank": 0.9595959595959596
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003038590094196293,
+              "rank": 0.5757575757575758
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2018-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002430872075357034,
+              "rank": 0.3333333333333333
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2018-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0013673655423883319,
+              "rank": 0.0707070707070707
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003985828166519044,
+              "rank": 0.7676767676767676
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002952465308532625,
+              "rank": 0.5303030303030303
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2018-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002952465308532625,
+              "rank": 0.5303030303030303
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2018-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.00118098612341305,
+              "rank": 0.03535353535353535
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2018-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.00118098612341305,
+              "rank": 0.03535353535353535
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003498727735368957,
+              "rank": 0.6666666666666666
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003975826972010178,
+              "rank": 0.7575757575757576
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0030216284987277355,
+              "rank": 0.5656565656565656
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002544529262086514,
+              "rank": 0.36363636363636365
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0022264631043256997,
+              "rank": 0.2828282828282828
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2018-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0020674300254452924,
+              "rank": 0.23232323232323232
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0033615901783104357,
+              "rank": 0.6161616161616161
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0036539023677287343,
+              "rank": 0.7171717171717171
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0029231218941829875,
+              "rank": 0.5
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0029231218941829875,
+              "rank": 0.5
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.001607717041800643,
+              "rank": 0.12121212121212122
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2018-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0017538731365097924,
+              "rank": 0.16161616161616163
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0020606968902210565,
+              "rank": 0.21717171717171718
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002810041213937804,
+              "rank": 0.46464646464646464
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0033720494567253652,
+              "rank": 0.6262626262626263
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0026227051330086175,
+              "rank": 0.3838383838383838
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0020606968902210565,
+              "rank": 0.21717171717171718
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-12-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0016860247283626826,
+              "rank": 0.13131313131313133
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0056657223796034,
+              "rank": 0.9494949494949495
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0036827195467422098,
+              "rank": 0.7272727272727273
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0016997167138810198,
+              "rank": 0.14646464646464646
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0016997167138810198,
+              "rank": 0.14646464646464646
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0018413597733711049,
+              "rank": 0.18181818181818182
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-11-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0011331444759206798,
+              "rank": 0.020202020202020204
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.007162661737523105,
+              "rank": 1.0
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0025415896487985213,
+              "rank": 0.35353535353535354
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0009242144177449168,
+              "rank": 0.010101010101010102
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0023105360443622922,
+              "rank": 0.31313131313131315
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0020794824399260627,
+              "rank": 0.2474747474747475
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-10-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0020794824399260627,
+              "rank": 0.2474747474747475
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.006993006993006993,
+              "rank": 0.98989898989899
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.005494505494505495,
+              "rank": 0.9393939393939394
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002747252747252747,
+              "rank": 0.43434343434343436
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004495504495504495,
+              "rank": 0.8585858585858586
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0022477522477522475,
+              "rank": 0.29797979797979796
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-09-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0022477522477522475,
+              "rank": 0.29797979797979796
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.006901651466600937,
+              "rank": 0.9797979797979798
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0034508257333004683,
+              "rank": 0.6414141414141414
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0027113630761646536,
+              "rank": 0.41414141414141414
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0034508257333004683,
+              "rank": 0.6414141414141414
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0051762385999507025,
+              "rank": 0.898989898989899
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-08-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0029578506285432584,
+              "rank": 0.5454545454545454
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.005330490405117271,
+              "rank": 0.9292929292929293
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003464818763326226,
+              "rank": 0.6565656565656566
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002398720682302772,
+              "rank": 0.32323232323232326
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002931769722814499,
+              "rank": 0.5151515151515151
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0021321961620469083,
+              "rank": 0.26262626262626265
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-07-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0031982942430703624,
+              "rank": 0.6060606060606061
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004939084622983207,
+              "rank": 0.8888888888888888
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003951267698386566,
+              "rank": 0.7424242424242424
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004280540006585446,
+              "rank": 0.8282828282828283
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0029634507737899243,
+              "rank": 0.5555555555555556
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003951267698386566,
+              "rank": 0.7424242424242424
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-06-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0036219953901876854,
+              "rank": 0.7070707070707071
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004636337293538105,
+              "rank": 0.8737373737373737
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004636337293538105,
+              "rank": 0.8737373737373737
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0028977108084613156,
+              "rank": 0.4797979797979798
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0028977108084613156,
+              "rank": 0.4797979797979798
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003187481889307447,
+              "rank": 0.5959595959595959
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-05-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.004056795131845842,
+              "rank": 0.7878787878787878
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0062056737588652485,
+              "rank": 0.9696969696969697
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002216312056737589,
+              "rank": 0.2727272727272727
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0017730496453900709,
+              "rank": 0.1717171717171717
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0026595744680851063,
+              "rank": 0.398989898989899
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0026595744680851063,
+              "rank": 0.398989898989899
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-04-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0035460992907801418,
+              "rank": 0.6767676767676768
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0043947263284059125,
+              "rank": 0.8484848484848485
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003595685177786656,
+              "rank": 0.6919191919191919
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003995205753096284,
+              "rank": 0.7777777777777778
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003595685177786656,
+              "rank": 0.6919191919191919
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0015980823012385138,
+              "rank": 0.10606060606060606
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-03-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0015980823012385138,
+              "rank": 0.10606060606060606
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0018427518427518428,
+              "rank": 0.1919191919191919
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.003071253071253071,
+              "rank": 0.5858585858585859
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0012285012285012285,
+              "rank": 0.05555555555555555
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0042997542997543,
+              "rank": 0.8383838383838383
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0012285012285012285,
+              "rank": 0.05555555555555555
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-02-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002457002457002457,
+              "rank": 0.3434343434343434
+            },
+            {
+              "month_offset": 1,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002789400278940028,
+              "rank": 0.4494949494949495
+            },
+            {
+              "month_offset": 2,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.002789400278940028,
+              "rank": 0.4494949494949495
+            },
+            {
+              "month_offset": 3,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.001394700139470014,
+              "rank": 0.08585858585858586
+            },
+            {
+              "month_offset": 4,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0041841004184100415,
+              "rank": 0.803030303030303
+            },
+            {
+              "month_offset": 5,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.001394700139470014,
+              "rank": 0.08585858585858586
+            },
+            {
+              "month_offset": 6,
+              "cohort_label": "2017-01-01",
+              "Return by cohort · months 1–6 (month 0 = 100%)": 0.0041841004184100415,
+              "rank": 0.803030303030303
+            }
+          ]
+        },
+        "40": {
+          "status": "success",
+          "rows": 6,
+          "query": "SELECT month_offset AS month_offset, CAST(SUM(active_customers) AS DECIMAL) / NULLIF(SUM(cohort_size), 0) AS \"Observed return rate · months 1–6, eligible cohorts\" \nFROM (SELECT *,cohort_month::text AS cohort_label FROM reporting.analytic_cohorts WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE month_offset > 0 AND cohort_label >= '2017-01-01' GROUP BY month_offset ORDER BY \"Observed return rate · months 1–6, eligible cohorts\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "month_offset": 1,
+              "Observed return rate · months 1–6, eligible cohorts": 0.0048303622771707876
+            },
+            {
+              "month_offset": 2,
+              "Observed return rate · months 1–6, eligible cohorts": 0.0033703287613733165
+            },
+            {
+              "month_offset": 3,
+              "Observed return rate · months 1–6, eligible cohorts": 0.002555808474102472
+            },
+            {
+              "month_offset": 4,
+              "Observed return rate · months 1–6, eligible cohorts": 0.002564962035647143
+            },
+            {
+              "month_offset": 5,
+              "Observed return rate · months 1–6, eligible cohorts": 0.0022567905214798097
+            },
+            {
+              "month_offset": 6,
+              "Observed return rate · months 1–6, eligible cohorts": 0.002316280921445504
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "screenshot": "var/evidence/superset-screenshots/customers.png"
+    },
+    "service": {
+      "url": "http://localhost:18088/superset/dashboard/olist-service-87f01740/",
+      "charts": {
+        "24": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT SUM(known_delivery_date_count) AS \"Eligible delivery observations\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Eligible delivery observations": 6156
+            }
+          ]
+        },
+        "25": {
+          "status": "success",
+          "rows": 6,
+          "query": "SELECT order_status AS order_status, SUM(order_count) AS \"Accepted order status · orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY order_status ORDER BY \"Accepted order status · orders\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "order_status": "delivered",
+              "Accepted order status · orders": 6159,
+              "Accepted order status · orders__contribution": 0.9788620470438653
+            },
+            {
+              "order_status": "shipped",
+              "Accepted order status · orders": 60,
+              "Accepted order status · orders__contribution": 0.009535918626827717
+            },
+            {
+              "order_status": "canceled",
+              "Accepted order status · orders": 41,
+              "Accepted order status · orders__contribution": 0.006516211061665607
+            },
+            {
+              "order_status": "unavailable",
+              "Accepted order status · orders": 18,
+              "Accepted order status · orders__contribution": 0.002860775588048315
+            },
+            {
+              "order_status": "invoiced",
+              "Accepted order status · orders": 13,
+              "Accepted order status · orders__contribution": 0.002066115702479339
+            },
+            {
+              "order_status": "processing",
+              "Accepted order status · orders": 1,
+              "Accepted order status · orders__contribution": 0.0001589319771137953
+            }
+          ]
+        },
+        "22": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT CAST(SUM(on_time_delivery_count) AS DECIMAL) / NULLIF(SUM(known_delivery_date_count), 0) AS \"On-time delivery · eligible orders\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "On-time delivery · eligible orders": 0.9662118258609487
+            }
+          ]
+        },
+        "23": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY delivery_days) FILTER(WHERE known_delivery_date_count = 1) AS \"Median delivery · days\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Median delivery · days": 7.5017245370370365
+            }
+          ]
+        },
+        "28": {
+          "status": "success",
+          "rows": 17,
+          "query": "SELECT payment_installments AS payment_installments, SUM(payment_record_count) AS \"Installments · payment records\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY payment_installments ORDER BY \"Installments · payment records\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "payment_installments": 1,
+              "Installments · payment records": 3435.0
+            },
+            {
+              "payment_installments": 2,
+              "Installments · payment records": 795.0
+            },
+            {
+              "payment_installments": 3,
+              "Installments · payment records": 585.0
+            },
+            {
+              "payment_installments": 4,
+              "Installments · payment records": 443.0
+            },
+            {
+              "payment_installments": 5,
+              "Installments · payment records": 334.0
+            },
+            {
+              "payment_installments": 6,
+              "Installments · payment records": 212.0
+            },
+            {
+              "payment_installments": 7,
+              "Installments · payment records": 97.0
+            },
+            {
+              "payment_installments": 8,
+              "Installments · payment records": 321.0
+            },
+            {
+              "payment_installments": 9,
+              "Installments · payment records": 29.0
+            },
+            {
+              "payment_installments": 10,
+              "Installments · payment records": 243.0
+            },
+            {
+              "payment_installments": 12,
+              "Installments · payment records": 2.0
+            },
+            {
+              "payment_installments": 13,
+              "Installments · payment records": 1.0
+            },
+            {
+              "payment_installments": 14,
+              "Installments · payment records": 1.0
+            },
+            {
+              "payment_installments": 15,
+              "Installments · payment records": 3.0
+            },
+            {
+              "payment_installments": 16,
+              "Installments · payment records": 1.0
+            },
+            {
+              "payment_installments": 17,
+              "Installments · payment records": 2.0
+            },
+            {
+              "payment_installments": 18,
+              "Installments · payment records": 3.0
+            }
+          ]
+        },
+        "26": {
+          "status": "success",
+          "rows": 15,
+          "query": "SELECT buyer_state AS buyer_state, AVG(delivery_days) FILTER(WHERE known_delivery_date_count = 1) AS \"Average delivery days · buyer states\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_orders WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY buyer_state ORDER BY \"Average delivery days · buyer states\" DESC \n LIMIT 15;\n\n",
+          "data": [
+            {
+              "buyer_state": "AC",
+              "Average delivery days · buyer states": 13.854797453703704
+            },
+            {
+              "buyer_state": "AL",
+              "Average delivery days · buyer states": 23.326137941919193
+            },
+            {
+              "buyer_state": "AM",
+              "Average delivery days · buyer states": 22.273317258230453
+            },
+            {
+              "buyer_state": "AP",
+              "Average delivery days · buyer states": 31.049104938271604
+            },
+            {
+              "buyer_state": "BA",
+              "Average delivery days · buyer states": 13.563969812925171
+            },
+            {
+              "buyer_state": "MA",
+              "Average delivery days · buyer states": 17.719745073599242
+            },
+            {
+              "buyer_state": "PA",
+              "Average delivery days · buyer states": 15.300362451267057
+            },
+            {
+              "buyer_state": "PB",
+              "Average delivery days · buyer states": 14.766183051924473
+            },
+            {
+              "buyer_state": "PE",
+              "Average delivery days · buyer states": 13.13245276756536
+            },
+            {
+              "buyer_state": "PI",
+              "Average delivery days · buyer states": 15.41192455150463
+            },
+            {
+              "buyer_state": "RN",
+              "Average delivery days · buyer states": 13.05485312899106
+            },
+            {
+              "buyer_state": "RO",
+              "Average delivery days · buyer states": 13.26886863425926
+            },
+            {
+              "buyer_state": "RR",
+              "Average delivery days · buyer states": 18.825002314814814
+            },
+            {
+              "buyer_state": "SE",
+              "Average delivery days · buyer states": 14.447032585470085
+            },
+            {
+              "buyer_state": "TO",
+              "Average delivery days · buyer states": 14.555898042929293
+            }
+          ]
+        },
+        "27": {
+          "status": "success",
+          "rows": 4,
+          "query": "SELECT payment_method AS payment_method, SUM(recorded_payment_value) AS \"Recorded payment amount by method · BRL\" \nFROM (SELECT *,month::text AS purchase_month FROM reporting.analytic_payments WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \nWHERE purchase_month IN ('2018-07-01') GROUP BY payment_method ORDER BY \"Recorded payment amount by method · BRL\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "payment_method": "credit_card",
+              "Recorded payment amount by method · BRL": 803674.49,
+              "Recorded payment amount by method · BRL__contribution": 0.753533786683725
+            },
+            {
+              "payment_method": "boleto",
+              "Recorded payment amount by method · BRL": 198041.24,
+              "Recorded payment amount by method · BRL__contribution": 0.18568558210269978
+            },
+            {
+              "payment_method": "debit_card",
+              "Recorded payment amount by method · BRL": 44866.18,
+              "Recorded payment amount by method · BRL__contribution": 0.042067009629027305
+            },
+            {
+              "payment_method": "voucher",
+              "Recorded payment amount by method · BRL": 19958.84,
+              "Recorded payment amount by method · BRL__contribution": 0.01871362158454799
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "screenshot": "var/evidence/superset-screenshots/service.png"
+    },
+    "trust": {
+      "url": "http://localhost:18088/superset/dashboard/olist-trust-87f01740/",
+      "charts": {
+        "29": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT state AS state, source_cut AS source_cut, started_at AS started_at, finished_at AS finished_at, pipeline_run_id AS pipeline_run_id \nFROM (SELECT * FROM reporting.pipeline_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "state": "succeeded",
+              "source_cut": 1,
+              "started_at": 1792074813636.69,
+              "finished_at": 1792075074049.218,
+              "pipeline_run_id": "5ac008ff-3041-54cf-b03a-b7e76a5fa82f"
+            }
+          ]
+        },
+        "32": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT COALESCE(SUM(affected_records) FILTER(WHERE severity = 'error'), 0) AS \"Quality error occurrences · producer run\" \nFROM (SELECT * FROM reporting.quality_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "Quality error occurrences · producer run": 0
+            }
+          ]
+        },
+        "30": {
+          "status": "success",
+          "rows": 1,
+          "query": "SELECT published_at AS published_at, source_cut AS source_cut, model_version AS model_version, release_id AS release_id \nFROM (SELECT * FROM reporting.release_metadata WHERE release_id='87f01740-0523-5fd4-be0e-eb52acb2842a'\n) AS virtual_table \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "published_at": 1792075072928.045,
+              "source_cut": 1,
+              "model_version": "2.0.0",
+              "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a"
+            }
+          ]
+        },
+        "31": {
+          "status": "success",
+          "rows": 6,
+          "query": "SELECT rule_id AS rule_id, SUM(affected_records) AS \"Source warnings · affected occurrences\" \nFROM (SELECT * FROM reporting.quality_health WHERE pipeline_run_id='5ac008ff-3041-54cf-b03a-b7e76a5fa82f'\n) AS virtual_table GROUP BY rule_id ORDER BY \"Source warnings · affected occurrences\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "rule_id": "DQ-CAT-001",
+              "Source warnings · affected occurrences": 610.0
+            },
+            {
+              "rule_id": "DQ-COV-001",
+              "Source warnings · affected occurrences": 775.0
+            },
+            {
+              "rule_id": "DQ-COV-002",
+              "Source warnings · affected occurrences": 1.0
+            },
+            {
+              "rule_id": "DQ-PAY-001",
+              "Source warnings · affected occurrences": 303.0
+            },
+            {
+              "rule_id": "DQ-TIME-001",
+              "Source warnings · affected occurrences": 8.0
+            },
+            {
+              "rule_id": "DQ-TIME-002",
+              "Source warnings · affected occurrences": 166.0
+            }
+          ]
+        },
+        "33": {
+          "status": "success",
+          "rows": 2,
+          "query": "SELECT state AS state, COUNT(*) AS \"Pipeline attempts · operational audit\" \nFROM (SELECT * FROM reporting.pipeline_health WHERE true\n) AS virtual_table GROUP BY state ORDER BY \"Pipeline attempts · operational audit\" DESC \n LIMIT 1000;\n\n",
+          "data": [
+            {
+              "state": "failed",
+              "Pipeline attempts · operational audit": 10.0
+            },
+            {
+              "state": "succeeded",
+              "Pipeline attempts · operational audit": 5.0
+            }
+          ]
+        },
+        "34": {
+          "status": "success",
+          "rows": 12,
+          "query": "SELECT state AS state, started_at AS started_at, finished_at AS finished_at, error_category AS error_category, pipeline_run_id AS pipeline_run_id \nFROM (SELECT * FROM reporting.pipeline_health WHERE true\n) AS virtual_table \n LIMIT 12;\n\n",
+          "data": [
+            {
+              "state": "failed",
+              "started_at": 1792061955776.9011,
+              "finished_at": 1792062170072.259,
+              "error_category": "RuntimeError",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddeeff"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792062214059.3281,
+              "finished_at": 1792062282468.462,
+              "error_category": "RuntimeError",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee00"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792062330850.439,
+              "finished_at": 1792062550918.2551,
+              "error_category": "QueryCanceled",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee01"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792062552114.842,
+              "finished_at": 1792062688584.409,
+              "error_category": "QueryCanceled",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee02"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792062691364.616,
+              "finished_at": 1792062806123.881,
+              "error_category": "RuntimeError",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee03"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792070407888.387,
+              "finished_at": 1792070534185.689,
+              "error_category": "AssertionError",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee04"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792070599682.205,
+              "finished_at": 1792070725616.506,
+              "error_category": "AssertionError",
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee05"
+            },
+            {
+              "state": "succeeded",
+              "started_at": 1792070954179.2778,
+              "finished_at": 1792071126752.4978,
+              "error_category": null,
+              "pipeline_run_id": "00112233-4455-4677-8899-aabbccddee06"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792071309299.0662,
+              "finished_at": 1792071438315.5342,
+              "error_category": "airflow_task_failure",
+              "pipeline_run_id": "217dedca-9986-5d20-b757-d4398215647f"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792071445681.694,
+              "finished_at": 1792071574339.865,
+              "error_category": "airflow_task_failure",
+              "pipeline_run_id": "fdb1bd26-6bb5-568e-9fc4-9b875f9e3b49"
+            },
+            {
+              "state": "succeeded",
+              "started_at": 1792071628410.6099,
+              "finished_at": 1792071902353.511,
+              "error_category": null,
+              "pipeline_run_id": "03a7356b-9951-5fb4-9339-60e106b47e8a"
+            },
+            {
+              "state": "failed",
+              "started_at": 1792071958352.8408,
+              "finished_at": 1792072020829.4958,
+              "error_category": "airflow_task_failure",
+              "pipeline_run_id": "219bcd6d-801d-5299-b5ee-a5c7c3ba358b"
+            }
+          ]
+        }
+      },
+      "errors": [],
+      "screenshot": "var/evidence/superset-screenshots/trust.png"
+    }
+  },
+  "native_month_change": {
+    "from": "2018-07-01",
+    "to": "2018-06-01",
+    "value_matched_sql": true,
+    "trend_context_preserved": true
+  },
+  "publish_transition": {
+    "pinned_release": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+    "new_current_release": "8b723f17-3ef3-5c80-93a4-c55bc6111f1e",
+    "all_sales_charts_unchanged": true,
+    "actual_new_publication_observed": true
+  }
+}

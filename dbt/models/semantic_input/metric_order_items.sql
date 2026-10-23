@@ -1,0 +1,2 @@
+-- This relation is provisioned by reviewed migrations. Parse only, never dbt-build this project.
+select i.*,i.purchase_timestamp::date as order_date,case when s.is_delivered then merchandise_value else 0::numeric end as delivered_merchandise_value,case when s.is_delivered then item_row_count else 0 end as delivered_item_rows from semantic_input.fct_order_items i join semantic_input.dim_order_status s using(release_id,order_status_key)

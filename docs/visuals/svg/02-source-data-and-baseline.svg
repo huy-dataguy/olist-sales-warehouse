@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Dữ liệu thật đủ để làm và đối soát</title>
+<desc id="desc">Một nhà công bố, bảy domain feeds; không gọi bảy file là bảy hệ thống độc lập.. Sơ đồ thiết kế; chưa nghiệm thu runtime.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">DESIGN BASELINE 2.0  /  15.10.2026</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Dữ liệu thật đủ để làm và đối soát</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Một nhà công bố, bảy domain feeds; không gọi bảy file là bảy hệ thống độc lập.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">THIẾT KẾ, CHƯA NGHIỆM THU HỆ THỐNG   |   02 / 09</text>
+<rect x="72" y="220" width="1045" height="568" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="100" y="265" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1780">FEED NGUỒN</text>
+<text x="762" y="265" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#2458B5" text-anchor="end" data-max-width="722">SỐ DÒNG</text>
+<text x="800" y="265" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1080">VAI TRÒ</text>
+<polyline points="100,331 1089,331" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="313" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">customers</text>
+<text x="762" y="313" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">99.441</text>
+<text x="800" y="313" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Tham chiếu khách/địa chỉ</text>
+<polyline points="100,390 1089,390" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="372" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">orders</text>
+<text x="762" y="372" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">99.441</text>
+<text x="800" y="372" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Đơn và milestone</text>
+<polyline points="100,449 1089,449" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="431" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">order_items</text>
+<text x="762" y="431" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">112.650</text>
+<text x="800" y="431" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Dòng hàng, giá, freight</text>
+<polyline points="100,508 1089,508" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="490" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">payments</text>
+<text x="762" y="490" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">103.886</text>
+<text x="800" y="490" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Bản ghi thanh toán</text>
+<polyline points="100,567 1089,567" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="549" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">products</text>
+<text x="762" y="549" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">32.951</text>
+<text x="800" y="549" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Danh mục sản phẩm</text>
+<polyline points="100,626 1089,626" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="608" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">sellers</text>
+<text x="762" y="608" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">3.095</text>
+<text x="800" y="608" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Người bán</text>
+<polyline points="100,685 1089,685" fill="none" stroke="#D7E1EB" stroke-width="1" stroke-linejoin="round"/>
+<text x="100" y="667" font-family="DejaVu Sans" font-size="25" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="440">category_translation</text>
+<text x="762" y="667" font-family="DejaVu Sans" font-size="26" font-weight="400" fill="#15283E" text-anchor="end" data-max-width="175">71</text>
+<text x="800" y="667" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="290">Dịch tên category</text>
+<text x="100" y="758" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1780">TỔNG TRONG PHẠM VI</text>
+<text x="762" y="758" font-family="DejaVu Sans" font-size="30" font-weight="700" fill="#2458B5" text-anchor="end" data-max-width="722">451.535</text>
+<rect x="1150" y="220" width="698" height="168" rx="18" fill="#E5F5F1"/>
+<text x="1174" y="258" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="650">BASELINE TÍNH TRỰC TIẾP TỪ NGUỒN</text>
+<text x="1174" y="290.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">96.478 đơn delivered</text>
+<text x="1174" y="323.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">93.358 khách có đơn delivered</text>
+<text x="1174" y="356.7" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">13.221.498,11 giá trị hàng, chưa gồm freight</text>
+<rect x="1150" y="410" width="698" height="245" rx="18" fill="#FFF3DD"/>
+<text x="1174" y="448" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#966119" text-anchor="start" data-max-width="650">CẢNH BÁO THỰC TẾ ĐÃ PHÁT HIỆN</text>
+<text x="1174" y="480.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">775 đơn không có items; 1 đơn không có payment</text>
+<text x="1174" y="513.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">610 sản phẩm thiếu category</text>
+<text x="1174" y="546.7" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">8 đơn delivered thiếu ngày nhận</text>
+<text x="1174" y="580.05" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">303 matched orders lệch tiền trên 0,01</text>
+<rect x="1150" y="677" width="698" height="111" rx="18" fill="#EAF1FD"/>
+<text x="1174" y="715" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="650">IDENTITY KHÔNG ĐƯỢC NHẦM</text>
+<text x="1174" y="747.0" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">99.441 customer references → 96.096 khách phân biệt</text>
+<rect x="72" y="818" width="1045" height="151" rx="18" fill="#EAF1FD"/>
+<text x="96" y="856" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="997">GIỮ NGUYÊN BẢN GỐC</text>
+<text x="96" y="888.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="997">ZIP 44.717.580 bytes + SHA-256 + manifest. Geolocation/reviews ngoài phạm vi;</text>
+<text x="96" y="921.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="997">không lấy số dòng đó để phóng đại số giao dịch.</text>
+<rect x="1150" y="818" width="698" height="151" rx="18" fill="#F0ECFA"/>
+<text x="1174" y="856" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="650">GIỚI HẠN VÀ QUYỀN SỬ DỤNG</text>
+<text x="1174" y="888.0" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">Không có currency/timezone/CDC; BRL là quy ước</text>
+<text x="1174" y="921.35" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="650">demo. Olist: CC BY-NC-SA 4.0, giữ attribution.</text>
+</svg>

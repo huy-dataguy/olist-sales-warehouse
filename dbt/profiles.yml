@@ -1,0 +1,13 @@
+sales_dw:
+  target: runtime
+  outputs:
+    runtime:
+      type: postgres
+      host: "{{ env_var('SALES_DBT_HOST', 'postgres') }}"
+      port: 5432
+      user: "{{ env_var('SALES_DBT_USER') }}"
+      password: "{{ env_var('SALES_DBT_PASSWORD') }}"
+      dbname: "{{ env_var('SALES_DBT_DATABASE', 'sales_dw') }}"
+      schema: "{{ env_var('SALES_DBT_SCHEMA', 'work') }}"
+      threads: 1
+      connect_timeout: 15

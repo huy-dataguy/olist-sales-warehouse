@@ -1,0 +1,5 @@
+payment_method,payment_records,orders_using_method,recorded_payment_value,average_installments
+credit_card,4755,4738,803674.49,3.3396424815983176
+boleto,1229,1229,198041.24,1.00000000000000000000
+debit_card,242,242,44866.18,1.00000000000000000000
+voucher,281,212,19958.84,1.00000000000000000000

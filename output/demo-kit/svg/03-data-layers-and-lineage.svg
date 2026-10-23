@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Mỗi lớp dữ liệu có một trách nhiệm</title>
+<desc id="desc">Raw → accepted versions → working models → immutable DWH → governed serving. Không phải Delta Lake.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Mỗi lớp dữ liệu có một trách nhiệm</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Raw → accepted versions → working models → immutable DWH → governed serving. Không phải Delta Lake.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   03 / 10</text>
+<rect x="72" y="222" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="222" width="225" height="92" rx="10" fill="#EAF1FD"/>
+<text x="95" y="278" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="185">RAW</text>
+<text x="326" y="258" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">MinIO + original ZIP</text>
+<text x="326" y="293" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">Byte gốc + SHA-256</text>
+<text x="1040" y="293" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#2458B5" text-anchor="start" data-max-width="770">Audit, replay; không sửa bản gốc</text>
+<polyline points="1805,316 1805,331" fill="none" stroke="#52647B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-muted)"/>
+<rect x="72" y="334" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="334" width="225" height="92" rx="10" fill="#EAF1FD"/>
+<text x="95" y="390" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="185">LANDING</text>
+<text x="326" y="370" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">landing.source_versions</text>
+<text x="326" y="405" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">Source cut + accepted payload</text>
+<text x="1040" y="405" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#2458B5" text-anchor="start" data-max-width="770">Row lineage → file / dòng / hash</text>
+<polyline points="1805,428 1805,443" fill="none" stroke="#52647B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-muted)"/>
+<rect x="72" y="446" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="446" width="225" height="92" rx="10" fill="#F0ECFA"/>
+<text x="95" y="502" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="185">TRANSFORM</text>
+<text x="326" y="482" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">work.stg_* / int_* / dim_* / fct_*</text>
+<text x="326" y="517" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">dbt models có thể build lại</text>
+<text x="1040" y="517" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#6650A8" text-anchor="start" data-max-width="770">Tests; checkpoint; key registry</text>
+<polyline points="1805,540 1805,555" fill="none" stroke="#52647B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-muted)"/>
+<rect x="72" y="558" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="558" width="225" height="92" rx="10" fill="#F0ECFA"/>
+<text x="95" y="614" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="185">WAREHOUSE</text>
+<text x="326" y="594" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">warehouse_store.dim_* / fct_*</text>
+<text x="326" y="629" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">Typed Kimball snapshot theo release</text>
+<text x="1040" y="629" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#6650A8" text-anchor="start" data-max-width="770">PK / FK / grain / reconciliation</text>
+<polyline points="1805,652 1805,667" fill="none" stroke="#52647B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-muted)"/>
+<rect x="72" y="670" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="670" width="225" height="92" rx="10" fill="#E5F5F1"/>
+<text x="95" y="726" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="185">SEMANTIC</text>
+<text x="326" y="706" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">semantic_input + MetricFlow</text>
+<text x="326" y="741" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">Release-bound query definitions</text>
+<text x="1040" y="741" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#087E79" text-anchor="start" data-max-width="770">8 KPI; 5 exports; SQL parity</text>
+<polyline points="1805,764 1805,779" fill="none" stroke="#52647B" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-muted)"/>
+<rect x="72" y="782" width="1776" height="92" rx="10" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="782" width="225" height="92" rx="10" fill="#E5F5F1"/>
+<text x="95" y="838" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="185">SERVING</text>
+<text x="326" y="818" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1460">reporting.* → Superset / SQL</text>
+<text x="326" y="853" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="640">Metric tables + analytical views</text>
+<text x="1040" y="853" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#087E79" text-anchor="start" data-max-width="770">Chỉ published; role BI read-only</text>
+<rect x="72" y="916" width="1776" height="66" rx="18" fill="#EAF1FD"/>
+<text x="96" y="954" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1728">TRUY VẾT</text>
+<text x="96" y="986.0" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1728"></text>
+<text x="270" y="958" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1530">Chart → query / release → fact / dimension → source version → file / row / checksum</text>
+</svg>

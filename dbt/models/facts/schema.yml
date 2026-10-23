@@ -1,0 +1,206 @@
+version: 2
+models:
+  - name: dim_customer
+    description: "One durable customer_unique_id, plus reserved members 0/-1. Order-specific customer_id is an address reference, not a person identity. Distinct customer metrics are non-additive."
+    columns:
+      - name: customer_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_product
+    description: "One Olist product_id in the accepted snapshot. Integer SK comes from the persistent registry. No invented product names or historical business effectivity."
+    columns:
+      - name: product_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_seller
+    description: "One seller_id; conformed seller attributes from the accepted source snapshot."
+    columns:
+      - name: seller_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_buyer_geography
+    description: "One postal-prefix/city/state tuple. Facts keep the order-address reference instead of overwriting customer history."
+    columns:
+      - name: buyer_geography_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_date
+    description: "Calendar 2016–2030, role-playing purchase/approval/carrier/delivery/estimated dates. 0 is missing, -1 is not applicable. Source timestamps have no timezone offset."
+    columns:
+      - name: date_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_order_status
+    description: "One accepted source status with explicit delivered/canceled flags, plus reserved members."
+    columns:
+      - name: order_status_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: dim_payment_method
+    description: "One source payment type; recorded payment is not an inferred cash-settlement event."
+    columns:
+      - name: payment_method_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+  - name: fct_orders
+    description: "Accumulating snapshot: one source/order_id. Child totals are preaggregated independently; incomplete orders and source discrepancies remain visible. Order metrics must not fan out by product/seller."
+    columns:
+      - name: order_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+      - name: customer_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: buyer_geography_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_buyer_geography')
+                field: buyer_geography_key
+      - name: order_status_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_order_status')
+                field: order_status_key
+      - name: purchase_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: approved_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: carrier_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: delivered_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: estimated_delivery_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+  - name: fct_order_items
+    description: "Transaction fact: one source/order_id/order_item_id. Monetary values are exact numeric. Delivered classifications use the accepted parent status. Never join atomic payments to sum sales."
+    columns:
+      - name: order_item_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+      - name: customer_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: buyer_geography_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_buyer_geography')
+                field: buyer_geography_key
+      - name: order_status_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_order_status')
+                field: order_status_key
+      - name: purchase_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: product_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_key
+      - name: seller_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_seller')
+                field: seller_key
+  - name: fct_payments
+    description: "Transaction fact: one source/order_id/payment_sequential. Preserves recorded payment and installments without manufacturing payment timestamps."
+    columns:
+      - name: payment_key
+        data_tests: [unique, not_null]
+      - name: source_cut
+        data_tests: [not_null]
+      - name: customer_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customer')
+                field: customer_key
+      - name: buyer_geography_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_buyer_geography')
+                field: buyer_geography_key
+      - name: order_status_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_order_status')
+                field: order_status_key
+      - name: purchase_date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: payment_method_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_payment_method')
+                field: payment_method_key
+

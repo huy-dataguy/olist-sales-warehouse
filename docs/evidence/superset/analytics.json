@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "release": {
+    "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+    "pipeline_run_id": "5ac008ff-3041-54cf-b03a-b7e76a5fa82f",
+    "source_cut": 1
+  },
+  "selected_month": "2018-07-01",
+  "analysis_cutoff": "2018-08-31",
+  "captured_at": "2026-10-15T15:38:41.585686+00:00",
+  "queries": {
+    "categories": {
+      "path": "analysis/sql/categories.sql",
+      "sha256": "a6e31223b86ff82587e903bf35de1d3d89ec1f9270270d8bfc8c69521bc8de8a",
+      "rows": 67
+    },
+    "cohorts": {
+      "path": "analysis/sql/cohorts.sql",
+      "sha256": "b9ed6be31b84f730e7901ca0cd1d41cf7fe5aa9d96da2d1ced9b884ce7f51ce5",
+      "rows": 140
+    },
+    "customer_segments": {
+      "path": "analysis/sql/customer_segments.sql",
+      "sha256": "122a6c07da150f86a87e8e1968defdd758c032050e7b68a40f8cede8c03a9a5f",
+      "rows": 3
+    },
+    "delivery": {
+      "path": "analysis/sql/delivery.sql",
+      "sha256": "488d4f5f387937f7653133b078cf0823475852f53cf6d0b80c145760e9267e41",
+      "rows": 27
+    },
+    "monthly": {
+      "path": "analysis/sql/monthly.sql",
+      "sha256": "ebe01c61852097f88220f17128661eb65473792cb9e85609a3b1032b0621c2e8",
+      "rows": 25
+    },
+    "payments": {
+      "path": "analysis/sql/payments.sql",
+      "sha256": "d9f85d7fd899b20d4ab500eb975116bc8ce65edf83c44ff1c389fc3e205b03aa",
+      "rows": 4
+    },
+    "quality": {
+      "path": "analysis/sql/quality.sql",
+      "sha256": "b7518140e7b018a985264939af2a4c568ff1b68da8079b2628de21e57a699433",
+      "rows": 6
+    },
+    "sellers": {
+      "path": "analysis/sql/sellers.sql",
+      "sha256": "a50a4d7c57cc3810ed8682c9fa7fbbf978320db14af17ef978554207d612de2b",
+      "rows": 1261
+    }
+  },
+  "summary": {
+    "selected_month": {
+      "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+      "month": "2018-07-01",
+      "total_orders": 6292,
+      "delivered_orders": 6159,
+      "canceled_orders": 41,
+      "cancellation_rate": 0.006516211061665607,
+      "delivered_merchandise_value": "867953.46",
+      "delivered_aov": 140.9244130540672,
+      "delivered_unique_customers": 6100,
+      "delivered_item_rows": 6963,
+      "generated_sql_sha256": "5f3c9764142999cde2ed81c7dd40f8ec660f1c291447f410aba053a2a965783e",
+      "previous_month_value": "856077.86",
+      "value_mom": "0.01387210270804106533",
+      "previous_year_value": "481604.52",
+      "value_yoy": "0.80221203073426304222"
+    },
+    "customer_totals": {
+      "customers": 93358,
+      "delivered_orders": "96478",
+      "value": "13221498.11",
+      "repeat_customers": 2801,
+      "repeat_value": "728408.75"
+    },
+    "repeat_customer_share": "0.03000278497825574669551618501",
+    "repeat_value_share": "0.05509275453808615338523086625",
+    "top10_seller_share": "0.14145283780538186920",
+    "delivery_eligible": 6156,
+    "on_time_deliveries": 5948,
+    "payment_totals": {
+      "n": 103886,
+      "value": "16008872.12"
+    }
+  },
+  "checks": {
+    "eight_core_metrics_match_order_grain": true,
+    "customer_counts_and_value_reconcile": true,
+    "cohort_oracle_and_denominators": true,
+    "payment_grain_count": true
+  }
+}

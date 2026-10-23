@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "target": "sales_dw_restore_20261015_133251",
+  "restore_seconds": 102.056,
+  "manifest": "var/backups/20261015T133223Z/manifest.json",
+  "signature": {
+    "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+    "source_versions": 451535,
+    "registry_rows": 147189,
+    "registry_hash": "acd7656ca55ee6d0531b7992163bf37a",
+    "snapshots": [
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_buyer_geography",
+        "row_count": 15036,
+        "logical_content_sha256": "55d4a4e216e177e799db986a7ab2279f20aacd9021e67de4741a6dc4530522ae",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_customer",
+        "row_count": 96098,
+        "logical_content_sha256": "b7882981f926b37491cd0854f48b8b82d58df1d48b6dfb3337021e75db797c8b",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_date",
+        "row_count": 5481,
+        "logical_content_sha256": "5e1408c894987283429e08f378c46b3e41c4fd5126c3cba92fea7a0d1a9dc84e",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_order_status",
+        "row_count": 10,
+        "logical_content_sha256": "2987678c5c4f1464b13bb60f03c98637725ee20eb28caf4440a1a1c3d81f92cf",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_payment_method",
+        "row_count": 7,
+        "logical_content_sha256": "6c5fbaeb777cddfe3ac01943daa2f64013dcfe11488246562e4ca9d7290fd13d",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_product",
+        "row_count": 32953,
+        "logical_content_sha256": "6ead34570e489d3b35d6687715f7e987fde6f8ada576d1f1fbe80f9f577b7a5f",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "dim_seller",
+        "row_count": 3097,
+        "logical_content_sha256": "e284f89b05dbd526d8fd56f2cd4e2fb15da9de71465e3947aff3734de7763e5e",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "fct_order_items",
+        "row_count": 112650,
+        "logical_content_sha256": "3934c842042ebfb93fa0fef2dc0a977a60ffbb7ae82f652adaffa8a13dde9b52",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "fct_orders",
+        "row_count": 99441,
+        "logical_content_sha256": "3cbce4e76df29e1ae541744b996605265e7e63f9fa1d3327bcc6c8883f6c0dc9",
+        "validated": true
+      },
+      {
+        "release_id": "4b4e373f-d0e9-527e-857f-f818b4418794",
+        "model_name": "fct_payments",
+        "row_count": 103886,
+        "logical_content_sha256": "65018da14bcdcbc69d0510ecc4b48fd14632da3b89a2be1ecec2ece753b79b09",
+        "validated": true
+      }
+    ],
+    "orders": 99441,
+    "items": 112650,
+    "payments": 103886,
+    "delivered_value": 13221498.11
+  },
+  "live_unchanged": true,
+  "scope": "DWH schema/data/ACL restored; app database dumps retained but app restore not claimed",
+  "rto_target_seconds": 1800
+}

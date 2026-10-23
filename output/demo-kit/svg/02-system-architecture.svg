@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Kiến trúc hệ thống đang chạy</title>
+<desc id="desc">Docker Compose project salesdw | PostgreSQL là analytical Warehouse; không có OLTP riêng trong v1.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Kiến trúc hệ thống đang chạy</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Docker Compose project salesdw | PostgreSQL là analytical Warehouse; không có OLTP riêng trong v1.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   02 / 10</text>
+<rect x="72" y="213" width="1776" height="76" rx="18" fill="#EAF1FD"/>
+<text x="98" y="262" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1782">APACHE AIRFLOW</text>
+<text x="430" y="262" font-family="DejaVu Sans" font-size="25" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1370">02:00 Asia/Ho_Chi_Minh • 9 tasks • retries • logs • trạng thái thực</text>
+<rect x="72" y="326" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="346" width="5" height="217" rx="2" fill="#2458B5"/>
+<text x="98" y="370" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="356">01  SOURCE</text>
+<text x="98" y="410.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Olist snapshot</text>
+<text x="98" y="458.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 CSV trong ZIP v2</text>
+<text x="98" y="503.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">SHA-256 cố định</text>
+<text x="98" y="548.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Không có source CDC</text>
+<rect x="528" y="326" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="528" y="346" width="5" height="217" rx="2" fill="#2458B5"/>
+<text x="554" y="370" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="356">02  RAW / AUDIT</text>
+<text x="554" y="410.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Python + MinIO</text>
+<text x="554" y="458.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Giữ nguyên raw archive</text>
+<text x="554" y="503.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Receipt / artifact metadata</text>
+<text x="554" y="548.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">S3-compatible object storage</text>
+<rect x="984" y="326" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="984" y="346" width="5" height="217" rx="2" fill="#6650A8"/>
+<text x="1010" y="370" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">03  POSTGRESQL</text>
+<text x="1010" y="410.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Validate + landing</text>
+<text x="1010" y="458.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Schema / ID / conflict checks</text>
+<text x="1010" y="503.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Accepted source versions</text>
+<text x="1010" y="548.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Chốt source_cut</text>
+<rect x="1440" y="326" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1440" y="346" width="5" height="217" rx="2" fill="#6650A8"/>
+<text x="1466" y="370" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">04  WORKING MODELS</text>
+<text x="1466" y="410.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">dbt Core</text>
+<text x="1466" y="458.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 staging + 1 intermediate</text>
+<text x="1466" y="503.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 dims + 3 facts</text>
+<text x="1466" y="548.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Tests / incremental / keys</text>
+<polyline points="486,456 522,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="942,456 978,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="1398,456 1434,456" fill="none" stroke="#2458B5" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<polyline points="1644,583 1644,633" fill="none" stroke="#6650A8" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-purple)"/>
+<rect x="72" y="637" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="72" y="657" width="5" height="217" rx="2" fill="#087E79"/>
+<text x="98" y="681" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="356">08  CONSUMER</text>
+<text x="98" y="721.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Apache Superset</text>
+<text x="98" y="769.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">6 dashboard + SQL Lab</text>
+<text x="98" y="814.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Read-only reporting views</text>
+<text x="98" y="859.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Cùng published release</text>
+<rect x="528" y="637" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="528" y="657" width="5" height="217" rx="2" fill="#087E79"/>
+<text x="554" y="681" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="356">07  SERVING</text>
+<text x="554" y="721.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Published reporting</text>
+<text x="554" y="769.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">5 MetricFlow exports</text>
+<text x="554" y="814.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Analytical SQL views</text>
+<text x="554" y="859.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Atomic publication gate</text>
+<rect x="984" y="637" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="984" y="657" width="5" height="217" rx="2" fill="#087E79"/>
+<text x="1010" y="681" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="356">06  SEMANTICS</text>
+<text x="1010" y="721.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Local MetricFlow</text>
+<text x="1010" y="769.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">8 KPI khai báo trong dbt</text>
+<text x="1010" y="814.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Bind candidate release</text>
+<text x="1010" y="859.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">CLI + SQL oracle parity</text>
+<rect x="1440" y="637" width="408" height="257" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<rect x="1440" y="657" width="5" height="217" rx="2" fill="#6650A8"/>
+<text x="1466" y="681" font-family="DejaVu Sans" font-size="18" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="356">05  FREEZE / VALIDATE</text>
+<text x="1466" y="721.0" font-family="DejaVu Sans" font-size="27" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="356">Kimball snapshot</text>
+<text x="1466" y="769.37" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">warehouse_store schema</text>
+<text x="1466" y="814.35" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">7 dimensions + 3 facts</text>
+<text x="1466" y="859.33" font-family="DejaVu Sans" font-size="21" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="356">Immutable, release-scoped</text>
+<polyline points="522,766 486,766" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="978,766 942,766" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<polyline points="1434,766 1398,766" fill="none" stroke="#087E79" stroke-width="3" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="72" y="921" width="1776" height="61" rx="18" fill="#F0ECFA"/>
+<text x="98" y="960" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#6650A8" text-anchor="start" data-max-width="1782">POSTGRESQL</text>
+<text x="303" y="960" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="1500">sales_dw: landing / work / warehouse_store / semantic_input / reporting / ops</text>
+</svg>

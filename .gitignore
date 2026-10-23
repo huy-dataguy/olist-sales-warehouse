@@ -1,0 +1,26 @@
+# Local secrets and runtime state — never commit
+.env
+.env.*
+!.env.example
+account.txt
+var/
+tmp/
+data/raw/
+data/replay/
+logs/
+**/logs/
+
+# Python / tooling caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+**/target/
+
+# Generated archives (the extracted folder is committed instead)
+output/*.zip
+output/history/
+
+.DS_Store

@@ -1,0 +1,229 @@
+{
+  "created_at_utc": "2026-10-19T05:56:51.603475+00:00",
+  "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+  "source_cut": 1,
+  "title": "Sales and Customer Analytics Warehouse",
+  "scope": "Independent interview portfolio; local implemented demo; not internal Abbott/Concentrix architecture",
+  "data_license": "Olist CC BY-NC-SA 4.0; maintain attribution and applicable derived-data conditions",
+  "source_archive": {
+    "sha256": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+    "bytes": 44717580,
+    "source_url": "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "raw_included_in_kit": false
+  },
+  "report": {
+    "pages": 5,
+    "architecture_image": "assets/architecture-user.png",
+    "image_policy": "Unmodified user-provided illustration with implementation scope clarifications below it",
+    "schema_unchanged": true
+  },
+  "evidence_scope": {
+    "current_ui": "health, 60 chart queries, 8 SQL Lab queries, 6 rendered pages, 14 actual navigation clicks",
+    "historical_runtime": "2026-10-15 bounded DWH, semantic, retry, incremental, recovery and restore checks; not rerun by this exporter",
+    "not_accepted": [
+      "production/HA",
+      "source CDC",
+      "real Olist SCD2 history",
+      "Superset app restore",
+      "remote CI",
+      "off-host encrypted recovery"
+    ]
+  },
+  "slides": [
+    {
+      "number": 1,
+      "slug": "01-business-input-output",
+      "title": "Bài toán và đầu ra của dự án",
+      "svg": "svg/01-business-input-output.svg",
+      "png": "png/01-business-input-output.png",
+      "sources": [
+        "README.md",
+        "docs/analytics-design.md",
+        "output/analysis/results.json"
+      ],
+      "speaker_notes": "Mở đầu bằng kết quả: nhà phân tích cần số bán hàng, khách hàng và giao hàng nhất quán. Dự án có dữ liệu thật, báo cáo thật và bằng chứng chạy; không phải dự án nội bộ Abbott. Nêu giới hạn telesales ngoài v1."
+    },
+    {
+      "number": 2,
+      "slug": "02-system-architecture",
+      "title": "Kiến trúc hệ thống đang chạy",
+      "svg": "svg/02-system-architecture.svg",
+      "png": "png/02-system-architecture.png",
+      "sources": [
+        "infra/compose.yaml",
+        "src/sales_dw/cli.py",
+        "src/sales_dw/export_metrics.py",
+        "bi/bootstrap_superset.py"
+      ],
+      "speaker_notes": "Đọc hàng trên từ trái sang phải, hàng dưới từ phải sang trái theo số thứ tự. Airflow gọi các stage CLI; dbt và MetricFlow là tiến trình theo run, không phải container thường trực. Superset chỉ đọc reporting views của published releases. Metadata ứng dụng tách database."
+    },
+    {
+      "number": 3,
+      "slug": "03-data-layers-and-lineage",
+      "title": "Mỗi lớp dữ liệu có một trách nhiệm",
+      "svg": "svg/03-data-layers-and-lineage.svg",
+      "png": "png/03-data-layers-and-lineage.png",
+      "sources": [
+        "db/migrations/001_schema.sql",
+        "db/migrations/003_semantic_views.sql",
+        "db/migrations/005_published_analysis.sql"
+      ],
+      "speaker_notes": "Đây là DWH quan hệ trên PostgreSQL, có tư tưởng phân lớp nhưng không dùng Iceberg/Delta hay gọi MinIO là một lakehouse. Reporting cùng database, không phải DWH thứ hai. Chỉ mutable work được rebuild; consumer đọc snapshot đã publish."
+    },
+    {
+      "number": 4,
+      "slug": "04-kimball-bus-matrix",
+      "title": "Kimball bus matrix và grain",
+      "svg": "svg/04-kimball-bus-matrix.svg",
+      "png": "png/04-kimball-bus-matrix.png",
+      "sources": [
+        "contracts/warehouse-model.json",
+        "specs/spec-package/03-data/kimball-design.md"
+      ],
+      "speaker_notes": "Bus matrix là kế hoạch tích hợp các star, không thay thế star schema. Tất cả grain có source namespace. Purchase date ở payment là ngữ cảnh đơn, không phải timestamp thanh toán. Không phân bổ payment cho product/seller khi không có hợp đồng."
+    },
+    {
+      "number": 5,
+      "slug": "05-dimensional-constellation",
+      "title": "Ba star dùng chung bảy dimensions",
+      "svg": "svg/05-dimensional-constellation.svg",
+      "png": "png/05-dimensional-constellation.png",
+      "sources": [
+        "docs/warehouse-erd.md",
+        "contracts/warehouse-model.json",
+        "db/migrations/001_schema.sql"
+      ],
+      "speaker_notes": "Đọc từng cột như một star. Date/customer/geography/status là cùng bốn dimension vật lý trên cả ba cột. Product/seller chỉ ở item star, method chỉ ở payment star. Không có đường nối giữa các fact; xem hình 10 để đọc khóa/cột vật lý."
+    },
+    {
+      "number": 6,
+      "slug": "06-airflow-workflow",
+      "title": "Workflow thực tế của Airflow",
+      "svg": "svg/06-airflow-workflow.svg",
+      "png": "png/06-airflow-workflow.png",
+      "sources": [
+        "orchestration/dags/sales_warehouse_pipeline.py",
+        "src/sales_dw/cli.py",
+        "docs/evidence/runtime/airflow.json"
+      ],
+      "speaker_notes": "Đọc 1-5 trên rồi 6-9 dưới từ phải sang trái. Raw đã gồm manifest/hash và bảo toàn archive; build bao gồm dbt và tests. Finish không gọi Superset bootstrap. Lịch được chạy nhiều lần nhưng nguồn Olist tĩnh không tạo sự kiện kinh doanh mới. Batch replay không phải CDC."
+    },
+    {
+      "number": 7,
+      "slug": "07-semantic-and-serving",
+      "title": "Semantic Layer nằm ở đâu?",
+      "svg": "svg/07-semantic-and-serving.svg",
+      "png": "png/07-semantic-and-serving.png",
+      "sources": [
+        "dbt/models/semantic/semantic_models.yml",
+        "src/sales_dw/export_metrics.py",
+        "db/migrations/005_published_analysis.sql"
+      ],
+      "speaker_notes": "MetricFlow đọc candidate Kimball qua release-bound views, sinh và chạy SQL rồi xuất kết quả vào reporting tables. Phân tích cohort/delivery/payment dùng published SQL views riêng, không được gọi là MetricFlow mới. Superset đọc cả hai qua role readonly; không tính lại công thức lõi theo từng chart."
+    },
+    {
+      "number": 8,
+      "slug": "08-publication-quality-and-recovery",
+      "title": "Không công bố dữ liệu đang xử lý dở",
+      "svg": "svg/08-publication-quality-and-recovery.svg",
+      "png": "png/08-publication-quality-and-recovery.png",
+      "sources": [
+        "src/sales_dw/snapshot_release.py",
+        "src/sales_dw/publish_release.py",
+        "docs/evidence/runtime/pipeline-recovery.json"
+      ],
+      "speaker_notes": "R0 tiếp tục phục vụ trong lúc R1 được build. Warehouse snapshot phải đầy đủ, cùng source cut, FK/grain đạt; semantic phải bind R1 và exports có parity. Chỉ khi tất cả đạt publisher mới đổi pointer dưới fencing. Superset URL R0 còn pin R0; muốn chọn R1 phải tạo/bàn giao assets riêng."
+    },
+    {
+      "number": 9,
+      "slug": "09-dashboards-results-and-evidence",
+      "title": "Kết quả để trình bày trong buổi demo",
+      "svg": "svg/09-dashboards-results-and-evidence.svg",
+      "png": "png/09-dashboards-results-and-evidence.png",
+      "sources": [
+        "output/analysis/results.json",
+        "var/evidence/superset.json",
+        "var/evidence/superset-browser.json",
+        "docs/implementation-progress.md"
+      ],
+      "speaker_notes": "Đọc KPI tháng 7 trước, sau đó dùng menu để đi sâu. Chứng cứ hiện tại: 6 trang, 60 đối tượng, 8 saved queries và 14 lượt bấm navigation thật. Không gọi khoản merchandise value là profit/net revenue; BRL là quy ước demo. Restore và retry là bằng chứng lịch sử, không phải chạy lại khi xuất tài liệu."
+    },
+    {
+      "number": 10,
+      "slug": "10-warehouse-key-schema",
+      "title": "Thiết kế bảng và quan hệ Kimball",
+      "svg": "svg/10-warehouse-key-schema.svg",
+      "png": "png/10-warehouse-key-schema.png",
+      "sources": [
+        "db/migrations/001_schema.sql",
+        "contracts/warehouse-model.json"
+      ],
+      "speaker_notes": "Bốn dimensions ở hàng trên kết nối độc lập tới cả ba facts; chúng được gom thành bốn thanh routing ngang để giữ hình dễ đọc. Các đường chỉ đi từ dimension tới fact, không có fact-to-fact FK. PK facts là text identity cộng release; dimension SK là integer. Xem ERD Mermaid đi kèm để đọc từng FK cụ thể."
+    }
+  ],
+  "input_sha256": {
+    "README.md": "a8382e4155213d900e0383f90a06da3367720da5575a4c6229b191868ce849ca",
+    "infra/compose.yaml": "a1418b375ef730d199f7563e8d2adda1f5861feb0bc9e6f6868ba0f3c28ca488",
+    "orchestration/dags/sales_warehouse_pipeline.py": "7c9ea2751119d38f8d759ea32e8fa0a4378ddabad30d28f939d48383a72dcd16",
+    "db/migrations/001_schema.sql": "4c2f018e5ae6d06a7534bfc9139c47fda0d34a6d581f6f3cdfc23a2a01cc4848",
+    "db/migrations/005_published_analysis.sql": "3b51d202bcc148c09a44b32a079d58184b7eddc353b408ef4ef5a5f8ff33cf79",
+    "contracts/warehouse-model.json": "d9e98a81b6a2b9148bde2f2ad31dda4604c25f0db97288ef23ee9efb4b23ad25",
+    "contracts/metric-catalog.json": "4fb0aabe85dc695d0ac1b7e9a0f8f3d719cbcc1771ea8ec46c544a7072cfff68",
+    "dbt/models/semantic/semantic_models.yml": "a32443c2d78c85dfbc99844e926f60c05b26a2b25a8fd9575d52ab13c77788ba",
+    "src/sales_dw/export_metrics.py": "3c1bffa0b8a35bdfc5d831c7532e1ca2a960e2e72041c584c220efcac04fa8c2",
+    "docs/implementation-progress.md": "3a83ef319d342d42cffa05d37bb9389b5e65c73803119fe450fd128d52f334b8",
+    "docs/demo/report-short-template.md": "69d323fe344441c5c9537e32f2a3b43d207dbaf97b187d608ac48147dd2c5dc1",
+    "docs/demo/assets/architecture-user.png": "5cfcde2e354a1acbe29d5ca0711f0f417ced4727a585dc3d1e839f9aa94cb7af",
+    "scripts/build_demo_kit.py": "bf1663d09515ffca80a47d831c0f65149d176fa6209528b55459cddf9bc9fe04",
+    "scripts/build_project_visuals.py": "176ef9224b81830084155c01a692c3c9b499522e93163924a11ec98147d23e18",
+    "docs/evidence/source-profile.json": "d6e9cceb30cf27c1068dbd291399012468dd1b7527e9538f922dad22dd9d2839",
+    "data/source-manifest.json": "47ec1036f2a3138b5dd478fce1a71971bfe0f57a93e1d0ad4739fd1689657c3d",
+    "output/analysis/results.json": "479b7cd17b6d2da9f78e31bb12fda182a520f2ef76553f03c5bfa12bfb2fa11a",
+    "var/evidence/health.json": "4b4979f5336a8c32f995cdfbedfaed11a16d7c339ec23e5524c23aaa7819ec8f",
+    "var/evidence/superset.json": "a365fc382b2ea45e99555488960dcf4bef0316e91c5c1836e799167adcfb17b3",
+    "var/evidence/superset-browser.json": "e79bd8c2c9b2bba85cf9da1e71b5a5dd0813f28d1c105cc05a257dc3c11c7b61",
+    "docs/evidence/runtime/runtime-sales_dw.json": "507c4595baf34d27afa1b2707149925038c3a88cab91271224485e824ce614dc",
+    "docs/evidence/runtime/airflow.json": "8ddd3b18c6ce09e9ea729ecf2615a7ce5b57457772a67e153626bc5289f48258",
+    "docs/evidence/runtime/restore.json": "e9adf649908b3aec33898ba9359e4ad4b858ced66f67a3ca4b333dd8f29ae968",
+    "docs/evidence/runtime/incremental.json": "e6a6a12875244acb58f0e821adffae593a89d2f0295cdfdee0fe20243c92f42e",
+    "docs/evidence/runtime/pipeline-recovery.json": "5af7751bef3c63b160600ec9a15e50d1eb96466e545cc3b08a4f43e914836331"
+  },
+  "output_sha256": {
+    "README.md": "b702d4faf10909824293ae170f41c2b9b7538dde0c3c9b4e8e8d24f248ef516d",
+    "architecture-slides.pdf": "7c3ce5661d35a2e01cbd3e242214448b310d42a8d00b97022d611e9187e416a1",
+    "assets/architecture-user.png": "5cfcde2e354a1acbe29d5ca0711f0f417ced4727a585dc3d1e839f9aa94cb7af",
+    "business-analysis.md": "ba8c9e92cc2b3fb3a37ec790b72fbba564734bf34cf221f9a2bb5694099eeb6d",
+    "index.html": "32fa2aee783acf38ca9ac27583d8f0a88b4cce3395f82bf3fe926ac23f977dcd",
+    "png/01-business-input-output.png": "09f8f19089e42dc95aafd029fa59e608a76d29ea57c48560169968653ffee46e",
+    "png/02-system-architecture.png": "4867726fdc61eb588926661c1e1ca4b08a86dd61e9ef35045dde7f172402561a",
+    "png/03-data-layers-and-lineage.png": "a6f1435e0b30ba6ce279cfbb249b518df46f4d8bea784d9aad674fa0fb29bd8f",
+    "png/04-kimball-bus-matrix.png": "993c648fdb65a9ad1a3187a14456007b7d46424485a6d3de100ef24fee217035",
+    "png/05-dimensional-constellation.png": "1db00eb13b5df96ee9fe426d632aabd9303f8954ebd3d878eba7cab3d1c34537",
+    "png/06-airflow-workflow.png": "5bb0c4729a39d9d4bd0a7f8f574fed7c1e9caf254df02214f23c9decc0e2295e",
+    "png/07-semantic-and-serving.png": "dea473a70ccf67e2230c04838ff16001592b04c9f17ae09daa7ff31498f57837",
+    "png/08-publication-quality-and-recovery.png": "13cd732ff2fecbe3bec0db935d0ad1fd02b99015f5c2777ec09e57b8a86ec611",
+    "png/09-dashboards-results-and-evidence.png": "6cb27732c271a74e516f68c8f73493e0aba55dd810bc5eac80be43a7fcc146ad",
+    "png/10-warehouse-key-schema.png": "827d1e1e867b070a574b83316cb8b98d49dfebef1ae3ef23301571a61bc50e15",
+    "presentation-notes.md": "f0967db25908dfcc481a5711be9a67d4a6b01b093b554af617e2578b1ce03dee",
+    "project-report.pdf": "484e036bc3d9382b9043eb0808fa408d2aca152260d7434bc8a6cf938d88da44",
+    "report.md": "bcc3fb677c87503af2b23eaec5d2df3c8357d34b573fcffab71959e13c0f33c6",
+    "screenshots/commercial.png": "9861a86d1209face181b48feeb03efea668c7010a70327713badb81eeedcc0cc",
+    "screenshots/customers.png": "35c097eea98c21111aa78d3a1f205d4a51ac958434b79032da93c5dacc380d51",
+    "screenshots/overview.png": "b00c479466e23c84a428de25e41ac00f64cd7e6120a1b6d0a2e070173d2ac46f",
+    "screenshots/sales.png": "00a2cf25e067195c8dcde8edc2d2ae5aa405d9523f7a5686e07fac458ff9977e",
+    "screenshots/service.png": "367ace3de28deabfd1b8e28786253a7f621fef6285644f4cf16d85496ef0bf03",
+    "screenshots/trust.png": "7b72b67f99f16b1f6567466f7ccc8c46128a6c9bd8864c1918089647d62feb8a",
+    "svg/01-business-input-output.svg": "dc043986b69c407d34e13c061b72761f04225b41455870d7a4ebed1c365a77a1",
+    "svg/02-system-architecture.svg": "8c20f1b0a2b2e35d114a9f33ea365f52051c71446b1720626dd753dcc5f5fcec",
+    "svg/03-data-layers-and-lineage.svg": "f8d61f629d66807cbf1786c7999ac1c673c2c5519af7e8b185d73eaaf6960957",
+    "svg/04-kimball-bus-matrix.svg": "dc42af3707cc31092e28fd5a6c4538853449e71ff18cad8bba3c0cbd93c09c17",
+    "svg/05-dimensional-constellation.svg": "d7e84a52e64f9d47187f01d63b3f3087fc79d55e14518cc58bfc31ed280f372b",
+    "svg/06-airflow-workflow.svg": "414929e6f6f0fac542f40190e3518f7b1fcfc1ebc3952b88f9ef80dd79237de5",
+    "svg/07-semantic-and-serving.svg": "222fc9ac186694326d3bcccd85d106417a37bee8df64256b00140742a7216ef7",
+    "svg/08-publication-quality-and-recovery.svg": "e8d25a2ca46e384af7f99a50268e1fb9ffa37780a8ffb62c01ec4589b9966b96",
+    "svg/09-dashboards-results-and-evidence.svg": "07889e723662ee60809da7e6796c2f28c45d51dbc0a0af08055656fbb1d6a8cb",
+    "svg/10-warehouse-key-schema.svg": "27b150faef3c6d44a12a827506e73f60290f090883893f2f3b002674065bd8ce",
+    "visual-verification.json": "073baa74129b568981fac63d6990c2d5736df2210b8e2bbf0983a964cdf40198",
+    "warehouse-schema.mmd": "636d712c70a41af842bcd0263c125fad359171c1972e7a8bdb475ecee4408fb8"
+  }
+}

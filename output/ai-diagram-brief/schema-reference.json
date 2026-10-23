@@ -1,0 +1,1211 @@
+{
+  "scope": "Ten analytical Warehouse tables; all physical columns; only nineteen dimensional FK roles are drawn",
+  "database": "sales_dw",
+  "schema": "warehouse_store",
+  "source_migration": "db/migrations/001_schema.sql",
+  "ddl_sha256": "4c2f018e5ae6d06a7534bfc9139c47fda0d34a6d581f6f3cdfc23a2a01cc4848",
+  "external_fk_note": "References to ops and landing are outside this analytical diagram; not exported as dimensional relationships",
+  "tables": {
+    "dim_customer": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "customer_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "customer_unique_id",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "is_inferred",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "customer_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "customer_unique_id"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_product": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "product_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "version_identity",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "category_source",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "category_english",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "category_missing",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "valid_from",
+          "type": "timestamp without time zone",
+          "not_null": false
+        },
+        {
+          "name": "valid_to",
+          "type": "timestamp without time zone",
+          "not_null": false
+        },
+        {
+          "name": "is_current",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "business_effectivity_known",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "is_inferred",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "product_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "product_id",
+          "version_identity"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_seller": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "seller_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "seller_id",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "seller_city",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "seller_state",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "seller_zip_code_prefix",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "is_inferred",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "seller_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "seller_id"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_buyer_geography": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "buyer_geography_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "postal_prefix",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "state",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "buyer_geography_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "postal_prefix",
+          "city",
+          "state"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_date": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "full_date",
+          "type": "date",
+          "not_null": false
+        },
+        {
+          "name": "month_start",
+          "type": "date",
+          "not_null": false
+        },
+        {
+          "name": "day",
+          "type": "smallint",
+          "not_null": false
+        },
+        {
+          "name": "month",
+          "type": "smallint",
+          "not_null": false
+        },
+        {
+          "name": "quarter",
+          "type": "smallint",
+          "not_null": false
+        },
+        {
+          "name": "year",
+          "type": "smallint",
+          "not_null": false
+        },
+        {
+          "name": "weekday",
+          "type": "smallint",
+          "not_null": false
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "date_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "full_date"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_order_status": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "order_status_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "status_code",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "is_delivered",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "is_canceled",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "order_status_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "status_code"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "dim_payment_method": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "payment_method_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "payment_type",
+          "type": "text",
+          "not_null": false
+        },
+        {
+          "name": "attribute_sha256",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": false
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "payment_method_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "payment_type"
+        ]
+      ],
+      "dimension_foreign_keys": []
+    },
+    "fct_orders": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "order_key",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "customer_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "buyer_geography_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "order_status_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "purchase_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "approved_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "carrier_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "delivered_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "estimated_delivery_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "source_customer_id",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "purchase_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": true
+        },
+        {
+          "name": "approved_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": false
+        },
+        {
+          "name": "carrier_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": false
+        },
+        {
+          "name": "delivered_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": false
+        },
+        {
+          "name": "estimated_delivery_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": true
+        },
+        {
+          "name": "order_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "delivered_order_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "canceled_order_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "item_merchandise_total",
+          "type": "numeric(18,2)",
+          "not_null": false
+        },
+        {
+          "name": "item_freight_total",
+          "type": "numeric(18,2)",
+          "not_null": false
+        },
+        {
+          "name": "recorded_payment_total",
+          "type": "numeric(18,2)",
+          "not_null": false
+        },
+        {
+          "name": "item_row_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "payment_record_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "has_items",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "has_payments",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "missing_delivery_timestamp",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "temporal_anomaly",
+          "type": "boolean",
+          "not_null": true
+        },
+        {
+          "name": "known_delivery_date_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "on_time_delivery_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "purchase_to_delivery_seconds",
+          "type": "numeric",
+          "not_null": false
+        },
+        {
+          "name": "currency_code",
+          "type": "char(3)",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "order_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "order_id"
+        ]
+      ],
+      "dimension_foreign_keys": [
+        {
+          "columns": [
+            "release_id",
+            "customer_key"
+          ],
+          "target": "dim_customer",
+          "target_columns": [
+            "release_id",
+            "customer_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "buyer_geography_key"
+          ],
+          "target": "dim_buyer_geography",
+          "target_columns": [
+            "release_id",
+            "buyer_geography_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "order_status_key"
+          ],
+          "target": "dim_order_status",
+          "target_columns": [
+            "release_id",
+            "order_status_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "purchase_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "approved_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "carrier_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "delivered_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "estimated_delivery_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        }
+      ]
+    },
+    "fct_order_items": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "order_item_key",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "customer_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "buyer_geography_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "order_status_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "purchase_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "product_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "seller_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "order_item_id",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "purchase_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": true
+        },
+        {
+          "name": "merchandise_value",
+          "type": "numeric(18,2)",
+          "not_null": true
+        },
+        {
+          "name": "freight_value",
+          "type": "numeric(18,2)",
+          "not_null": true
+        },
+        {
+          "name": "item_row_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "currency_code",
+          "type": "char(3)",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "order_item_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "order_id",
+          "order_item_id"
+        ]
+      ],
+      "dimension_foreign_keys": [
+        {
+          "columns": [
+            "release_id",
+            "customer_key"
+          ],
+          "target": "dim_customer",
+          "target_columns": [
+            "release_id",
+            "customer_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "buyer_geography_key"
+          ],
+          "target": "dim_buyer_geography",
+          "target_columns": [
+            "release_id",
+            "buyer_geography_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "order_status_key"
+          ],
+          "target": "dim_order_status",
+          "target_columns": [
+            "release_id",
+            "order_status_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "purchase_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "product_key"
+          ],
+          "target": "dim_product",
+          "target_columns": [
+            "release_id",
+            "product_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "seller_key"
+          ],
+          "target": "dim_seller",
+          "target_columns": [
+            "release_id",
+            "seller_key"
+          ]
+        }
+      ]
+    },
+    "fct_payments": {
+      "columns": [
+        {
+          "name": "release_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "payment_key",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "source_system",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "order_id",
+          "type": "text",
+          "not_null": true
+        },
+        {
+          "name": "customer_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "buyer_geography_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "order_status_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "purchase_date_key",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "payment_method_key",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "payment_sequential",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "purchase_timestamp",
+          "type": "timestamp without time zone",
+          "not_null": true
+        },
+        {
+          "name": "recorded_payment_value",
+          "type": "numeric(18,2)",
+          "not_null": true
+        },
+        {
+          "name": "payment_installments",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "payment_record_count",
+          "type": "integer",
+          "not_null": true
+        },
+        {
+          "name": "currency_code",
+          "type": "char(3)",
+          "not_null": true
+        },
+        {
+          "name": "lineage_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "source_cut",
+          "type": "bigint",
+          "not_null": true
+        },
+        {
+          "name": "created_run_id",
+          "type": "uuid",
+          "not_null": true
+        },
+        {
+          "name": "last_changed_run_id",
+          "type": "uuid",
+          "not_null": true
+        }
+      ],
+      "primary_key": [
+        "release_id",
+        "payment_key"
+      ],
+      "unique_business_keys": [
+        [
+          "release_id",
+          "source_system",
+          "order_id",
+          "payment_sequential"
+        ]
+      ],
+      "dimension_foreign_keys": [
+        {
+          "columns": [
+            "release_id",
+            "customer_key"
+          ],
+          "target": "dim_customer",
+          "target_columns": [
+            "release_id",
+            "customer_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "buyer_geography_key"
+          ],
+          "target": "dim_buyer_geography",
+          "target_columns": [
+            "release_id",
+            "buyer_geography_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "order_status_key"
+          ],
+          "target": "dim_order_status",
+          "target_columns": [
+            "release_id",
+            "order_status_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "purchase_date_key"
+          ],
+          "target": "dim_date",
+          "target_columns": [
+            "release_id",
+            "date_key"
+          ]
+        },
+        {
+          "columns": [
+            "release_id",
+            "payment_method_key"
+          ],
+          "target": "dim_payment_method",
+          "target_columns": [
+            "release_id",
+            "payment_method_key"
+          ]
+        }
+      ]
+    }
+  }
+}

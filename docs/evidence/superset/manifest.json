@@ -1,0 +1,133 @@
+{
+  "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+  "engine": "Apache Superset 6.1.0",
+  "dashboards": {
+    "overview": "http://localhost:18088/superset/dashboard/olist-overview-87f01740/",
+    "sales": "http://localhost:18088/superset/dashboard/olist-sales-87f01740/",
+    "commercial": "http://localhost:18088/superset/dashboard/olist-commercial-87f01740/",
+    "customers": "http://localhost:18088/superset/dashboard/olist-customers-87f01740/",
+    "service": "http://localhost:18088/superset/dashboard/olist-service-87f01740/",
+    "trust": "http://localhost:18088/superset/dashboard/olist-trust-87f01740/"
+  },
+  "charts": 60,
+  "analysis_cutoff": "2018-08-31",
+  "selected_month": "2018-07-01",
+  "catalog_sha256": "82cf6ac59b4b2219db99cd064a7fd827259d85bea0089fe8408d70c8ddb3bbce",
+  "entry_url": "http://localhost:18088/superset/dashboard/olist-overview-87f01740/",
+  "navigation": {
+    "actual_clicks": 14,
+    "month_and_release_preserved": true,
+    "fixed_customer_trust_scope_preserved": {
+      "customers": true,
+      "trust": true
+    },
+    "viewport_checks": {
+      "1720": {
+        "no_horizontal_overflow": true,
+        "all_six_links_fit": true,
+        "questions_findings_actions_fit": true,
+        "presentation": {
+          "passed": true,
+          "concise_context_and_source": true,
+          "repeated_panels_absent": true,
+          "methodology_in_chart_descriptions": true,
+          "technical_details_on_trust_page": true,
+          "all_eight_kpis_in_first_viewport": true
+        },
+        "screenshot": "docs/evidence/superset/screenshots/overview-navigation-1720.png"
+      },
+      "1366": {
+        "no_horizontal_overflow": true,
+        "all_six_links_fit": true,
+        "questions_findings_actions_fit": true,
+        "presentation": {
+          "passed": true,
+          "concise_context_and_source": true,
+          "repeated_panels_absent": true,
+          "methodology_in_chart_descriptions": true,
+          "technical_details_on_trust_page": true,
+          "all_eight_kpis_in_first_viewport": true
+        },
+        "screenshot": "docs/evidence/superset/screenshots/overview-navigation-1366.png"
+      }
+    }
+  },
+  "metadata_idempotency": {
+    "passed": true,
+    "same_catalog_and_context": true,
+    "asset_counts": {
+      "datasets": 44,
+      "charts": 65,
+      "dashboards": 6
+    }
+  },
+  "report": "output/analysis/business-analysis.md",
+  "notebook": "output/analysis/analysis.ipynb",
+  "commentary": {
+    "implementation": "bi/superset_narratives.py",
+    "numeric_parity": true,
+    "native_month_changes": {
+      "overview": {
+        "from": "2018-07-01",
+        "to": "2018-06-01",
+        "commentary_period_and_findings_changed": true,
+        "three_answers_visible": true
+      },
+      "sales": {
+        "from": "2018-07-01",
+        "to": "2018-06-01",
+        "commentary_period_and_findings_changed": true,
+        "three_answers_visible": true
+      },
+      "commercial": {
+        "from": "2018-07-01",
+        "to": "2018-06-01",
+        "commentary_period_and_findings_changed": true,
+        "three_answers_visible": true
+      },
+      "service": {
+        "from": "2018-07-01",
+        "to": "2018-06-01",
+        "commentary_period_and_findings_changed": true,
+        "three_answers_visible": true
+      }
+    },
+    "answers_per_page": 3,
+    "guides_on_all_pages": false,
+    "methodology_location": "chart descriptions and docs; technical provenance on trust page",
+    "repeated_instructional_panels_absent": true,
+    "publication_drill_scope": "Historical proof: original 10 sales charts; new narrative tables verified by pinned SQL/API/native filters."
+  },
+  "evidence_sha256": {
+    "superset.json": "def383e94cabf245d02e2860bd400913168134abf641bbbf6679644cbce22980",
+    "superset-browser.json": "19f42ef214190b4bbb9ab0cf303edc2f34ce5d3e6e354d284c518f5ae9b7c761",
+    "superset-publish-transition.json": "a733a33b2b8ead227e89b0e97f771f94cff42a90053e24d808f7fa885613c2ce",
+    "analytics.json": "d3ad8756aca3dc5e9509bb6c030e59d28d5f04fa70958bf5424944b5a8af6da7",
+    "notebook.json": "27866042d1d96d31738ef6529a36818d86ae21fa1a833a456cba33a565400ea4"
+  },
+  "output_sha256": {
+    "output/analysis/payments.csv": "631b6fdc042dabd0afff017bbb6fb88763fd6e7353dff00cd8affcfda9e8b68d",
+    "output/analysis/cohorts.csv": "d8dd3b1f304b8389e4b6d76510e7107fd84a2936e7215754b754de5de09c0dca",
+    "output/analysis/delivery.csv": "a6fb24bcd3f490ab7aea554a9df8ad8c2e116d31e32045ac2e458a9df1d3be64",
+    "output/analysis/README.md": "a883b116f2f2cd208f027b0cf00ef5da1eb546e275f8fba19e931be50af32748",
+    "output/analysis/customer_segments.csv": "11378b8752a411b804293462c87a1babd48dbe29ac4cc073012b015b53cb66cd",
+    "output/analysis/quality.csv": "9827033a76b4637b0841186dc3682358c87c8631b3c6ae70641473101a11902e",
+    "output/analysis/categories.csv": "904c0905407c55f082777006e89648aa6c97189db60da5a55aba103ad7cf0a57",
+    "output/analysis/results.json": "479b7cd17b6d2da9f78e31bb12fda182a520f2ef76553f03c5bfa12bfb2fa11a",
+    "output/analysis/sellers.csv": "504d14121b467ba79579493a72a2d9e2790b7e5cb026472b1fbd3c0a87455ee3",
+    "output/analysis/business-analysis.md": "ba8c9e92cc2b3fb3a37ec790b72fbba564734bf34cf221f9a2bb5694099eeb6d",
+    "output/analysis/monthly.csv": "ff5fa467619107d3e513feb03d33e8dcb06c2ad346e4092f8b66433b0cf456c8",
+    "output/analysis/analysis.ipynb": "c29bade8f0aa27698e722c6302d800be97c24132119e63ed20c38f80156b5dbd"
+  },
+  "screenshot_sha256": {
+    "commercial.png": "e446577d7d7253b677734f685d1c7b89202d27b2f09a5b65aad138367cddc4a8",
+    "trust.png": "9c6d52032a6d49cba42ab635fb425a4df7451a2220117b46ecd54c652177117d",
+    "overview-navigation-1720.png": "8e23e79ca413091f216ab6b8b3ade6da6799ca84d96129c14c758ec9ad69c6ef",
+    "service.png": "cbeb5c60248403740b6830e6ff2358d409c98a68ca0380eafc5d37e7a9d05eb9",
+    "overview-navigation-1366.png": "8c9db79623a56d0d08aecc65d6f359e84bf140fe844bfe872b9f522bac0d7fd1",
+    "overview.png": "e0c85943ea5a51c0befc316542d9c9e2dfcce3b3aadd491896c6aea0c12c2e4c",
+    "sales.png": "ec9d42fbaa4327a2f398b8b88a2477b6815b42601ae271c55c2d5a0319ea7f01",
+    "customers.png": "37cd84099afb76b01c8d69e8f2178d1b283f607565a5892c6f55cf7943fde8b0"
+  },
+  "data_license": "Olist CC BY-NC-SA 4.0; derived data retains attribution and applicable terms"
+}

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "id": "<stable-slice-id>",
+  "name": "<bounded slice>",
+  "consumer": "<consumer>",
+  "useCase": "<use case>",
+  "workload": "<workload>",
+  "sourceOfTruth": "<workspace-relative source of truth>",
+  "constraints": [
+    "<safe bounded constraint>"
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "description": "<requirement>",
+      "acceptanceCriteria": [
+        "<criterion proven by a runbook>"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "requirementId": "REQ-001",
+      "description": "<implemented task>",
+      "dependsOn": []
+    }
+  ],
+  "contracts": [
+    "<workspace-relative contract path>"
+  ],
+  "artifacts": [
+    {
+      "id": "<artifact-id>",
+      "description": "<artifact path>"
+    }
+  ],
+  "runbooks": [
+    {
+      "id": "V-001",
+      "command": "<implemented command>",
+      "expectedExitCode": 0,
+      "requiredEvidence": [
+        "<evidence type>"
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,82 @@
+{
+  "captured_at": "2026-10-15T14:50:34.499432+00:00",
+  "scope": "Actual local runtime evidence; not certification of all enterprise acceptance gates",
+  "publication": {
+    "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+    "pipeline_run_id": "5ac008ff-3041-54cf-b03a-b7e76a5fa82f",
+    "source_cut": 1,
+    "published_at": "2026-10-15T14:37:52.928045+00:00"
+  },
+  "pipeline": {
+    "state": "succeeded",
+    "elapsed_seconds": 260.412528
+  },
+  "dbt_nodes_passed": 93,
+  "source_rows": 451535,
+  "evidence_sha256": {
+    "airflow.json": "8ddd3b18c6ce09e9ea729ecf2615a7ce5b57457772a67e153626bc5289f48258",
+    "bi.json": "a7bcb5d3170397bf7031f606822882d95c9436535cbcb483df5f6be351bc67ae",
+    "browser.json": "d49d1e14f879041155b44107089236c2dffb220a9128472954280acc19d76d91",
+    "browser-publish-transition.json": "dce6811445fe67a8f08d87bf7a355a9b009a2130fa7a808b9e2caafec8260792",
+    "capacity.json": "4dd46a56276a21926972a168f6678a2c937b4652dbf1678ca2e917a4de0e197f",
+    "health.json": "5d38641f4aa53cdeca9bdd4a92790b45e3e3147cceeb847c11f7e4e9c66ff248",
+    "faults.json": "bdafea7fe977094c43da2021dad973482e34ac79a206499a22efe018a275b8d8",
+    "incremental.json": "e6a6a12875244acb58f0e821adffae593a89d2f0295cdfdee0fe20243c92f42e",
+    "pipeline-recovery.json": "5af7751bef3c63b160600ec9a15e50d1eb96466e545cc3b08a4f43e914836331",
+    "ack-recovery.json": "a4021be3e8220421bdb00453749ea0b78b5e54e5cdf27047bc59afac5845116f",
+    "restore.json": "e9adf649908b3aec33898ba9359e4ad4b858ced66f67a3ca4b333dd8f29ae968",
+    "rotation.json": "80725cc1606e459969903a5a2c17a9e14509472df4897bcb127752fbb1f1cd93",
+    "correction.json": "997c17582358d125a85f0c75636c646127b1b39ad4f48742f76b56a50a93e9cb",
+    "runtime-sales_dw.json": "507c4595baf34d27afa1b2707149925038c3a88cab91271224485e824ce614dc"
+  },
+  "exports": {
+    "sales_monthly": {
+      "rows": 25,
+      "path": "output/reports/sales_monthly.csv",
+      "sha256": "735528204da5a6c86e8b2cc4afbcadfabb680ed8ac92969555fd6d1fc8202cb6"
+    },
+    "sales_daily": {
+      "rows": 634,
+      "path": "output/reports/sales_daily.csv",
+      "sha256": "fa876c277fae2fc050100796192df06f932c30ba8818bfc3b15c44a93c16a667"
+    },
+    "product_monthly": {
+      "rows": 1283,
+      "path": "output/reports/product_monthly.csv",
+      "sha256": "652a20fc2abc5fd454abc53ba29bb88d2f5346cc61194abc56e1244d9cf885ae"
+    },
+    "seller_monthly": {
+      "rows": 16441,
+      "path": "output/reports/seller_monthly.csv",
+      "sha256": "d902b9434ce6a75bf170e82df959dc35d6d8e77dbab21bbfde84c265c324770e"
+    },
+    "buyer_state_monthly": {
+      "rows": 565,
+      "path": "output/reports/buyer_state_monthly.csv",
+      "sha256": "4bc1da6be7ab4d49cf7e6f2c0dd43fea9a1b3057d3102ed6999bf381d7b8d249"
+    }
+  },
+  "screenshots": {
+    "sales_overview": {
+      "path": "docs/evidence/runtime/screenshots/sales_overview.png",
+      "sha256": "c293941b234f266cafc45c010883eebb6891d71235252094ee987cb22f100942"
+    },
+    "commercial_performance": {
+      "path": "docs/evidence/runtime/screenshots/commercial_performance.png",
+      "sha256": "c0a4decbe0cf26614c68cc860b807ad31046f91acccf1607de661fab4b38e284"
+    },
+    "data_pipeline_health": {
+      "path": "docs/evidence/runtime/screenshots/data_pipeline_health.png",
+      "sha256": "2f3717dce41696ce993fec0a1ecf76d8d2772f6bd6522b4f176747d8cd41bf46"
+    }
+  },
+  "data_license": "Olist CC BY-NC-SA 4.0; attribution and downstream terms apply to derived exports",
+  "limitations": [
+    "Single-host, no HA",
+    "Local unencrypted backups, no host-loss RPO",
+    "App metadata restore not exercised",
+    "Remote GitHub CI not executed",
+    "Retention inventory, no automated deletion",
+    "No upstream Olist CDC; correction/effectivity fixtures isolated"
+  ]
+}

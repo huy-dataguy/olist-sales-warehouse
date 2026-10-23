@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Ba star dùng chung bảy dimensions</title>
+<desc id="desc">Sơ đồ logic để trình bày. Dimension chung được lặp trên hình, không phải nhân bản bảng vật lý.. Sơ đồ hệ thống đã triển khai; phạm vi demo local.</desc>
+<defs>
+<marker id="arrow-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#52647B"/></marker>
+<marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2458B5"/></marker>
+<marker id="arrow-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#087E79"/></marker>
+<marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#AE3949"/></marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#6650A8"/></marker>
+</defs>
+<rect x="0" y="0" width="1920" height="1080" rx="0" fill="#F4F7FB"/>
+<rect x="0" y="0" width="18" height="1080" rx="0" fill="#2458B5"/>
+<text x="72" y="53" font-family="DejaVu Sans" font-size="19" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="1808">SALES &amp; CUSTOMER ANALYTICS WAREHOUSE</text>
+<text x="1848" y="53" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">IMPLEMENTED DEMO  /  2026-10-19</text>
+<text x="72" y="123" font-family="DejaVu Sans" font-size="49" font-weight="700" fill="#15283E" text-anchor="start" data-max-width="1776">Ba star dùng chung bảy dimensions</text>
+<text x="72" y="169" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1776">Sơ đồ logic để trình bày. Dimension chung được lặp trên hình, không phải nhân bản bảng vật lý.</text>
+<polyline points="72,1007 1848,1007" fill="none" stroke="#D7E1EB" stroke-width="2" stroke-linejoin="round"/>
+<text x="72" y="1046" font-family="DejaVu Sans" font-size="18" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="1808">Portfolio độc lập • Olist • Không đại diện kiến trúc Abbott / Concentrix</text>
+<text x="1848" y="1046" font-family="DejaVu Sans" font-size="17" font-weight="400" fill="#52647B" text-anchor="end" data-max-width="1808">ĐỐI CHIẾU CODE VÀ EVIDENCE   |   05 / 10</text>
+<rect x="72" y="224" width="568" height="600" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="356" y="266" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="520">4 DIMENSIONS CONFORMED</text>
+<rect x="120" y="288" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="356" y="313" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_date</text>
+<rect x="120" y="331" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="356" y="356" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_customer</text>
+<rect x="120" y="374" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="356" y="399" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_buyer_geography</text>
+<rect x="120" y="417" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="356" y="442" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_order_status</text>
+<polyline points="356,453 356,490" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="100" y="495" width="512" height="138" rx="18" fill="#F0ECFA"/>
+<text x="356" y="536" font-family="DejaVu Sans" font-size="28" font-weight="700" fill="#6650A8" text-anchor="middle" data-max-width="480">fct_order_items</text>
+<text x="356" y="576" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="middle" data-max-width="480">112.650 dòng hàng</text>
+<text x="356" y="609" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="middle" data-max-width="480">release-scoped PK / FK</text>
+<rect x="100" y="697" width="240" height="60" rx="10" fill="#E5F5F1"/>
+<text x="220" y="736" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#087E79" text-anchor="middle" data-max-width="222">dim_product</text>
+<polyline points="220,697 220,670 356,670 356,637" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="372" y="697" width="240" height="60" rx="10" fill="#E5F5F1"/>
+<text x="492" y="736" font-family="DejaVu Sans" font-size="22" font-weight="700" fill="#087E79" text-anchor="middle" data-max-width="222">dim_seller</text>
+<polyline points="492,697 492,670 356,670 356,637" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="676" y="224" width="568" height="600" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="960" y="266" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="520">4 DIMENSIONS CONFORMED</text>
+<rect x="724" y="288" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="960" y="313" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_date</text>
+<rect x="724" y="331" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="960" y="356" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_customer</text>
+<rect x="724" y="374" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="960" y="399" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_buyer_geography</text>
+<rect x="724" y="417" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="960" y="442" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_order_status</text>
+<polyline points="960,453 960,490" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="704" y="495" width="512" height="138" rx="18" fill="#F0ECFA"/>
+<text x="960" y="536" font-family="DejaVu Sans" font-size="28" font-weight="700" fill="#6650A8" text-anchor="middle" data-max-width="480">fct_orders</text>
+<text x="960" y="576" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="middle" data-max-width="480">99.441 đơn hàng</text>
+<text x="960" y="609" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="middle" data-max-width="480">release-scoped PK / FK</text>
+<text x="704" y="695.0" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="512">Một dim_date đóng 5 vai: purchase,</text>
+<text x="704" y="729.8" font-family="DejaVu Sans" font-size="24" font-weight="400" fill="#52647B" text-anchor="start" data-max-width="512">approved, carrier, delivered, estimated.</text>
+<rect x="1280" y="224" width="568" height="600" rx="18" fill="#FFFFFF" stroke="#D7E1EB" stroke-width="2"/>
+<text x="1564" y="266" font-family="DejaVu Sans" font-size="20" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="520">4 DIMENSIONS CONFORMED</text>
+<rect x="1328" y="288" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="1564" y="313" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_date</text>
+<rect x="1328" y="331" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="1564" y="356" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_customer</text>
+<rect x="1328" y="374" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="1564" y="399" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_buyer_geography</text>
+<rect x="1328" y="417" width="472" height="35" rx="7" fill="#EAF1FD"/>
+<text x="1564" y="442" font-family="DejaVu Sans" font-size="21" font-weight="700" fill="#2458B5" text-anchor="middle" data-max-width="450">dim_order_status</text>
+<polyline points="1564,453 1564,490" fill="none" stroke="#2458B5" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-blue)"/>
+<rect x="1308" y="495" width="512" height="138" rx="18" fill="#F0ECFA"/>
+<text x="1564" y="536" font-family="DejaVu Sans" font-size="28" font-weight="700" fill="#6650A8" text-anchor="middle" data-max-width="480">fct_payments</text>
+<text x="1564" y="576" font-family="DejaVu Sans" font-size="23" font-weight="400" fill="#15283E" text-anchor="middle" data-max-width="480">103.886 payment records</text>
+<text x="1564" y="609" font-family="DejaVu Sans" font-size="20" font-weight="400" fill="#52647B" text-anchor="middle" data-max-width="480">release-scoped PK / FK</text>
+<rect x="1376" y="697" width="376" height="60" rx="10" fill="#E5F5F1"/>
+<text x="1564" y="736" font-family="DejaVu Sans" font-size="24" font-weight="700" fill="#087E79" text-anchor="middle" data-max-width="352">dim_payment_method</text>
+<polyline points="1564,697 1564,637" fill="none" stroke="#087E79" stroke-width="2" stroke-linejoin="round" marker-end="url(#arrow-teal)"/>
+<rect x="72" y="861" width="856" height="119" rx="18" fill="#EAF1FD"/>
+<text x="96" y="899" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#2458B5" text-anchor="start" data-max-width="808">KHÓA DIMENSION</text>
+<text x="96" y="931.0" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">Registry cấp bigint SK; date key YYYYMMDD; Unknown = 0, N/A = -1.</text>
+<text x="96" y="962.9" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="808">Inferred member được bổ sung mà giữ key.</text>
+<rect x="960" y="861" width="888" height="119" rx="18" fill="#E5F5F1"/>
+<text x="984" y="899" font-family="DejaVu Sans" font-size="23" font-weight="700" fill="#087E79" text-anchor="start" data-max-width="840">LỊCH SỬ NGUỒN</text>
+<text x="984" y="931.0" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">Olist thật chỉ có snapshot Type 0/1. Type 2 có explicit effectivity được kiểm</text>
+<text x="984" y="962.9" font-family="DejaVu Sans" font-size="22" font-weight="400" fill="#15283E" text-anchor="start" data-max-width="840">bằng fixture cô lập, không phải lịch sử Olist.</text>
+</svg>

@@ -1,0 +1,767 @@
+{
+  "database": "sales_dw",
+  "checks": {
+    "raw": {
+      "passed": true,
+      "seconds": 0.077,
+      "result": {
+        "s3_roundtrip": [
+          {
+            "sha256": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+            "bytes": 44717580
+          }
+        ]
+      }
+    },
+    "warehouse": {
+      "passed": true,
+      "seconds": 2.914,
+      "result": {
+        "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a",
+        "counts": {
+          "dim_customer": 96098,
+          "dim_product": 32953,
+          "dim_seller": 3097,
+          "dim_buyer_geography": 15036,
+          "dim_date": 5481,
+          "dim_order_status": 10,
+          "dim_payment_method": 7,
+          "fct_orders": 99441,
+          "fct_order_items": 112650,
+          "fct_payments": 103886
+        },
+        "totals": {
+          "delivered": 96478,
+          "customers": 93358
+        },
+        "occurrence_accounting": true,
+        "lineage_resolves": true
+      }
+    },
+    "semantic": {
+      "passed": true,
+      "seconds": 4.222,
+      "result": {
+        "exports": {
+          "sales_monthly": {
+            "rows": 25,
+            "oracle_parity": true
+          },
+          "sales_daily": {
+            "rows": 634,
+            "oracle_parity": true
+          },
+          "product_monthly": {
+            "rows": 1283,
+            "oracle_parity": true
+          },
+          "seller_monthly": {
+            "rows": 16441,
+            "oracle_parity": true
+          },
+          "buyer_state_monthly": {
+            "rows": 565,
+            "oracle_parity": true
+          }
+        },
+        "delivered_value": "13221498.11",
+        "zero_denominator_null": true
+      }
+    },
+    "security": {
+      "passed": true,
+      "seconds": 0.088,
+      "result": {
+        "denials": [
+          {
+            "role": "bi",
+            "statement": "SELECT * FROM landing.source_versions LIMIT 1",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "bi",
+            "statement": "SELECT * FROM work.fct_orders LIMIT 1",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "bi",
+            "statement": "SELECT * FROM warehouse_store.fct_orders LIMIT 1",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "bi",
+            "statement": "UPDATE reporting.sales_monthly SET total_orders=total_orders WHERE false",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "ingest",
+            "statement": "UPDATE landing.source_versions SET entity=entity WHERE false",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "publish",
+            "statement": "UPDATE warehouse_store.fct_orders SET order_count=order_count WHERE false",
+            "sqlstate": "42501"
+          },
+          {
+            "role": "semantic",
+            "statement": "SELECT * FROM semantic_input.metric_orders LIMIT 1",
+            "sqlstate": "42704"
+          }
+        ],
+        "allowed_bi_read": true,
+        "roles_unprivileged": true,
+        "s3_delete_denied": true,
+        "operator_secret_unmounted": true
+      }
+    },
+    "performance": {
+      "passed": true,
+      "seconds": 0.237,
+      "result": {
+        "expression_filter": {
+          "median_ms": 41.055,
+          "plans": [
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 39577.73,
+                "Total Cost": 39577.74,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 41.166,
+                "Actual Total Time": 41.167,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 4628,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 1189.98,
+                    "Total Cost": 39575.26,
+                    "Plan Rows": 494,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 3.366,
+                    "Actual Total Time": 39.554,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(\"left\"((purchase_date_key)::text, 6) = '201808'::text)",
+                    "Rows Removed by Filter": 92929,
+                    "Exact Heap Blocks": 4521,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 4628,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 1189.85,
+                        "Plan Rows": 98857,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 2.885,
+                        "Actual Total Time": 2.886,
+                        "Actual Rows": 99441,
+                        "Actual Loops": 1,
+                        "Index Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                        "Shared Hit Blocks": 107,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.079,
+              "Triggers": [],
+              "Execution Time": 41.291
+            },
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 39577.73,
+                "Total Cost": 39577.74,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 37.766,
+                "Actual Total Time": 37.768,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 4628,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 1189.98,
+                    "Total Cost": 39575.26,
+                    "Plan Rows": 494,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 3.589,
+                    "Actual Total Time": 36.302,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(\"left\"((purchase_date_key)::text, 6) = '201808'::text)",
+                    "Rows Removed by Filter": 92929,
+                    "Exact Heap Blocks": 4521,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 4628,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 1189.85,
+                        "Plan Rows": 98857,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 3.097,
+                        "Actual Total Time": 3.098,
+                        "Actual Rows": 99441,
+                        "Actual Loops": 1,
+                        "Index Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                        "Shared Hit Blocks": 107,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.107,
+              "Triggers": [],
+              "Execution Time": 37.894
+            },
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 39577.73,
+                "Total Cost": 39577.74,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 40.932,
+                "Actual Total Time": 40.934,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 4628,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 1189.98,
+                    "Total Cost": 39575.26,
+                    "Plan Rows": 494,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 3.404,
+                    "Actual Total Time": 39.281,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(\"left\"((purchase_date_key)::text, 6) = '201808'::text)",
+                    "Rows Removed by Filter": 92929,
+                    "Exact Heap Blocks": 4521,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 4628,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 1189.85,
+                        "Plan Rows": 98857,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 2.923,
+                        "Actual Total Time": 2.924,
+                        "Actual Rows": 99441,
+                        "Actual Loops": 1,
+                        "Index Cond": "(release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid)",
+                        "Shared Hit Blocks": 107,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.083,
+              "Triggers": [],
+              "Execution Time": 41.055
+            }
+          ],
+          "cache_condition": "warm/shared cache, no cache eviction performed"
+        },
+        "range_filter": {
+          "median_ms": 6.141,
+          "plans": [
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 15548.52,
+                "Total Cost": 15548.53,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 5.665,
+                "Actual Total Time": 5.666,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 3514,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 102.66,
+                    "Total Cost": 15519.41,
+                    "Plan Rows": 5822,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 1.009,
+                    "Actual Total Time": 4.441,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Exact Heap Blocks": 3505,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 3514,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 101.2,
+                        "Plan Rows": 5822,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 0.653,
+                        "Actual Total Time": 0.654,
+                        "Actual Rows": 6512,
+                        "Actual Loops": 1,
+                        "Index Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                        "Shared Hit Blocks": 9,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.099,
+              "Triggers": [],
+              "Execution Time": 5.799
+            },
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 15548.52,
+                "Total Cost": 15548.53,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 6.683,
+                "Actual Total Time": 6.687,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 3514,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 102.66,
+                    "Total Cost": 15519.41,
+                    "Plan Rows": 5822,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 1.071,
+                    "Actual Total Time": 5.2,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Exact Heap Blocks": 3505,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 3514,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 101.2,
+                        "Plan Rows": 5822,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 0.688,
+                        "Actual Total Time": 0.689,
+                        "Actual Rows": 6512,
+                        "Actual Loops": 1,
+                        "Index Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                        "Shared Hit Blocks": 9,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.158,
+              "Triggers": [],
+              "Execution Time": 6.916
+            },
+            {
+              "Plan": {
+                "Node Type": "Aggregate",
+                "Strategy": "Plain",
+                "Partial Mode": "Simple",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 15548.52,
+                "Total Cost": 15548.53,
+                "Plan Rows": 1,
+                "Plan Width": 40,
+                "Actual Startup Time": 5.966,
+                "Actual Total Time": 5.969,
+                "Actual Rows": 1,
+                "Actual Loops": 1,
+                "Shared Hit Blocks": 3514,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Bitmap Heap Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Relation Name": "fct_orders",
+                    "Alias": "fct_orders",
+                    "Startup Cost": 102.66,
+                    "Total Cost": 15519.41,
+                    "Plan Rows": 5822,
+                    "Plan Width": 6,
+                    "Actual Startup Time": 1.181,
+                    "Actual Total Time": 4.706,
+                    "Actual Rows": 6512,
+                    "Actual Loops": 1,
+                    "Recheck Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Exact Heap Blocks": 3505,
+                    "Lossy Heap Blocks": 0,
+                    "Shared Hit Blocks": 3514,
+                    "Shared Read Blocks": 0,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 0,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0,
+                    "Plans": [
+                      {
+                        "Node Type": "Bitmap Index Scan",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Index Name": "fct_orders_purchase_date",
+                        "Startup Cost": 0.0,
+                        "Total Cost": 101.2,
+                        "Plan Rows": 5822,
+                        "Plan Width": 0,
+                        "Actual Startup Time": 0.777,
+                        "Actual Total Time": 0.778,
+                        "Actual Rows": 6512,
+                        "Actual Loops": 1,
+                        "Index Cond": "((release_id = '87f01740-0523-5fd4-be0e-eb52acb2842a'::uuid) AND (purchase_date_key >= 20180801) AND (purchase_date_key < 20180901))",
+                        "Shared Hit Blocks": 9,
+                        "Shared Read Blocks": 0,
+                        "Shared Dirtied Blocks": 0,
+                        "Shared Written Blocks": 0,
+                        "Local Hit Blocks": 0,
+                        "Local Read Blocks": 0,
+                        "Local Dirtied Blocks": 0,
+                        "Local Written Blocks": 0,
+                        "Temp Read Blocks": 0,
+                        "Temp Written Blocks": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              "Planning": {
+                "Shared Hit Blocks": 0,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              },
+              "Planning Time": 0.159,
+              "Triggers": [],
+              "Execution Time": 6.141
+            }
+          ],
+          "cache_condition": "warm/shared cache, no cache eviction performed"
+        },
+        "monthly_export_query_p95_ms": 1.1075309994339477,
+        "same_output": true
+      }
+    },
+    "isolation": {
+      "passed": true,
+      "seconds": 0.035,
+      "result": {
+        "candidate_invisible_to_bi": true,
+        "stale_owner_rejected": true,
+        "release_id": "87f01740-0523-5fd4-be0e-eb52acb2842a"
+      }
+    }
+  },
+  "passed": true
+}

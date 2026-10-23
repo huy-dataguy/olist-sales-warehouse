@@ -1,0 +1,9 @@
+name: sales_dw_semantic
+version: '2.0.0'
+config-version: 2
+profile: sales_dw
+model-paths: [../models/semantic_input, ../models/semantic]
+macro-paths: []
+target-path: "{{ env_var('SALES_SEMANTIC_TARGET', 'target') }}"
+flags:
+  send_anonymous_usage_stats: false

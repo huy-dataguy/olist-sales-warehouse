@@ -1,0 +1,13 @@
+FROM python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 AS runtime
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 VIRTUAL_ENV=/opt/sales-venv
+RUN python -m venv /opt/sales-venv
+COPY infra-requirements.lock /tmp/requirements.txt
+RUN /opt/sales-venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
+ENV PATH="/opt/sales-venv/bin:${PATH}" PYTHONPATH=/workspace/src SALES_DW_ROOT=/workspace
+WORKDIR /workspace
+USER 1000:0
+ENTRYPOINT ["python", "-m", "sales_dw.cli"]
+
+FROM apache/airflow:3.1.8-python3.12@sha256:740da888bf8367e75e6db8c8cd62c4d7b4e6744cdf0e9b53bf4467458f8dadab AS airflow
+COPY --from=runtime /opt/sales-venv /opt/sales-venv
+ENV SALES_DW_ROOT=/workspace PYTHONPATH=/workspace/src

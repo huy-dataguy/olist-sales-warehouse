@@ -1,0 +1,67 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>SalesDW interview demo kit</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#e9eef5;color:#15283e;font:16px "DejaVu Sans",sans-serif}
+header,main{max-width:1440px;margin:auto}header{padding:30px 24px}h1{font-size:28px;margin:0 0 14px}
+p{line-height:1.65}a{color:#2458b5}nav{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+button{font:inherit;padding:10px 16px;border:1px solid #52647b;border-radius:6px;background:white;cursor:pointer}
+main{padding:0 24px 36px}.slide{margin-bottom:32px;background:white;scroll-margin-top:15px}
+.slide img{display:block;width:100%;height:auto}.notes{padding:4px 28px 20px}.notes h2{font-size:20px}
+body.presenting header,body.presenting .notes{display:none}body.presenting main{max-width:none;padding:0}
+body.presenting .slide{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center}
+body.presenting .slide img{max-height:100vh;width:100%;object-fit:contain}
+@media(max-width:600px){header,main{padding-left:12px;padding-right:12px}.notes{padding:4px 16px 16px}h1{font-size:23px}}
+@page{size:1920px 1080px;margin:0}@media print{header,.notes{display:none!important}main{padding:0;max-width:none}
+.slide,body.presenting .slide{width:1920px;height:1080px;min-height:0;margin:0;break-after:page;display:block}
+.slide:last-child{break-after:auto}.slide img{width:1920px;height:1080px;max-height:none!important}}
+</style></head><body><header><h1>Sales and Customer Analytics Warehouse</h1>
+<p>Bộ trình bày hệ thống đã triển khai. Olist thật, Airflow, dbt, Kimball, MetricFlow và Superset.
+Portfolio độc lập, không phải kiến trúc nội bộ Abbott hoặc Concentrix.</p>
+<nav><button id="present" type="button">Chế độ trình bày</button><button id="print" type="button">In hoặc lưu PDF</button>
+<a href="architecture-slides.pdf">PDF sơ đồ</a><a href="project-report.pdf">Báo cáo dự án</a><a href="README.md">Hướng dẫn</a></nav>
+<p>Phím trái phải chuyển hình, Esc thoát. Hoạt động offline, không gọi CDN hoặc dịch vụ ngoài.</p></header><main><section class="slide" id="01-business-input-output">
+<img src="svg/01-business-input-output.svg" width="1920" height="1080" alt="Bài toán và đầu ra của dự án">
+<div class="notes"><h2>01 Bài toán và đầu ra của dự án</h2>
+<p>Mở đầu bằng kết quả: nhà phân tích cần số bán hàng, khách hàng và giao hàng nhất quán. Dự án có dữ liệu thật, báo cáo thật và bằng chứng chạy; không phải dự án nội bộ Abbott. Nêu giới hạn telesales ngoài v1.</p><p><a href="png/01-business-input-output.png">PNG 4K</a> · <a href="svg/01-business-input-output.svg">SVG vector</a></p></div></section>
+<section class="slide" id="02-system-architecture">
+<img src="svg/02-system-architecture.svg" width="1920" height="1080" alt="Kiến trúc hệ thống đang chạy">
+<div class="notes"><h2>02 Kiến trúc hệ thống đang chạy</h2>
+<p>Đọc hàng trên từ trái sang phải, hàng dưới từ phải sang trái theo số thứ tự. Airflow gọi các stage CLI; dbt và MetricFlow là tiến trình theo run, không phải container thường trực. Superset chỉ đọc reporting views của published releases. Metadata ứng dụng tách database.</p><p><a href="png/02-system-architecture.png">PNG 4K</a> · <a href="svg/02-system-architecture.svg">SVG vector</a></p></div></section>
+<section class="slide" id="03-data-layers-and-lineage">
+<img src="svg/03-data-layers-and-lineage.svg" width="1920" height="1080" alt="Mỗi lớp dữ liệu có một trách nhiệm">
+<div class="notes"><h2>03 Mỗi lớp dữ liệu có một trách nhiệm</h2>
+<p>Đây là DWH quan hệ trên PostgreSQL, có tư tưởng phân lớp nhưng không dùng Iceberg/Delta hay gọi MinIO là một lakehouse. Reporting cùng database, không phải DWH thứ hai. Chỉ mutable work được rebuild; consumer đọc snapshot đã publish.</p><p><a href="png/03-data-layers-and-lineage.png">PNG 4K</a> · <a href="svg/03-data-layers-and-lineage.svg">SVG vector</a></p></div></section>
+<section class="slide" id="04-kimball-bus-matrix">
+<img src="svg/04-kimball-bus-matrix.svg" width="1920" height="1080" alt="Kimball bus matrix và grain">
+<div class="notes"><h2>04 Kimball bus matrix và grain</h2>
+<p>Bus matrix là kế hoạch tích hợp các star, không thay thế star schema. Tất cả grain có source namespace. Purchase date ở payment là ngữ cảnh đơn, không phải timestamp thanh toán. Không phân bổ payment cho product/seller khi không có hợp đồng.</p><p><a href="png/04-kimball-bus-matrix.png">PNG 4K</a> · <a href="svg/04-kimball-bus-matrix.svg">SVG vector</a></p></div></section>
+<section class="slide" id="05-dimensional-constellation">
+<img src="svg/05-dimensional-constellation.svg" width="1920" height="1080" alt="Ba star dùng chung bảy dimensions">
+<div class="notes"><h2>05 Ba star dùng chung bảy dimensions</h2>
+<p>Đọc từng cột như một star. Date/customer/geography/status là cùng bốn dimension vật lý trên cả ba cột. Product/seller chỉ ở item star, method chỉ ở payment star. Không có đường nối giữa các fact; xem hình 10 để đọc khóa/cột vật lý.</p><p><a href="png/05-dimensional-constellation.png">PNG 4K</a> · <a href="svg/05-dimensional-constellation.svg">SVG vector</a></p></div></section>
+<section class="slide" id="06-airflow-workflow">
+<img src="svg/06-airflow-workflow.svg" width="1920" height="1080" alt="Workflow thực tế của Airflow">
+<div class="notes"><h2>06 Workflow thực tế của Airflow</h2>
+<p>Đọc 1-5 trên rồi 6-9 dưới từ phải sang trái. Raw đã gồm manifest/hash và bảo toàn archive; build bao gồm dbt và tests. Finish không gọi Superset bootstrap. Lịch được chạy nhiều lần nhưng nguồn Olist tĩnh không tạo sự kiện kinh doanh mới. Batch replay không phải CDC.</p><p><a href="png/06-airflow-workflow.png">PNG 4K</a> · <a href="svg/06-airflow-workflow.svg">SVG vector</a></p></div></section>
+<section class="slide" id="07-semantic-and-serving">
+<img src="svg/07-semantic-and-serving.svg" width="1920" height="1080" alt="Semantic Layer nằm ở đâu?">
+<div class="notes"><h2>07 Semantic Layer nằm ở đâu?</h2>
+<p>MetricFlow đọc candidate Kimball qua release-bound views, sinh và chạy SQL rồi xuất kết quả vào reporting tables. Phân tích cohort/delivery/payment dùng published SQL views riêng, không được gọi là MetricFlow mới. Superset đọc cả hai qua role readonly; không tính lại công thức lõi theo từng chart.</p><p><a href="png/07-semantic-and-serving.png">PNG 4K</a> · <a href="svg/07-semantic-and-serving.svg">SVG vector</a></p></div></section>
+<section class="slide" id="08-publication-quality-and-recovery">
+<img src="svg/08-publication-quality-and-recovery.svg" width="1920" height="1080" alt="Không công bố dữ liệu đang xử lý dở">
+<div class="notes"><h2>08 Không công bố dữ liệu đang xử lý dở</h2>
+<p>R0 tiếp tục phục vụ trong lúc R1 được build. Warehouse snapshot phải đầy đủ, cùng source cut, FK/grain đạt; semantic phải bind R1 và exports có parity. Chỉ khi tất cả đạt publisher mới đổi pointer dưới fencing. Superset URL R0 còn pin R0; muốn chọn R1 phải tạo/bàn giao assets riêng.</p><p><a href="png/08-publication-quality-and-recovery.png">PNG 4K</a> · <a href="svg/08-publication-quality-and-recovery.svg">SVG vector</a></p></div></section>
+<section class="slide" id="09-dashboards-results-and-evidence">
+<img src="svg/09-dashboards-results-and-evidence.svg" width="1920" height="1080" alt="Kết quả để trình bày trong buổi demo">
+<div class="notes"><h2>09 Kết quả để trình bày trong buổi demo</h2>
+<p>Đọc KPI tháng 7 trước, sau đó dùng menu để đi sâu. Chứng cứ hiện tại: 6 trang, 60 đối tượng, 8 saved queries và 14 lượt bấm navigation thật. Không gọi khoản merchandise value là profit/net revenue; BRL là quy ước demo. Restore và retry là bằng chứng lịch sử, không phải chạy lại khi xuất tài liệu.</p><p><a href="png/09-dashboards-results-and-evidence.png">PNG 4K</a> · <a href="svg/09-dashboards-results-and-evidence.svg">SVG vector</a></p></div></section>
+<section class="slide" id="10-warehouse-key-schema">
+<img src="svg/10-warehouse-key-schema.svg" width="1920" height="1080" alt="Thiết kế bảng và quan hệ Kimball">
+<div class="notes"><h2>10 Thiết kế bảng và quan hệ Kimball</h2>
+<p>Bốn dimensions ở hàng trên kết nối độc lập tới cả ba facts; chúng được gom thành bốn thanh routing ngang để giữ hình dễ đọc. Các đường chỉ đi từ dimension tới fact, không có fact-to-fact FK. PK facts là text identity cộng release; dimension SK là integer. Xem ERD Mermaid đi kèm để đọc từng FK cụ thể.</p><p><a href="png/10-warehouse-key-schema.png">PNG 4K</a> · <a href="svg/10-warehouse-key-schema.svg">SVG vector</a></p></div></section></main><script>const slides=[...document.querySelectorAll('.slide')];let current=0;
+function go(n){current=Math.max(0,Math.min(slides.length-1,n));slides[current].scrollIntoView({behavior:'instant',block:'start'})}
+document.getElementById('present').onclick=()=>{document.body.classList.add('presenting');go(0)};
+document.getElementById('print').onclick=()=>window.print();document.addEventListener('keydown',e=>{
+if(!document.body.classList.contains('presenting'))return;
+if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(current+1)}
+if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(current-1)}
+if(e.key==='Escape'){document.body.classList.remove('presenting');go(current)}});</script></body></html>

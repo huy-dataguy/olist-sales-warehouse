@@ -1,0 +1,15 @@
+FROM golang:1.26.3-bookworm@sha256:386d475a660466863d9f8c766fec64d7fdad3edac2c6a05020c09534d71edb4b AS build
+ARG MINIO_REVISION=7aac2a2c5b7c882e68c1ce017d8256be2feea27f
+ENV CGO_ENABLED=0 GOBIN=/out GOMAXPROCS=2 GOFLAGS=-p=2
+RUN go install github.com/minio/minio@${MINIO_REVISION}
+
+FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl \
+    && apt-get clean && mkdir /data && chown 1000:0 /data
+COPY --from=build /out/minio /usr/local/bin/minio
+COPY infra/minio-entrypoint.sh /usr/local/bin/minio-entrypoint
+USER 1000:0
+VOLUME /data
+EXPOSE 9000 9001
+HEALTHCHECK --interval=10s --timeout=3s --retries=20 CMD curl -fsS http://localhost:9000/minio/health/live || exit 1
+ENTRYPOINT ["sh", "/usr/local/bin/minio-entrypoint"]

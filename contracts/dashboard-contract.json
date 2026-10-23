@@ -1,0 +1,48 @@
+{
+  "version": "3.3.0",
+  "engine": "Apache Superset 6.1.0",
+  "decision": "ADR-014 and ADR-015; executive entry and five specialist local-demo reports",
+  "catalog": "bi/superset_catalog.py",
+  "definitions": "docs/analytics-design.md",
+  "release_policy": "Each business virtual dataset has one literal ever-published release ID. Release-specific dashboards are retained; publication alone does not mutate assets.",
+  "formula_owner": "Eight core KPIs: existing MetricFlow exports. Extended customer/cohort/delivery/payment analysis: versioned published SQL views and analysis/sql, with separate oracle checks.",
+  "default_month": "2018-07-01",
+  "customer_cutoff": "2018-08-31",
+  "presentation": {
+    "implementation": "bi/superset_presentation.py",
+    "policy": "Compact business title/context, button navigation, KPIs, findings and charts. Methodology stays in chart descriptions/docs; technical provenance stays on the trust page.",
+    "forbidden_panels": ["Dùng để:", "Cách đọc & phân tích sâu", "Giới hạn kết luận"],
+    "verification": "No repeated boilerplate on all six pages; overview KPI cards fit the first 1720/1366 desktop viewport, while numeric and navigation evidence remains required."
+  },
+  "navigation": {
+    "entry": "overview",
+    "implementation": "bi/superset_navigation.py",
+    "destinations": ["overview", "sales", "commercial", "customers", "service", "trust"],
+    "policy": "Actual in-dashboard links retain published release and selected month using Superset native-filter URL state. Customer/trust month selectors affect navigation only, not fixed business scope.",
+    "idempotency": "Two bootstraps with unchanged catalog/context retain dataset/chart/dashboard IDs and asset counts."
+  },
+  "commentary": {
+    "implementation": "bi/superset_narratives.py",
+    "required": ["business context", "computed finding", "period and denominator", "follow-up", "methodology available in descriptions/documentation"],
+    "monthly_policy": "Overview/sales/commercial/service commentary is queried and filtered by the same single purchase_month as its KPI/breakdown; never a static paragraph with default-month numbers.",
+    "fixed_policy": "Customer observations use cutoff 2018-08-31; trust observations pin the producer/release and do not summarize live attempts as that producer.",
+    "missing_policy": "A missing or zero denominator is explicitly insufficient data, not a fabricated 0% change or rate.",
+    "verification": "Compare actual API findings to separately executed analytical SQL/arithmetic; browser checks visible findings and month changes on all four monthly boards without repeated methodology panels."
+  },
+  "dashboards": [
+    {"id":"overview", "question":"Business magnitude/change, leading contributors and eligible delivery observations; where to investigate next?", "charts":14, "filters":["single purchase_month for eight KPIs, commentary, contributions and navigation; trends keep historical context"]},
+    {"id":"sales", "question":"Delivered merchandise, orders, distinct customers, AOV, cancellations and monthly comparisons?", "charts":12, "filters":["single purchase_month for KPIs/daily chart/commentary/navigation; trends retain 2017-01 to 2018-08 context"]},
+    {"id":"commercial", "question":"Category, seller and buyer-state contribution/concentration?", "charts":8, "filters":["single purchase_month including commentary/navigation"]},
+    {"id":"customers", "question":"Observed repeat purchase, recency and cohort retention?", "charts":9, "filters":["fixed full observation cutoff; selected month filters navigation only, never customer history"]},
+    {"id":"service", "question":"Eligible on-time deliveries, duration, methods and installments?", "charts":9, "filters":["single purchase_month including commentary/navigation"]},
+    {"id":"trust", "question":"Producer run, published provenance, source warnings and failed attempts?", "charts":8, "filters":["pinned producer/release; live operational attempt audit separately labeled; selected month filters navigation only"]}
+  ],
+  "invariants": [
+    "Monthly distinct customers cannot be summed across months; scalar KPI returns NULL without a single-month context.",
+    "Ratios recompute from components; cohort denominator is original cohort size and future cells are absent.",
+    "No atomic fact-to-fact joins; payment records/amount are not orders/merchandise value.",
+    "No product-level AOV, profit, causal churn, fabricated names or healthcare/telesales claims.",
+    "MetricFlow/oracle parity, chart API execution, native month changes and browser rendering require real-run evidence."
+  ],
+  "verification": ["make verify-bi", "make analyze", "make verify-browser", "make verify-design"]
+}

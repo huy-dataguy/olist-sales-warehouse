@@ -1,0 +1,412 @@
+{
+  "contract_id": "WAREHOUSE-002",
+  "version": "2.0.0",
+  "owner": "data-warehouse-owner",
+  "method": "Kimball business process -> grain -> conformed dimensions -> facts",
+  "source_systems": [
+    "olist"
+  ],
+  "currency_convention": {
+    "code": "BRL",
+    "provenance": "explicit demo assumption; source has no currency field"
+  },
+  "timezone": {
+    "source": "unspecified, preserve naive timestamps",
+    "operational": "UTC"
+  },
+  "dimension_key_registry": {
+    "table": "ops.dimension_key_registry",
+    "identity": [
+      "namespace",
+      "natural_key",
+      "version_identity"
+    ],
+    "allocated_key": "surrogate_key bigint",
+    "stable_across": [
+      "replay",
+      "full_rebuild"
+    ],
+    "positive_keys_only": true
+  },
+  "dimensions": [
+    {
+      "name": "dim_customer",
+      "primary_key": "customer_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "customer_unique_id"
+      ],
+      "change_policy": "type0_identity",
+      "attributes": [
+        "customer_unique_id",
+        "is_inferred"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_customer",
+      "consumer_unique_key": [
+        "release_id",
+        "customer_key"
+      ]
+    },
+    {
+      "name": "dim_product",
+      "primary_key": "product_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "product_id",
+        "version_identity"
+      ],
+      "change_policy": "type1_snapshot_type2_explicit_revision",
+      "attributes": [
+        "product_id",
+        "category_source",
+        "category_english",
+        "category_missing",
+        "valid_from",
+        "valid_to",
+        "is_current",
+        "is_inferred",
+        "category",
+        "business_effectivity_known"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_product",
+      "consumer_unique_key": [
+        "release_id",
+        "product_key"
+      ]
+    },
+    {
+      "name": "dim_seller",
+      "primary_key": "seller_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "seller_id"
+      ],
+      "change_policy": "type1_snapshot",
+      "attributes": [
+        "seller_id",
+        "seller_city",
+        "seller_state",
+        "seller_zip_code_prefix",
+        "is_inferred"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_seller",
+      "consumer_unique_key": [
+        "release_id",
+        "seller_key"
+      ]
+    },
+    {
+      "name": "dim_buyer_geography",
+      "primary_key": "buyer_geography_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "postal_prefix",
+        "city",
+        "state"
+      ],
+      "change_policy": "type0",
+      "attributes": [
+        "postal_prefix",
+        "city",
+        "state"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_buyer_geography",
+      "consumer_unique_key": [
+        "release_id",
+        "buyer_geography_key"
+      ]
+    },
+    {
+      "name": "dim_date",
+      "primary_key": "date_key",
+      "key_type": "integer YYYYMMDD with sentinels",
+      "natural_key": [
+        "full_date"
+      ],
+      "change_policy": "type0_role_playing",
+      "attributes": [
+        "full_date",
+        "month_start",
+        "day",
+        "month",
+        "quarter",
+        "year",
+        "weekday"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_date",
+      "consumer_unique_key": [
+        "release_id",
+        "date_key"
+      ]
+    },
+    {
+      "name": "dim_order_status",
+      "primary_key": "order_status_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "status_code"
+      ],
+      "change_policy": "type0",
+      "attributes": [
+        "status_code",
+        "is_delivered",
+        "is_canceled"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_order_status",
+      "consumer_unique_key": [
+        "release_id",
+        "order_status_key"
+      ]
+    },
+    {
+      "name": "dim_payment_method",
+      "primary_key": "payment_method_key",
+      "key_type": "warehouse-managed bigint surrogate",
+      "natural_key": [
+        "source_system",
+        "payment_type"
+      ],
+      "change_policy": "type0",
+      "attributes": [
+        "payment_type"
+      ],
+      "reserved_members": {
+        "0": "unknown",
+        "-1": "not_applicable"
+      },
+      "consumer_storage": "warehouse_store.dim_payment_method",
+      "consumer_unique_key": [
+        "release_id",
+        "payment_method_key"
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "name": "fct_orders",
+      "business_process": "order_fulfillment",
+      "fact_type": "accumulating_snapshot",
+      "grain": [
+        "source_system",
+        "order_id"
+      ],
+      "degenerate_dimensions": [
+        "order_id"
+      ],
+      "foreign_keys": {
+        "customer_key": "dim_customer.customer_key",
+        "buyer_geography_key": "dim_buyer_geography.buyer_geography_key",
+        "order_status_key": "dim_order_status.order_status_key",
+        "purchase_date_key": "dim_date.date_key",
+        "approved_date_key": "dim_date.date_key",
+        "carrier_date_key": "dim_date.date_key",
+        "delivered_date_key": "dim_date.date_key",
+        "estimated_delivery_date_key": "dim_date.date_key"
+      },
+      "measures": {
+        "order_count": "integer",
+        "delivered_order_count": "integer",
+        "canceled_order_count": "integer",
+        "item_merchandise_total": "numeric(18,2), null if no items",
+        "item_freight_total": "numeric(18,2), null if no items",
+        "recorded_payment_total": "numeric(18,2), null if no payments",
+        "item_row_count": "integer",
+        "payment_record_count": "integer",
+        "known_delivery_date_count": "integer",
+        "on_time_delivery_count": "integer",
+        "purchase_to_delivery_seconds": "numeric, null if unavailable/invalid"
+      },
+      "flags": [
+        "has_items",
+        "has_payments",
+        "missing_delivery_timestamp",
+        "temporal_anomaly"
+      ],
+      "consumer_storage": "warehouse_store.fct_orders",
+      "consumer_unique_key": [
+        "release_id",
+        "source_system",
+        "order_id"
+      ],
+      "lineage_fields": [
+        "lineage_id",
+        "source_cut",
+        "created_run_id",
+        "last_changed_run_id"
+      ],
+      "foreign_key_release_rule": "same release_id for fact and dimension"
+    },
+    {
+      "name": "fct_order_items",
+      "business_process": "sales_lines",
+      "fact_type": "transaction",
+      "grain": [
+        "source_system",
+        "order_id",
+        "order_item_id"
+      ],
+      "degenerate_dimensions": [
+        "order_id"
+      ],
+      "foreign_keys": {
+        "customer_key": "dim_customer.customer_key",
+        "buyer_geography_key": "dim_buyer_geography.buyer_geography_key",
+        "order_status_key": "dim_order_status.order_status_key",
+        "purchase_date_key": "dim_date.date_key",
+        "product_key": "dim_product.product_key",
+        "seller_key": "dim_seller.seller_key"
+      },
+      "measures": {
+        "merchandise_value": "numeric(18,2)",
+        "freight_value": "numeric(18,2)",
+        "item_row_count": "integer"
+      },
+      "prohibited": [
+        "price * order_item_id",
+        "atomic joins to payment facts for aggregation"
+      ],
+      "consumer_storage": "warehouse_store.fct_order_items",
+      "consumer_unique_key": [
+        "release_id",
+        "source_system",
+        "order_id",
+        "order_item_id"
+      ],
+      "lineage_fields": [
+        "lineage_id",
+        "source_cut",
+        "created_run_id",
+        "last_changed_run_id"
+      ],
+      "foreign_key_release_rule": "same release_id for fact and dimension"
+    },
+    {
+      "name": "fct_payments",
+      "business_process": "payment_records",
+      "fact_type": "transaction",
+      "grain": [
+        "source_system",
+        "order_id",
+        "payment_sequential"
+      ],
+      "degenerate_dimensions": [
+        "order_id"
+      ],
+      "foreign_keys": {
+        "customer_key": "dim_customer.customer_key",
+        "buyer_geography_key": "dim_buyer_geography.buyer_geography_key",
+        "order_status_key": "dim_order_status.order_status_key",
+        "purchase_date_key": "dim_date.date_key",
+        "payment_method_key": "dim_payment_method.payment_method_key"
+      },
+      "measures": {
+        "recorded_payment_value": "numeric(18,2)",
+        "payment_record_count": "integer"
+      },
+      "non_additive_attributes": [
+        "payment_installments"
+      ],
+      "purchase_date_semantics": "order context; source has no payment event timestamp",
+      "prohibited": [
+        "payment_value * payment_installments",
+        "invented product/seller allocation"
+      ],
+      "consumer_storage": "warehouse_store.fct_payments",
+      "consumer_unique_key": [
+        "release_id",
+        "source_system",
+        "order_id",
+        "payment_sequential"
+      ],
+      "lineage_fields": [
+        "lineage_id",
+        "source_cut",
+        "created_run_id",
+        "last_changed_run_id"
+      ],
+      "foreign_key_release_rule": "same release_id for fact and dimension"
+    }
+  ],
+  "reporting_rules": {
+    "fact_to_fact_atomic_joins": false,
+    "drill_across": "aggregate independently to common conformed dimensions",
+    "missing_children": "retain parent fact and completeness flags",
+    "unknown_keys": "reserved values/inferred members, never null applicable FK",
+    "scd2_intervals": "[valid_from, valid_to)",
+    "source_cut": "required consistent accepted version boundary",
+    "publication": "immutable typed snapshots + one validated release pointer"
+  },
+  "source_to_target_lineage": [
+    {
+      "source": "customers.customer_unique_id",
+      "target": "dim_customer.customer_unique_id",
+      "rule": "durable identity; resolve warehouse key"
+    },
+    {
+      "source": "customers.customer_id",
+      "target": "fct_orders.source_customer_id",
+      "rule": "per-order reference, retained for lineage"
+    },
+    {
+      "source": "customers.customer_city/customer_state/customer_zip_code_prefix",
+      "target": "dim_buyer_geography + fact buyer_geography_key",
+      "rule": "address description for the order, not a current customer address"
+    },
+    {
+      "source": "order_items.price",
+      "target": "fct_order_items.merchandise_value",
+      "rule": "exact decimal, one line"
+    },
+    {
+      "source": "order_payments.payment_value",
+      "target": "fct_payments.recorded_payment_value",
+      "rule": "exact decimal; no installment multiplier"
+    },
+    {
+      "source": "orders.order_status",
+      "target": "dim_order_status and fact order_status_key",
+      "rule": "accepted snapshot classification"
+    },
+    {
+      "source": "orders.order_* timestamps",
+      "target": "fct_orders milestone timestamps and role date keys",
+      "rule": "preserve nulls; unknown date key"
+    }
+  ],
+  "publication": {
+    "warehouse": "immutable full consumer snapshots with release-scoped PK/FK integrity",
+    "semantic": "required connection-bound explicit release",
+    "bi": "all cards pinned to the same ever-published retained release",
+    "ddl_design": "db/design/001_warehouse_schema.sql"
+  }
+}
+

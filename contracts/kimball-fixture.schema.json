@@ -1,0 +1,407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:synthetic-kimball-fixture:1.0.0",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "source_system": {
+          "const": "synthetic_contract_fixture"
+        },
+        "scenario_id": {
+          "const": "kimball-golden-v1"
+        },
+        "scd2_scenario_id": {
+          "const": "scd2-effective-history-v1"
+        },
+        "currency": {
+          "const": "BRL"
+        },
+        "business_effectivity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "not_real_olist": {
+          "const": true
+        }
+      },
+      "required": [
+        "source_system",
+        "scenario_id",
+        "scd2_scenario_id",
+        "currency",
+        "business_effectivity",
+        "not_real_olist"
+      ],
+      "additionalProperties": false
+    },
+    "customers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/customer"
+      }
+    },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/product"
+      }
+    },
+    "sellers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/seller"
+      }
+    },
+    "orders": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/order"
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/item"
+      }
+    },
+    "payments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/payment"
+      }
+    },
+    "scd2_arrivals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/scd2"
+      }
+    },
+    "scd2_lookups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "format": "olist-timestamp"
+      }
+    },
+    "inferred_member": {
+      "type": "object",
+      "properties": {
+        "natural_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allocated_key": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initial": {
+          "type": "object",
+          "properties": {
+            "is_inferred": {
+              "const": true
+            },
+            "state": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "is_inferred",
+            "state"
+          ],
+          "additionalProperties": false
+        },
+        "arriving": {
+          "type": "object",
+          "properties": {
+            "is_inferred": {
+              "const": false
+            },
+            "state": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "is_inferred",
+            "state"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "natural_key",
+        "allocated_key",
+        "initial",
+        "arriving"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "metadata",
+    "customers",
+    "products",
+    "sellers",
+    "orders",
+    "items",
+    "payments",
+    "scd2_arrivals",
+    "scd2_lookups",
+    "inferred_member"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "customer": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "customer_unique_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "postal_prefix": {
+          "type": "string",
+          "pattern": "^[0-9]{5}$"
+        }
+      },
+      "required": [
+        "customer_id",
+        "customer_unique_id",
+        "city",
+        "state",
+        "postal_prefix"
+      ],
+      "additionalProperties": false
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "product_id",
+        "category"
+      ],
+      "additionalProperties": false
+    },
+    "seller": {
+      "type": "object",
+      "properties": {
+        "seller_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        }
+      },
+      "required": [
+        "seller_id",
+        "state"
+      ],
+      "additionalProperties": false
+    },
+    "order": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "customer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "delivered",
+            "canceled",
+            "unavailable"
+          ]
+        },
+        "purchased_at": {
+          "type": "string",
+          "format": "olist-timestamp"
+        },
+        "approved_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "olist-timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "carrier_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "olist-timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "delivered_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "olist-timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "estimated_delivery_at": {
+          "type": "string",
+          "format": "olist-timestamp"
+        }
+      },
+      "required": [
+        "order_id",
+        "customer_id",
+        "status",
+        "purchased_at",
+        "approved_at",
+        "carrier_at",
+        "delivered_at",
+        "estimated_delivery_at"
+      ],
+      "additionalProperties": false
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "order_item_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "seller_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "price": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]{2}$"
+        },
+        "freight_value": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]{2}$"
+        }
+      },
+      "required": [
+        "order_id",
+        "order_item_id",
+        "product_id",
+        "seller_id",
+        "price",
+        "freight_value"
+      ],
+      "additionalProperties": false
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payment_sequential": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "payment_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payment_installments": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "payment_value": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]{2}$"
+        }
+      },
+      "required": [
+        "order_id",
+        "payment_sequential",
+        "payment_type",
+        "payment_installments",
+        "payment_value"
+      ],
+      "additionalProperties": false
+    },
+    "scd2": {
+      "type": "object",
+      "properties": {
+        "product_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "olist-timestamp"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allocated_key": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "product_id",
+        "valid_from",
+        "category",
+        "allocated_key"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

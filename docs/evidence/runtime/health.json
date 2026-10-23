@@ -1,0 +1,34 @@
+{
+  "metabase": {
+    "status": "ok"
+  },
+  "airflow": {
+    "metadatabase": {
+      "status": "healthy"
+    },
+    "scheduler": {
+      "status": "healthy",
+      "latest_scheduler_heartbeat": "2026-10-15T14:38:17.288733+00:00"
+    },
+    "triggerer": {
+      "status": null,
+      "latest_triggerer_heartbeat": null
+    },
+    "dag_processor": {
+      "status": "healthy",
+      "latest_dag_processor_heartbeat": "2026-10-15T14:38:17.807298+00:00"
+    }
+  },
+  "passed": true,
+  "private_database_port": true,
+  "services": [
+    "airflow-api",
+    "airflow-dag-processor",
+    "airflow-scheduler",
+    "dbt-docs",
+    "metabase",
+    "minio",
+    "postgres"
+  ],
+  "measured_at": "2026-10-15T14:38:23.976490+00:00"
+}

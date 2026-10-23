@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sales-dw:source:olist-v2:payments:1.0.0",
+  "title": "Olist payments source CSV row",
+  "description": "Wire-format row: all CSV values remain strings. Empty optional values are preserved; normalized typing happens after source validation.",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "payment_sequential": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+$"
+    },
+    "payment_type": {
+      "type": "string",
+      "minLength": 1,
+      "enum": [
+        "credit_card",
+        "boleto",
+        "voucher",
+        "debit_card",
+        "not_defined"
+      ]
+    },
+    "payment_installments": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+$"
+    },
+    "payment_value": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$"
+    }
+  },
+  "required": [
+    "order_id",
+    "payment_sequential",
+    "payment_type",
+    "payment_installments",
+    "payment_value"
+  ],
+  "additionalProperties": false,
+  "x-source-system": "olist",
+  "x-member": "olist_order_payments_dataset.csv",
+  "x-natural-key": [
+    "order_id",
+    "payment_sequential"
+  ],
+  "x-owner": "ingestion-service",
+  "x-invalid-data": "preserve raw, quarantine row and block batch by default; schema drift blocks the batch"
+}
+
