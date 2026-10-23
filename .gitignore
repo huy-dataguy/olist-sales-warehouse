@@ -24,3 +24,9 @@ output/*.zip
 output/history/
 
 .DS_Store
+
+# Personal CV artefact placed in this folder — never publish to the public repo
+NguyenQuocHuy_CV_DataEngineer.*
+*.aux
+*.log
+*.out
