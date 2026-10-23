@@ -79,7 +79,7 @@ Metrics combine facts by **drill-across** through conformed dimensions.
 **Seven conformed dimensions, three facts.** Every table carries `release_id`; surrogate keys are
 warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never joined to each other.
 
-![Warehouse schema](docs/assets/warehouse-schema.png)
+[![Warehouse schema: seven conformed dimensions and three facts](docs/assets/warehouse-schema.png)](docs/assets/warehouse-schema.png)
 
 <details>
 <summary><b>Editable schema source (Mermaid)</b></summary>
