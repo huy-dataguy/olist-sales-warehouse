@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Warehouse schema editor — kéo thả để xếp bố cục</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --ink:#1b2530; --muted:#6b7a8c; --line:#d8e0ea; --accent:#0b6bcb;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font:13px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);display:flex;flex-direction:column}
+  header{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  header h1{font-size:14px;margin:0 12px 0 0;font-weight:650;letter-spacing:.2px}
+  header .hint{color:var(--muted);font-size:12px;margin-right:auto}
+  button{font:inherit;padding:6px 11px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:7px;cursor:pointer}
+  button:hover{border-color:#b9c6d6;background:#fbfdff}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.primary:hover{background:#0a5cb0}
+  .zoom{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:7px;padding:0 6px;height:32px}
+  .zoom button{border:0;padding:2px 8px;background:transparent}
+  #zval{min-width:38px;text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+  #stage{flex:1;min-height:0;overflow:auto;padding:18px}
+  #canvas{background:#f6f8fb;border-radius:10px;box-shadow:0 1px 2px #0b1b2b12;display:block}
+  #canvas .tbl{cursor:grab}
+  #canvas .tbl.dragging{cursor:grabbing}
+  .edge{fill:none;stroke:#93a7bc;stroke-width:1.5}
+  .edge.dim{stroke:#5b86bd}
+  .edge.fact{stroke:#8a6cc0}
+  #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#12202e;color:#fff;padding:8px 14px;border-radius:8px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .2s}
+  #toast.show{opacity:1}
+  dialog{border:1px solid var(--line);border-radius:12px;padding:0;width:min(720px,92vw)}
+  dialog h2{margin:0;padding:12px 16px;font-size:13px;border-bottom:1px solid var(--line)}
+  dialog textarea{width:100%;height:320px;border:0;padding:12px 16px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;resize:vertical}
+  dialog .actions{display:flex;justify-content:flex-end;gap:8px;padding:10px 16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Warehouse schema — kéo thả</h1>
+  <span class="hint">Kéo bảng để đặt vị trí · vị trí tự lưu trong trình duyệt</span>
+  <button id="fit">Vừa khung</button>
+  <div class="zoom">
+    <button id="zout" title="Thu nhỏ">−</button><span id="zval">100%</span><button id="zin" title="Phóng to">+</button>
+  </div>
+  <button id="reset">Xếp lại</button>
+  <button id="save">Lưu bố cục</button>
+  <button id="load">Mở bố cục</button>
+  <button id="dbml">DBML</button>
+  <button id="png" class="primary">Xuất PNG</button>
+  <button id="svg">Xuất SVG</button>
+  <input id="file" type="file" accept="application/json" hidden>
+</header>
+
+<div id="stage">
+  <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .tbl .name{font:650 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#fff}
+      .tbl .sub{font:600 8.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#ffffffb8;letter-spacing:.5px}
+      .tbl .col{font:400 11.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#1b2530}
+      .tbl .typ{font:400 10px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;fill:#6b7a8c}
+      .tbl .badge{font:700 8.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;letter-spacing:.3px}
+      .edge{fill:none;stroke:#93a7bc;stroke-width:1.5}
+      .edge.dim{stroke:#5b86bd}
+      .edge.fact{stroke:#8a6cc0}
+    </style>
+    <defs>
+      <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="1" fill="#cfd8e3"/>
+      </pattern>
+    </defs>
+    <rect id="bg" x="0" y="0" width="100%" height="100%" fill="url(#grid)"/>
+    <g id="edges"></g>
+    <g id="tables"></g>
+  </svg>
+</div>
+
+<dialog id="modal">
+  <h2 id="modalTitle">DBML</h2>
+  <textarea id="modalText" spellcheck="false"></textarea>
+  <div class="actions">
+    <button id="copy">Copy</button>
+    <button id="close" class="primary">Đóng</button>
+  </div>
+</dialog>
+
+<div id="toast"></div>
+
+<script>
+const NW = 280, HH = 30, RH = 18, PAD = 8, SNAP = 5, MARGIN = 48;
+
+const TABLES = [
+  {id:'dim_customer', label:'dim_customer', kind:'dim', sub:'DIM · CUSTOMER',
+   cols:[['customer_key','bigint','PK'],['customer_unique_id','text',''],['is_inferred','boolean','']]},
+  {id:'dim_product', label:'dim_product', kind:'leaf', sub:'DIM · SCD2',
+   cols:[['product_key','bigint','PK'],['product_id','text',''],['category_english','text',''],['valid_from','date',''],['valid_to','date',''],['is_current','boolean','']]},
+  {id:'dim_seller', label:'dim_seller', kind:'leaf', sub:'DIM · SELLER',
+   cols:[['seller_key','bigint','PK'],['seller_id','text',''],['seller_state','text','']]},
+  {id:'dim_buyer_geography', label:'dim_buyer_geography', kind:'dim', sub:'DIM · GEO',
+   cols:[['buyer_geography_key','bigint','PK'],['postal_prefix','text',''],['city','text',''],['state','text','']]},
+  {id:'dim_date', label:'dim_date', kind:'dim', sub:'DIM · ROLE-PLAY',
+   cols:[['date_key','int','PK'],['full_date','date',''],['month_start','date','']]},
+  {id:'dim_order_status', label:'dim_order_status', kind:'dim', sub:'DIM · STATUS',
+   cols:[['order_status_key','bigint','PK'],['status_code','text',''],['is_delivered','boolean',''],['is_canceled','boolean','']]},
+  {id:'dim_payment_method', label:'dim_payment_method', kind:'leaf', sub:'DIM · PAYMENT',
+   cols:[['payment_method_key','bigint','PK'],['payment_type','text','']]},
+  {id:'fct_order_items', label:'fct_order_items', kind:'fact', sub:'FACT · ITEM LINES',
+   cols:[['order_id','text',''],['order_item_id','int',''],['product_key','bigint','FK'],['seller_key','bigint','FK'],['merchandise_value','numeric',''],['freight_value','numeric','']]},
+  {id:'fct_orders', label:'fct_orders', kind:'fact', sub:'FACT · SNAPSHOT',
+   cols:[['order_id','text',''],['customer_key','bigint','FK'],['buyer_geography_key','bigint','FK'],['order_status_key','bigint','FK'],['purchase_date_key','int','FK'],['item_merchandise_total','numeric',''],['recorded_payment_total','numeric','']]},
+  {id:'fct_payments', label:'fct_payments', kind:'fact', sub:'FACT · PAYMENTS',
+   cols:[['order_id','text',''],['payment_sequential','int',''],['payment_method_key','bigint','FK'],['recorded_payment_value','numeric','']]},
+];
+
+const REFS = [
+  {from:'dim_customer', to:'fct_orders', col:'customer_key'},
+  {from:'dim_buyer_geography', to:'fct_orders', col:'buyer_geography_key'},
+  {from:'dim_order_status', to:'fct_orders', col:'order_status_key'},
+  {from:'dim_date', to:'fct_orders', col:'purchase_date_key'},
+  {from:'dim_product', to:'fct_order_items', col:'product_key'},
+  {from:'dim_seller', to:'fct_order_items', col:'seller_key'},
+  {from:'dim_payment_method', to:'fct_payments', col:'payment_method_key'},
+];
+
+const COLORS = {
+  dim: {head:'#1f5fa9'},
+  leaf:{head:'#0f7b6c'},
+  fact:{head:'#5d3a9b'},
+};
+
+const DIM_ORDER = ['dim_customer','dim_buyer_geography','dim_order_status','dim_date',
+                   'dim_product','dim_seller','dim_payment_method'];
+function arrangeLayout(){
+  const out = {};
+  let y = 40;
+  for(const id of DIM_ORDER){ out[id] = [40, y]; y += height(byId[id]) + 22; }
+  out.fct_orders = [640, 40];
+  out.fct_order_items = [640, 320];
+  out.fct_payments = [640, 560];
+  return out;
+}
+
+const STORE = 'olist-schema-layout-v2';
+const byId = Object.fromEntries(TABLES.map(t => [t.id, t]));
+let layout = loadLayout();
+let view = {x:0, y:0, w:1400, h:820};
+let zoom = 1;
+
+function loadLayout(){
+  const base = arrangeLayout();
+  try{
+    const raw = localStorage.getItem(STORE);
+    if(raw) return {...base, ...JSON.parse(raw)};
+  }catch(e){}
+  return base;
+}
+
+function height(t){ return HH + t.cols.length * RH + PAD; }
+function clip(s, n){ return s.length > n ? s.slice(0, n-1) + '…' : s; }
+
+const svg = document.getElementById('canvas');
+const gTables = document.getElementById('tables');
+const gEdges = document.getElementById('edges');
+const stage = document.getElementById('stage');
+
+function ns(tag, attrs){ const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for(const [k,v] of Object.entries(attrs||{})) el.setAttribute(k,v); return el; }
+function textEl(x,y,txt,cls,anchor){ const t = ns('text',{x,y,class:cls}); if(anchor) t.setAttribute('text-anchor',anchor); t.textContent = txt; return t; }
+
+function buildCard(t){
+  const [x,y] = layout[t.id];
+  const g = ns('g',{class:'tbl', 'data-id':t.id, transform:`translate(${x},${y})`});
+  const w = NW, h = height(t);
+  g.appendChild(ns('rect',{x:0,y:0,width:w,height:h,rx:9,fill:'#fff',stroke:'#c9d5e2','stroke-width':1}));
+  g.appendChild(ns('path',{d:`M0,9 a9,9 0 0 1 9,-9 h${w-18} a9,9 0 0 1 9,9 v${HH-9} h${-w} z`,fill:COLORS[t.kind].head}));
+  g.appendChild(textEl(12, 19.5, clip(t.label, 22), 'name'));
+  g.appendChild(textEl(w-10, 19.5, t.sub, 'sub', 'end'));
+  t.cols.forEach(([name,typ,badge],i)=>{
+    const yy = HH + 6 + i*RH + 12;
+    if(i%2===1) g.appendChild(ns('rect',{x:1,y:HH + i*RH,width:w-2,height:RH,fill:'#f7f9fc'}));
+    if(badge){
+      g.appendChild(ns('rect',{x:10,y:HH + i*RH + 4,width:21,height:11,rx:3,fill: badge==='PK' ? '#cfe4ff' : '#e7d9ff'}));
+      g.appendChild(textEl(20.5, HH + i*RH + 12.6, badge, 'badge', 'middle'));
+    }
+    g.appendChild(textEl(badge ? 38 : 12, yy, name, 'col'));
+    g.appendChild(textEl(w-10, yy, typ, 'typ', 'end'));
+  });
+  return g;
+}
+
+function render(){
+  gTables.innerHTML = '';
+  for(const t of TABLES) gTables.appendChild(buildCard(t));
+  drawEdges();
+  applyView();
+}
+
+function applyView(){
+  svg.setAttribute('viewBox', `${view.x} ${view.y} ${view.w} ${view.h}`);
+  svg.style.width = Math.round(view.w * zoom) + 'px';
+  svg.style.height = Math.round(view.h * zoom) + 'px';
+  const bg = document.getElementById('bg');
+  bg.setAttribute('x', view.x); bg.setAttribute('y', view.y);
+  bg.setAttribute('width', view.w); bg.setAttribute('height', view.h);
+  document.getElementById('zval').textContent = Math.round(zoom*100) + '%';
+}
+
+function rowY(t, col){
+  const i = t.cols.findIndex(c => c[0] === col);
+  if(i < 0) return height(t)/2 + HH/2;
+  return HH + 6 + i*RH + 12 - 4;
+}
+function anchor(t, side, col){
+  const [x,y] = layout[t.id];
+  return [side==='right' ? x + NW : x, y + (col ? rowY(t, col) : height(t)/2 + HH/2)];
+}
+
+function dot(x,y){
+  gEdges.appendChild(ns('circle',{cx:x,cy:y,r:2.6,fill:'#fff',stroke:'#93a7bc','stroke-width':1.4}));
+}
+function drawEdges(){
+  gEdges.innerHTML = '';
+  for(const r of REFS){
+    const src = byId[r.from], dst = byId[r.to];
+    if(!src || !dst) continue;
+    const [sx0,sy0] = layout[src.id], [tx0,ty0] = layout[dst.id];
+    const cls = `edge ${src.kind==='fact'?'fact':'dim'}`;
+    const cx = sx0 + NW/2;
+    const overlapX = sx0 < tx0 + NW && sx0 + NW > tx0;
+    const blocked = TABLES.some(o=>{
+      if(o.id === src.id || o.id === dst.id) return false;
+      const [ox,oy] = layout[o.id], oh = height(o);
+      return cx > ox-4 && cx < ox+NW+4 && sy0 + height(src) < oy + oh && ty0 > oy;
+    });
+    const above = sy0 + height(src) <= ty0 + 2 && overlapX && !blocked;
+    let d, s, e;
+    if(above){
+      const sx = sx0 + NW/2, sy = sy0 + height(src);
+      const tx = Math.min(Math.max(sx, tx0 + 24), tx0 + NW - 24), ty = ty0;
+      d = `M${sx},${sy} V${ty-22} H${tx} V${ty}`;
+      s = [sx,sy]; e = [tx,ty];
+    }else{
+      s = anchor(src,'right');
+      e = anchor(dst,'left',r.col);
+      const dir = e[0] >= s[0] ? 1 : -1;
+      const idx = REFS.indexOf(r);
+      const vx = s[0] + dir * (26 + idx * 14);
+      d = `M${s[0]},${s[1]} H${vx} V${e[1]} H${e[0]}`;
+    }
+    gEdges.appendChild(ns('path',{d, class:cls}));
+    dot(...s); dot(...e);
+  }
+}
+
+function scaleX(){ return svg.getBoundingClientRect().width / view.w; }
+function scaleY(){ return svg.getBoundingClientRect().height / view.h; }
+
+let drag = null;
+gTables.addEventListener('pointerdown', ev => {
+  const g = ev.target.closest('.tbl'); if(!g) return;
+  const id = g.dataset.id;
+  const [x,y] = layout[id];
+  drag = {id, start:{clientX:ev.clientX, clientY:ev.clientY, x, y}};
+  g.classList.add('dragging');
+  gTables.setPointerCapture(ev.pointerId);
+});
+
+gTables.addEventListener('pointermove', ev => {
+  if(!drag) return;
+  const nx = Math.round((drag.start.x + (ev.clientX - drag.start.clientX) / scaleX()) / SNAP) * SNAP;
+  const ny = Math.round((drag.start.y + (ev.clientY - drag.start.clientY) / scaleY()) / SNAP) * SNAP;
+  layout[drag.id] = [Math.max(0,nx), Math.max(0,ny)];
+  const g = gTables.querySelector(`[data-id="${drag.id}"]`);
+  g.setAttribute('transform', `translate(${layout[drag.id][0]},${layout[drag.id][1]})`);
+  drawEdges();
+});
+
+function endDrag(ev){
+  if(!drag) return;
+  const g = gTables.querySelector(`[data-id="${drag.id}"]`);
+  if(g){ g.classList.remove('dragging'); try{gTables.releasePointerCapture(ev.pointerId);}catch(e){} }
+  drag = null;
+  persist();
+  ensureVisible();
+}
+gTables.addEventListener('pointerup', endDrag);
+gTables.addEventListener('pointercancel', endDrag);
+
+function persist(){ try{ localStorage.setItem(STORE, JSON.stringify(layout)); }catch(e){} }
+
+function contentBox(){
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+  for(const t of TABLES){
+    const [x,y]=layout[t.id];
+    minX=Math.min(minX,x); minY=Math.min(minY,y);
+    maxX=Math.max(maxX,x+NW); maxY=Math.max(maxY,y+height(t));
+  }
+  return {x:minX-MARGIN, y:minY-MARGIN, w:maxX-minX+MARGIN*2, h:maxY-minY+MARGIN*2};
+}
+
+function ensureVisible(){
+  const b = contentBox();
+  const grew = b.x < view.x || b.y < view.y || b.x+b.w > view.x+view.w || b.y+b.h > view.y+view.h;
+  if(grew){ view = b; applyView(); }
+}
+
+function fit(){
+  const b = contentBox();
+  view = b;
+  const availW = Math.max(320, stage.clientWidth - 40);
+  const availH = Math.max(240, stage.clientHeight - 40);
+  zoom = Math.min(1, availW / b.w, availH / b.h);
+  zoom = Math.max(0.35, Math.round(zoom*20)/20);
+  applyView();
+}
+
+function toast(msg){
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+function serializeSVG(){
+  const b = contentBox();
+  const clone = svg.cloneNode(true);
+  clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  clone.setAttribute('width', b.w);
+  clone.setAttribute('height', b.h);
+  clone.setAttribute('viewBox', `${b.x} ${b.y} ${b.w} ${b.h}`);
+  const bg = clone.querySelector('#bg');
+  if(bg){ bg.setAttribute('x',b.x); bg.setAttribute('y',b.y); bg.setAttribute('width',b.w); bg.setAttribute('height',b.h); }
+  return {xml: new XMLSerializer().serializeToString(clone), w:b.w, h:b.h};
+}
+
+function download(name, blob){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 3000);
+}
+
+document.getElementById('svg').onclick = ()=>{
+  download('olist-warehouse-schema.svg', new Blob([serializeSVG().xml], {type:'image/svg+xml'}));
+  toast('Đã xuất SVG');
+};
+
+document.getElementById('png').onclick = ()=>{
+  const {xml,w,h} = serializeSVG();
+  const img = new Image();
+  img.onload = ()=>{
+    const s = 2, c = document.createElement('canvas');
+    c.width = w*s; c.height = h*s;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#f6f8fb'; ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    c.toBlob(b=>{ download('olist-warehouse-schema.png', b); toast('Đã xuất PNG (2x)'); }, 'image/png');
+  };
+  img.onerror = ()=> toast('Không xuất được PNG — dùng SVG');
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+};
+
+document.getElementById('save').onclick = ()=>{
+  download('schema-layout.json', new Blob([JSON.stringify(layout,null,2)], {type:'application/json'}));
+  toast('Đã lưu bố cục');
+};
+document.getElementById('load').onclick = ()=> document.getElementById('file').click();
+document.getElementById('file').onchange = ev => {
+  const f = ev.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{ try{ layout = {...arrangeLayout(), ...JSON.parse(r.result)}; persist(); render(); fit(); toast('Đã mở bố cục'); }catch(e){ toast('File JSON không hợp lệ'); } };
+  r.readAsText(f);
+};
+document.getElementById('reset').onclick = ()=>{
+  if(!confirm('Xếp lại toàn bộ về bố cục mặc định?')) return;
+  layout = arrangeLayout(); persist(); render(); fit(); toast('Đã xếp lại');
+};
+document.getElementById('fit').onclick = ()=> fit();
+document.getElementById('zin').onclick = ()=>{ zoom = Math.min(2, Math.round((zoom+0.1)*10)/10); applyView(); };
+document.getElementById('zout').onclick = ()=>{ zoom = Math.max(0.35, Math.round((zoom-0.1)*10)/10); applyView(); };
+
+const modal = document.getElementById('modal');
+function showModal(title, text){
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalText').value = text;
+  modal.showModal();
+}
+document.getElementById('close').onclick = ()=> modal.close();
+document.getElementById('copy').onclick = async ()=>{
+  try{ await navigator.clipboard.writeText(document.getElementById('modalText').value); toast('Đã copy'); }
+  catch(e){ document.getElementById('modalText').select(); toast('Ctrl/Cmd + C để copy'); }
+};
+
+function toDBML(){
+  const t = TABLES.map(tb=>{
+    const cols = tb.cols.map(([n,ty,k])=>`  ${n} ${ty}${k==='PK'?' [pk]':''}`).join('\n');
+    return `Table ${tb.label} {\n${cols}\n}`;
+  }).join('\n\n');
+  const refs = REFS.map(r=>`Ref: ${r.from}.${r.col} > ${r.to}.${r.col}`).join('\n');
+  return `${t}\n\n${refs}\n`;
+}
+document.getElementById('dbml').onclick = ()=> showModal('DBML — dán vào dbdiagram.io để kéo thả thêm', toDBML());
+
+window.addEventListener('keydown', e=>{
+  const tag = (e.target.tagName || '').toLowerCase();
+  if(tag === 'input' || tag === 'textarea') return;
+  if(e.key==='f' && !e.metaKey && !e.ctrlKey) fit();
+});
+
+render(); fit();
+</script>
+</body>
+</html>

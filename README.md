@@ -81,6 +81,10 @@ warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never jo
 
 [![Warehouse schema: seven conformed dimensions and three facts](docs/assets/warehouse-schema.png)](docs/assets/warehouse-schema.png)
 
+Prefer another arrangement? Open **[`docs/schema-editor.html`](docs/schema-editor.html)** in a browser:
+drag the tables, the key lines follow, then export PNG/SVG or copy the DBML for dbdiagram.io.
+The layout is kept in your own browser — nothing to install.
+
 <details>
 <summary><b>Editable schema source (Mermaid)</b></summary>
 
