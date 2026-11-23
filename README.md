@@ -73,102 +73,22 @@ flowchart LR
 
 ## Data model
 
-Grain is declared before any join; facts are never joined to each other for aggregation.
-Metrics combine facts by **drill-across** through conformed dimensions.
+**Seven conformed dimensions, three facts.** 
 
-**Seven conformed dimensions, three facts.** Every table carries `release_id` in its primary key;
-surrogate keys are warehouse-managed (Unknown = `0`, not-applicable = `-1`), and facts are never
-joined to each other. Nineteen foreign-key roles tie them together: seven core relationships plus
-twelve roll-up/context keys, including all five `dim_date` roles on `fct_orders`.
+![Bus Matrix](docs/visuals/png/bus_matrix.png)
 
-[![Warehouse schema: seven conformed dimensions and three facts](docs/assets/warehouse-schema.png)](docs/assets/warehouse-schema.png)
+#### Sale Mart
+![Sale Mart](docs/visuals/svg/sale_mart.svg)
 
-Prefer another arrangement? Open **[`docs/schema-editor.html`](docs/schema-editor.html)** in a browser:
-drag the tables, the key lines follow, then export PNG/SVG or copy the DBML for dbdiagram.io.
-The layout is kept in your own browser — nothing to install.
+#### Payment Mart
+![Payment Mart](docs/visuals/svg/payment_mart.svg)
 
-<details>
-<summary><b>Editable schema source (Mermaid)</b></summary>
 
-```mermaid
-erDiagram
-    dim_customer {
-        bigint customer_key PK
-        text customer_unique_id
-        boolean is_inferred
-    }
-    dim_product {
-        bigint product_key PK
-        text product_id
-        text category_english
-        date valid_from
-        date valid_to
-        boolean is_current
-    }
-    dim_seller {
-        bigint seller_key PK
-        text seller_id
-        text seller_state
-    }
-    dim_buyer_geography {
-        bigint buyer_geography_key PK
-        text postal_prefix
-        text city
-        text state
-    }
-    dim_date {
-        int date_key PK
-        date full_date
-        date month_start
-    }
-    dim_order_status {
-        bigint order_status_key PK
-        text status_code
-        boolean is_delivered
-        boolean is_canceled
-    }
-    dim_payment_method {
-        bigint payment_method_key PK
-        text payment_type
-    }
-    fct_orders {
-        text order_id
-        bigint customer_key FK
-        bigint buyer_geography_key FK
-        bigint order_status_key FK
-        int purchase_date_key FK
-        numeric item_merchandise_total
-        numeric recorded_payment_total
-    }
-    fct_order_items {
-        text order_id
-        int order_item_id
-        bigint product_key FK
-        bigint seller_key FK
-        numeric merchandise_value
-        numeric freight_value
-    }
-    fct_payments {
-        text order_id
-        int payment_sequential
-        bigint payment_method_key FK
-        numeric recorded_payment_value
-    }
+#### Order Mart
+![Order Mart](docs/visuals/svg/order_mart.svg)
 
-    dim_customer ||--o{ fct_orders : customer_key
-    dim_buyer_geography ||--o{ fct_orders : buyer_geography_key
-    dim_order_status ||--o{ fct_orders : order_status_key
-    dim_date ||--o{ fct_orders : "purchase / approved / carrier / delivered / estimated"
-    dim_product ||--o{ fct_order_items : product_key
-    dim_seller ||--o{ fct_order_items : seller_key
-    dim_payment_method ||--o{ fct_payments : payment_method_key
-```
 
-</details>
 
-`fct_orders` is an accumulating snapshot; `fct_order_items` and `fct_payments` are transactions.
-`fct_order_items` and `fct_payments` also carry customer/geography/status/date keys (omitted above for
-readability). Full ERD: [warehouse ERD](docs/warehouse-erd.md) · [Mermaid source](output/demo-kit/warehouse-schema.mmd) ·
 [Kimball design and bus matrix](specs/spec-package/03-data/kimball-design.md).
 
 ## Verified results
@@ -285,6 +205,7 @@ output/           Generated reports, dashboard screenshots and the demo kit
 | Document | Content |
 |---|---|
 | [Product design](docs/PRODUCTION_DESIGN.md) | Vietnamese product/design narrative |
+| [Model map](docs/model/README.md) | Bus matrix + one readable DBML star per data mart |
 | [Specification index](specs/spec-package/00-index.md) | Requirements, architecture, data, workflow, verification |
 | [Kimball design](specs/spec-package/03-data/kimball-design.md) | Bus matrix, grain, conformed dimensions, SCD policy |
 | [Verification matrix](specs/spec-package/06-verification/verification-matrix.md) | 20 requirement/verification contracts |
